@@ -1,0 +1,7 @@
+{
+  "name": "courier-monitoring-frontend",
+  "version": "0.0.1",
+  "description": "Courier Monitoring Frontend",
+  "main": "index.js",
+  "repository": "https://github.com/TeamD2018/courier-monitoring-frontend.git",
+}
