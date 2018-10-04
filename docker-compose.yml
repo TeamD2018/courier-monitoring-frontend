@@ -1,0 +1,10 @@
+version: '3.5'
+services:
+  courier-monitoring-frontend:
+    image: teamd2018/courier-monitoring-frontend:latest
+    ports:
+    - 8082:2015
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure

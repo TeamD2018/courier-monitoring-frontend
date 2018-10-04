@@ -4,4 +4,17 @@
   "description": "Courier Monitoring Frontend",
   "main": "index.js",
   "repository": "https://github.com/TeamD2018/courier-monitoring-frontend.git",
+  "dependencies": {
+    "@blueprintjs/core": "^3.6.1",
+    "components": "^0.1.0",
+    "normalize.css": "^8.0.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-google-maps": "^9.4.5",
+    "styled-components": "^3.4.9"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.10.1"
+  }
 }

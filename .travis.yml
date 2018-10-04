@@ -1,0 +1,37 @@
+jobs:
+  include:
+  - stage: Build docker images
+    name: Caddy
+    language: minimal
+    services:
+    - docker
+    script:
+    - docker build -t $DOCKERHUB_OWNER/courier-monitoring-frontend:$TRAVIS_COMMIT -f Dockerfile .
+    - docker tag $DOCKERHUB_OWNER/courier-monitoring-frontend:$TRAVIS_COMMIT $DOCKERHUB_OWNER/courier-monitoring-frontend:latest
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_NAME" --password-stdin
+    - docker push $DOCKERHUB_OWNER/courier-monitoring-frontend
+    if: branch = master
+    branches:
+      only:
+      - master
+
+  - stage: deploy
+    if: branch = master
+    language: bash
+    before_deploy:
+    - openssl aes-256-cbc -K $encrypted_0159f993d050_key -iv $encrypted_0159f993d050_iv -in travis_key.enc -out ./travis_key -d
+    deploy:
+    - provider: script
+      skip_cleanup: true
+      script: bash deploy.sh 35.204.198.186
+      on:
+        branch: master
+    - provider: script
+      skip_cleanup: true
+      script: bash deploy.sh 35.204.198.186
+      on:
+        branch: develop
+    branches:
+      only:
+      - master
+
