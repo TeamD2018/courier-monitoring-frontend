@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {Spinner} from '@blueprintjs/core';
-import { withGoogleMap, GoogleMap, withScriptjs, Marker } from 'react-google-maps';
+import { Spinner } from '@blueprintjs/core';
+import { withGoogleMap, GoogleMap, withScriptjs } from 'react-google-maps';
 import styled from 'styled-components';
-import connect from "react-redux/es/connect/connect";
 
-import Markers from './markers';
+import Markers from '../containers/markers';
 
 const MOSCOW = { lat: 55.751244, lng: 37.618423 };
 const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsvYa45nNh7NNLE_PUix8SOI73_HlcTX8';
@@ -21,7 +20,6 @@ const MAP_OPTIONS = {
 class Map extends Component {
     constructor(props) {
         super(props);
-        this.couriers = props.couriers;
 
         this.onMove = this.onMove.bind(this);
         this.refreshMarkers = this.refreshMarkers.bind(this);
@@ -107,9 +105,4 @@ class Map extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    couriers: state.couriers,
-    center: state.center,
-});
-
-export default connect(mapStateToProps)(Map);
+export default Map;

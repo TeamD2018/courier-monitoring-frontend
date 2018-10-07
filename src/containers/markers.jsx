@@ -20,7 +20,7 @@ class Markers extends Component {
         return this.props.couriers.map(courier => {
             const position = {
                 lat: courier.location.point.lat,
-                lng: courier.location.point.lon
+                lng: courier.location.point.lon,
             };
 
             return (
