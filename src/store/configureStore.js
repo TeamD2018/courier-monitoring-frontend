@@ -3,21 +3,21 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 
 const configureStore = () => {
-    const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware();
 
-    const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-    if (module.hot) {
-        module.hot.accept('../reducers', () => {
-            const nextRootReducer = require('../reducers/index');
-            store.replaceReducer(nextRootReducer);
-        });
-    }
+  if (module.hot) {
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers/index');
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
-    return {
-        ...store,
-        runSaga: sagaMiddleware.run,
-    };
+  return {
+    ...store,
+    runSaga: sagaMiddleware.run,
+  };
 };
 
 export default configureStore;
