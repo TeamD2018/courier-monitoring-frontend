@@ -6,6 +6,14 @@ import connect from "react-redux/es/connect/connect";
 class Markers extends Component {
     constructor(props) {
         super(props);
+
+        this.onClick = this.onClick.bind(this);
+    }
+
+    onClick(event, object) {
+        const info = `Name: ${object.name}\nPhone: ${object.phone}`;
+
+        alert(info);
     }
 
     render() {
@@ -15,7 +23,12 @@ class Markers extends Component {
                 lng: courier.location.point.lon
             };
 
-            return <Marker position={ position } />
+            return (
+                <Marker
+                    position={ position }
+                    onClick={ e => this.onClick(e, courier) }
+                />
+            );
         });
     }
 }
