@@ -4,14 +4,12 @@ import * as actions from '../actions';
 import * as Api from '../api';
 
 function* couriersFetch(action) {
-  console.log('Receiving couriers...');
-
   try {
     const {
       topLeftLat, topLeftLon, bottomRightLat, bottomRightLon,
     } = action.boxField;
-    const couriers = yield call(Api.getCouriersByBoxField, topLeftLat, topLeftLon, bottomRightLat, bottomRightLon);
-    console.log(couriers);
+    const couriers = yield call(Api.getCouriersByBoxField,
+      topLeftLat, topLeftLon, bottomRightLat, bottomRightLon);
     yield put({ type: actions.RECEIVE_COURIERS, couriers, center: action.center });
   } catch (e) {
     yield put({ type: actions.RECEIVE_COURIERS_FAILED });

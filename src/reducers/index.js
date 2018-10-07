@@ -8,7 +8,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.RECEIVE_COURIERS: {
-      console.log('couriers received');
       return {
         ...state,
         couriers: action.couriers,
