@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import {Spinner} from '@blueprintjs/core';
 import { withGoogleMap, GoogleMap, withScriptjs, Marker } from 'react-google-maps';
 import styled from 'styled-components';
-
 import connect from "react-redux/es/connect/connect";
+
+import Markers from './markers';
 
 const MOSCOW = { lat: 55.751244, lng: 37.618423 };
 const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsvYa45nNh7NNLE_PUix8SOI73_HlcTX8';
@@ -27,9 +28,9 @@ class Map extends Component {
         this.mapRef = React.createRef();
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return false;
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return false;
+    }
 
     onMove() {
         this.refreshMarkers();
@@ -73,17 +74,7 @@ class Map extends Component {
                 ref={ this.mapRef }
                 defaultOptions={ MAP_OPTIONS }
             >
-
-            { this.props.couriers.map(courier => {
-                const position = {
-                    lat: courier.location.point.lat,
-                    lng: courier.location.point.lon
-                };
-
-                return <Marker position={ position } />
-            }) }
-
-
+                <Markers />
             </GoogleMap>
         )));
 
