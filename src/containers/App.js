@@ -37,7 +37,7 @@ class App extends Component {
                                 { this.props.couriers.map(courier =>
                                      <tr>
                                          <td>{ courier.name }</td>
-                                         <td>{ courier.phone }</td>
+                                         <td>+{ courier.phone }</td>
                                      </tr>
                                 ) }
                             </tbody>
