@@ -10,7 +10,6 @@ export default class Sidebar extends Component {
             z-index: 0;
             top: 0;
             left: 0;
-            bottom: 0;
             width: 25rem;
             
             padding: 10px;
