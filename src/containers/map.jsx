@@ -9,6 +9,7 @@ import Markers from './markers';
 const MOSCOW = { lat: 55.751244, lng: 37.618423 };
 const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsvYa45nNh7NNLE_PUix8SOI73_HlcTX8';
 const DEFAULT_ZOOM = 13;
+const TIMEOUT = 5000;
 
 const MAP_OPTIONS = {
     fullscreenControl: false,
@@ -26,6 +27,14 @@ class Map extends Component {
         this.refreshMarkers = this.refreshMarkers.bind(this);
 
         this.mapRef = React.createRef();
+    }
+
+    componentDidMount() {
+        this.timer = setInterval(this.refreshMarkers, TIMEOUT);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -69,10 +78,9 @@ class Map extends Component {
             <GoogleMap
                 defaultCenter={ MOSCOW }
                 defaultZoom={ DEFAULT_ZOOM }
-                onDragEnd={ this.onMove }
-                onZoomChanged={ this.onMove }
                 ref={ this.mapRef }
                 defaultOptions={ MAP_OPTIONS }
+                onIdle={ this.onMove }
             >
                 <Markers />
             </GoogleMap>
