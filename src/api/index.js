@@ -1,0 +1,44 @@
+const API_URL = 'http://dc.utkin.xyz:8081/';
+
+export const getCourierById = (courierId) => {
+    const url = new URL(`courier/${courierId}`, API_URL);
+
+    return fetch(url)
+        .then(res => res.json());
+};
+
+export const getCourierOrders = (courierId, since, asc) => {
+    let url = new URL(`courier/${courierId}/orders`, API_URL);
+    url.search = new URLSearchParams({
+        'since': since,
+        'asc': asc,
+    });
+
+    return fetch(url)
+        .then(res => res.json());
+};
+
+export const getCouriersByCircleField = (lat, lon, radius) => {
+    let url = new URL('couriers', API_URL);
+    url.search = new URLSearchParams({
+        'lat': lat,
+        'lon': lon,
+        'radius': radius,
+    });
+
+    return fetch(url)
+        .then(res => res.json());
+};
+
+export const getCouriersByBoxField = (topLeftLat, topLeftLon, bottomRightLat, bottomRightLon) => {
+    let url = new URL('couriers', API_URL);
+    url.search = new URLSearchParams({
+        'top_left_lat': topLeftLat,
+        'top_left_lon': topLeftLon,
+        'bottom_right_lat': bottomRightLat,
+        'bottom_right_lon': bottomRightLon,
+    });
+
+    return fetch(url)
+        .then(res => res.json());
+};

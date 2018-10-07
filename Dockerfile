@@ -1,11 +1,14 @@
 FROM node:10.11 as build
 
-ENV NODE_ENV=production
+ENV NODE_ENV production
 RUN yarn global add parcel-bundler
 
 WORKDIR /root
-COPY . .
-RUN yarn install
+COPY ./src ./src
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install --non-interactive --frozen-lockfile
 RUN parcel build src/index.html --no-source-maps
 
 
@@ -19,4 +22,5 @@ COPY --from=build /root/dist /var/www
 COPY Caddyfile /etc/Caddyfile
 
 EXPOSE 80 443 2015
-ENTRYPOINT ["/usr/bin/caddy", "--conf", "/etc/Caddyfile", "--log", "stdout"]
+ENTRYPOINT ["/usr/bin/caddy"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout"]
