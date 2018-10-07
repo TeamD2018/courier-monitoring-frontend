@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-export default class Sidebar extends Component {
-
+class Sidebar extends Component {
     render() {
         const StyledDiv = styled.div`
             overflow: scroll;
@@ -19,3 +18,5 @@ export default class Sidebar extends Component {
         return <StyledDiv>{this.props.children}</StyledDiv>;
     }
 }
+
+export default Sidebar;
