@@ -8,6 +8,7 @@ class Markers extends Component {
         super(props);
 
         this.onClick = this.onClick.bind(this);
+        this.renderMarker = this.renderMarker.bind(this);
     }
 
     onClick(event, object) {
@@ -16,20 +17,23 @@ class Markers extends Component {
         alert(info);
     }
 
-    render() {
-        return this.props.couriers.map(courier => {
-            const position = {
-                lat: courier.location.point.lat,
-                lng: courier.location.point.lon,
-            };
 
-            return (
-                <Marker
-                    position={ position }
-                    onClick={ e => this.onClick(e, courier) }
-                />
-            );
-        });
+    renderMarker(courier) {
+        const position = {
+            lat: courier.location.point.lat,
+            lng: courier.location.point.lon,
+        };
+
+        return (
+            <Marker
+                position={ position }
+                onClick={ e => this.onClick(e, courier) }
+            />
+        );
+    }
+
+    render() {
+        return this.props.couriers.map(this.renderMarker);
     }
 }
 
