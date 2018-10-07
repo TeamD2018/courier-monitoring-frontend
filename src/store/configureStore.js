@@ -9,7 +9,9 @@ const configureStore = () => {
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
+      /* eslint-disable global-require */
       const nextRootReducer = require('../reducers/index');
+      /* eslint-enable global-require */
       store.replaceReducer(nextRootReducer);
     });
   }
