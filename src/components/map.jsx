@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Spinner } from '@blueprintjs/core';
-import { withGoogleMap, GoogleMap, withScriptjs } from 'react-google-maps';
+import {
+  withGoogleMap, GoogleMap, withScriptjs,
+} from 'react-google-maps';
 import styled from 'styled-components';
 
 import Markers from '../containers/markers';
@@ -11,98 +13,100 @@ const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
 
 const MAP_OPTIONS = {
-    fullscreenControl: false,
-    mapTypeControl: false,
-    panControl: false,
-    streetViewControl: false,
+  fullscreenControl: false,
+  mapTypeControl: false,
+  panControl: false,
+  streetViewControl: false,
 };
 
 class Map extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.onMove = this.onMove.bind(this);
-        this.refreshMarkers = this.refreshMarkers.bind(this);
+    this.onMove = this.onMove.bind(this);
+    this.refreshMarkers = this.refreshMarkers.bind(this);
 
-        this.mapRef = React.createRef();
-    }
+    this.mapRef = React.createRef();
+  }
 
-    componentDidMount() {
-        this.timer = setInterval(this.refreshMarkers, TIMEOUT);
-    }
+  componentDidMount() {
+    this.timer = setInterval(this.refreshMarkers, TIMEOUT);
+  }
 
-    componentWillUnmount() {
-        clearInterval(this.timer);
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return false;
-    }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
-    onMove() {
-        this.refreshMarkers();
-        const getCenter = this.mapRef.current.getCenter();
-        const lat = getCenter.lat();
+  onMove() {
+    this.refreshMarkers();
+    const getCenter = this.mapRef.current.getCenter();
 
-        const lng = getCenter.lng();
-        this.props.changeCenter({lat, lng});
-    }
+    const lat = getCenter.lat();
+    const lng = getCenter.lng();
+    const { changeCenter } = this.props;
+    changeCenter({ lat, lng });
+  }
 
-    refreshMarkers() {
-        console.log("Markers refreshing...");
+  refreshMarkers() {
+    console.log('Markers refreshing...');
 
-        const bounds = this.mapRef.current.getBounds();
+    const bounds = this.mapRef.current.getBounds();
 
-        const lat = bounds.f;
-        const lon = bounds.b;
+    const lat = bounds.f;
+    const lon = bounds.b;
 
-        const topLeftLat = lat.f;
-        const topLeftLon = lon.b;
+    const topLeftLat = lat.f;
+    const topLeftLon = lon.b;
 
-        const bottomRightLat = lat.b;
-        const bottomRightLon = lon.f;
+    const bottomRightLat = lat.b;
+    const bottomRightLon = lon.f;
 
-        this.props.requestCouriersByBoxField({
-            topLeftLat,
-            topLeftLon,
-            bottomRightLat,
-            bottomRightLon
-        });
-    };
-
-
-    render() {
-        const GoogleMapWrapper = withScriptjs(withGoogleMap(props => (
-            <GoogleMap
-                defaultCenter={ MOSCOW }
-                defaultZoom={ DEFAULT_ZOOM }
-                ref={ this.mapRef }
-                defaultOptions={ MAP_OPTIONS }
-                onIdle={ this.onMove }
-            >
-                <Markers />
-            </GoogleMap>
-        )));
-
-        const StyledSpinner = styled(Spinner)`
-            height: 100%;
-            width: 100%;
-            
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        `;
+    const { requestCouriersByBoxField } = this.props;
+    requestCouriersByBoxField({
+      topLeftLat,
+      topLeftLon,
+      bottomRightLat,
+      bottomRightLon,
+    });
+  }
 
 
-        return (
-            <GoogleMapWrapper
-                googleMapURL={ GOOGLE_API_URL }
-                loadingElement={ <StyledSpinner size={ 200 } intent={ 'primary' } /> }
-                containerElement={ <div /> }
-                mapElement={ <div style={{ height: '100%' }} /> }
-            />
-        );
-    }
+  render() {
+    const GoogleMapWrapper = withScriptjs(withGoogleMap(props => (
+      <GoogleMap
+        defaultCenter={MOSCOW}
+        defaultZoom={DEFAULT_ZOOM}
+        ref={this.mapRef}
+        defaultOptions={MAP_OPTIONS}
+        onIdle={this.onMove}
+      >
+        <Markers />
+      </GoogleMap>
+    )));
+
+    const StyledSpinner = styled(Spinner)`
+        height: 100%;
+        width: 100%;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+
+    return (
+      <GoogleMapWrapper
+        googleMapURL={GOOGLE_API_URL}
+        loadingElement={<StyledSpinner size={200} intent="primary" />}
+        containerElement={<div />}
+        mapElement={<div style={{ height: '100%' }} />}
+      />
+    );
+  }
 }
 
 export default Map;

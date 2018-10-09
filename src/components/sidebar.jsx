@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 class Sidebar extends Component {
   render() {
@@ -15,8 +16,17 @@ class Sidebar extends Component {
             margin: 10px;
         `;
 
-        return <StyledDiv>{this.props.children}</StyledDiv>;
-    }
+    const { children } = this.props;
+    return <StyledDiv>{children}</StyledDiv>;
+  }
 }
+
+Sidebar.propTypes = {
+  children: PropTypes.node,
+};
+
+Sidebar.defaultProps = {
+  children: [],
+};
 
 export default Sidebar;

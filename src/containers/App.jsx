@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { HTMLTable, Card } from '@blueprintjs/core';
+import { Card } from '@blueprintjs/core';
 import styled from 'styled-components';
-import Map from '../components/map.jsx';
+import Map from '../components/map';
 
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
@@ -13,11 +13,12 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.boundActionCreators = bindActionCreators(actions, this.props.dispatch);
+    const { dispatch } = this.props;
+    this.boundActionCreators = bindActionCreators(actions, dispatch);
   }
 
 
-  onRowClick(event, row) {
+  static onRowClick(event, row) {
     const info = `Name: ${row.Name}\nPhone: ${row.Phone}`;
 
     alert(info);
@@ -29,18 +30,17 @@ class App extends Component {
             padding: 0;
         `;
 
-    const StyledHTMLTable = styled(HTMLTable)`
-            width: 100%;
-        `;
+    const { couriers, highlightedRowId } = this.props;
 
     const headers = ['Name', 'Phone', 'Last seen'];
-    const rows = this.props.couriers.map((courier) => {
+    const rows = couriers.map((courier) => {
       const d = new Date(courier.last_seen * 1000);
 
       return {
         Name: courier.name,
         Phone: `+${courier.phone}`,
         'Last seen': d.toLocaleString(),
+        id: courier.id,
       };
     });
 
@@ -48,13 +48,17 @@ class App extends Component {
       <div>
         <Map {...this.boundActionCreators} />
         <Sidebar>
-          {rows.length > 0
-                        && (
-                        <StyledCard>
-                          <Table headers={headers} rows={rows} onRowClick={this.onRowClick} />
-                        </StyledCard>
-                        )
-                    }
+          {rows.length > 0 && (
+            <StyledCard>
+              <Table
+                headers={headers}
+                rows={rows}
+                onRowClick={App.onRowClick}
+                rowId={row => row.id}
+                highlightedRowId={highlightedRowId}
+              />
+            </StyledCard>
+          )}
         </Sidebar>
       </div>
     );
@@ -64,6 +68,7 @@ class App extends Component {
 const mapStateToProps = state => ({
   couriers: state.couriers,
   center: state.center,
+  highlightedRowId: state.highlightedRowId,
 });
 
 export default connect(mapStateToProps)(App);

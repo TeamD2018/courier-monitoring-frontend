@@ -2,6 +2,7 @@ import * as actions from '../actions';
 
 const initialState = {
   couriers: [],
+  highlightedCourierId: '',
   center: { lat: 55.751244, lng: 37.618423 },
 };
 
@@ -18,6 +19,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         center: action.newCenter,
+      };
+    }
+
+    case actions.HIGHLIGHT_COURIER: {
+      return {
+        ...state,
+        highlightedCourierId: action.highlightedCourierId,
       };
     }
 
