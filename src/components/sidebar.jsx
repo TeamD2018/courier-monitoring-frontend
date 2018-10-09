@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 class Sidebar extends Component {
-    render() {
-        const StyledDiv = styled.div`
-            overflow: scroll;
+  render() {
+    const StyledDiv = styled.div`
+            overflow: hidden;
             position: fixed;
             z-index: 0;
             top: 0;
