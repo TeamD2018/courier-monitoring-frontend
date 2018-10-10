@@ -11,6 +11,7 @@ class Sidebar extends Component {
             top: 0;
             left: 0;
             width: 25rem;
+            height: 100vh;
             
             padding: 10px;
             margin: 10px;
