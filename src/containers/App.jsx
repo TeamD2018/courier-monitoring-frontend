@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
 import styled from 'styled-components';
-import Map from '../components/map';
+import CourierMap from '../components/couriersMap';
 
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
@@ -48,14 +48,14 @@ class App extends Component {
 
     return (
       <div>
-        <Map {...this.boundActionCreators} />
+        <CourierMap couriers={couriers} {...this.boundActionCreators} />
         <Sidebar>
           {rows.length > 0 && (
             <StyledCard>
               <Table
                 headers={headers}
                 rows={rows}
-                onRowClick={App.onRowClick}
+                // onRowClick={App.onRowClick}
                 rowId={row => row.id}
                 highlightedRowId={highlightedRowId}
               />
