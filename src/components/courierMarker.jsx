@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Intent, Popover } from '@blueprintjs/core';
+import { Icon, Intent, Popover, PopoverInteractionKind } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ class CourierMarker extends Component {
     `;
 
     return (
-      <Popover>
+      <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
         <StyledIcon icon={IconNames.MAP_MARKER} intent={Intent.DANGER} iconSize={32} />
         <StyledDiv>
           <div className="bp3-text-large">{name}</div>
