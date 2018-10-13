@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Icon, Intent, Popover, PopoverInteractionKind } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-class CourierMarker extends Component {
+const StyledDiv = styled.div`
+  padding: 1rem;
+`;
+
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+`;
+
+class CourierMarker extends PureComponent {
   render() {
     const { phone, name } = this.props;
-
-    const StyledDiv = styled.div`
-      padding: 1rem;
-    `;
-
-    const StyledIcon = styled(Icon)`
-      cursor: pointer;
-    `;
 
     return (
       <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
