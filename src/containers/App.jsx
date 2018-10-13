@@ -9,6 +9,13 @@ import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 
+const StyledCard = styled(Card)`
+  margin: 0;
+  padding: 0;
+  max-height: 100%;
+  overflow: auto;
+`;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -24,14 +31,11 @@ class App extends Component {
     alert(info);
   }
 
-  render() {
-    const StyledCard = styled(Card)`
-            margin: 0;
-            padding: 0;
-            max-height: 100%;
-            overflow: auto;
-        `;
+  static extractRowID(row) {
+    return row.id;
+  }
 
+  render() {
     const { couriers, highlightedRowId } = this.props;
 
     const headers = ['Name', 'Phone', 'Last seen'];
@@ -56,7 +60,7 @@ class App extends Component {
                 headers={headers}
                 rows={rows}
                 // onRowClick={App.onRowClick}
-                rowId={row => row.id}
+                rowId={App.extractRowID}
                 highlightedRowId={highlightedRowId}
               />
             </StyledCard>

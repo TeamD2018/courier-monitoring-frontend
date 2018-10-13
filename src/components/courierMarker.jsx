@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
-import { Icon, Intent, Popover, PopoverInteractionKind } from '@blueprintjs/core';
+import {
+  Icon, Intent, Popover, PopoverInteractionKind,
+} from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 
 import styled from 'styled-components';

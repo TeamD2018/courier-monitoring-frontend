@@ -39,8 +39,8 @@ class CouriersMap extends Component {
     this.refreshMarkers();
 
     const { lat, lng } = center;
-    const { changeCenter } = this.props;
-    changeCenter({ lat, lng });
+    // const { changeCenter } = this.props;
+    // changeCenter({ lat, lng });
   }
 
   refreshMarkers() {
@@ -61,30 +61,31 @@ class CouriersMap extends Component {
     });
   }
 
+  static renderCourierMarker(courier) {
+    return (
+      <CourierMarker
+        key={courier.id}
+        lat={courier.location.point.lat}
+        lng={courier.location.point.lon}
+        name={courier.name}
+        phone={`+${courier.phone}`}
+      />
+    );
+  }
 
   render() {
     const { couriers } = this.props;
 
     return (
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: KEY }}
-          defaultCenter={MOSCOW}
-          defaultZoom={DEFAULT_ZOOM}
-          onChange={this.onMove}
-          options={CouriersMap.createOptions}
-        >
-          {couriers.map(courier => (
-            <CourierMarker
-              key={courier.id}
-              lat={courier.location.point.lat}
-              lng={courier.location.point.lon}
-              name={courier.name}
-              phone={`+${courier.phone}`}
-            />
-          ))}
-        </GoogleMapReact>
-      </div>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: KEY }}
+        defaultCenter={MOSCOW}
+        defaultZoom={DEFAULT_ZOOM}
+        onChange={this.onMove}
+        options={CouriersMap.createOptions}
+      >
+        {couriers.map(CouriersMap.renderCourierMarker)}
+      </GoogleMapReact>
     );
   }
 }

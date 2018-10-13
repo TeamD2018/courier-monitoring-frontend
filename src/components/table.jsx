@@ -1,9 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { HTMLTable } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
-class Table extends Component {
+const StyledHTMLTable = styled(HTMLTable)`
+  width: 100%;
+`;
+
+const HighlightedTR = styled.tr`
+  font-weight: bold;
+`;
+
+class Table extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -18,28 +26,25 @@ class Table extends Component {
     const renderedHeaders = headers.map(header => <td key={header}>{ row[header] }</td>);
 
     if (rowId(row) === highlightedRowId) {
-      const HighlightedTR = styled.tr`
-        font-weight: bold,
-      `;
-
       return (
         <HighlightedTR key={rowId(row)} id={rowId(row)} onClick={e => onRowClick(e, row)}>
-          { renderedHeaders}
+          { renderedHeaders }
         </HighlightedTR>
       );
     }
 
     return (
-      <tr key={rowId(row)} id={rowId(row)} onClick={e => onRowClick(e, row)}>{ renderedHeaders}</tr>
+      <tr
+        key={rowId(row)}
+        id={rowId(row)}
+        onClick={e => onRowClick(e, row)}
+      >
+        { renderedHeaders}
+      </tr>
     );
   }
 
   render() {
-    const StyledHTMLTable = styled(HTMLTable)`
-        width: 100%;
-    `;
-
-
     const { headers, rows } = this.props;
     return (
       <StyledHTMLTable interactive>
