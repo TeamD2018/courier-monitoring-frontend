@@ -9,7 +9,7 @@ COPY package.json .
 COPY yarn.lock .
 
 RUN yarn install --non-interactive --frozen-lockfile
-RUN parcel build src/index.html --no-source-maps
+RUN parcel build src/index.html --no-source-maps --experimental-scope-hoisting
 
 
 RUN curl https://getcaddy.com | bash -s personal

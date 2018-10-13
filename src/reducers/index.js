@@ -6,7 +6,7 @@ const initialState = {
   center: { lat: 55.751244, lng: 37.618423 },
 };
 
-const reducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.RECEIVE_COURIERS: {
       return {
@@ -35,4 +35,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default rootReducer;
