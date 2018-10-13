@@ -9,17 +9,13 @@ const StyledDiv = styled.div`
   padding: 1rem;
 `;
 
-const StyledIcon = styled(Icon)`
-  cursor: pointer;
-`;
-
 class CourierMarker extends PureComponent {
   render() {
     const { phone, name } = this.props;
 
     return (
       <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
-        <StyledIcon icon={IconNames.MAP_MARKER} intent={Intent.DANGER} iconSize={32} />
+        <Icon icon={IconNames.MAP_MARKER} intent={Intent.DANGER} iconSize={32} />
         <StyledDiv>
           <div className="bp3-text-large">{name}</div>
           { phone && <div className="bp3-text-muted">{phone}</div> }
