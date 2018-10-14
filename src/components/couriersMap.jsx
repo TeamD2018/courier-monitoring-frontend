@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import CourierMarker from './courierMarker';
 
 const MOSCOW = { lat: 55.751244, lng: 37.618423 };
-const KEY = 'AIzaSyCsvYa45nNh7NNLE_PUix8SOI73_HlcTX8';
+const KEY = process.env.API_KEY;
 const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
 
