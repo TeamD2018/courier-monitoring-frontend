@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
+import PropTypes from 'prop-types';
 import CourierMarker from './courierMarker';
 
 const MOSCOW = { lat: 55.751244, lng: 37.618423 };
@@ -21,7 +22,6 @@ class CouriersMap extends Component {
 
   constructor(props) {
     super(props);
-
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
   }
@@ -38,7 +38,7 @@ class CouriersMap extends Component {
     this.bounds = bounds;
     this.refreshMarkers();
 
-    const { lat, lng } = center;
+    // const { lat, lng } = center;
     // const { changeCenter } = this.props;
     // changeCenter({ lat, lng });
   }
@@ -89,5 +89,23 @@ class CouriersMap extends Component {
     );
   }
 }
+
+CouriersMap.propTypes = {
+  couriers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    phone: PropTypes.string,
+    location: PropTypes.shape({
+      lat: PropTypes.number,
+      lng: PropTypes.number,
+    }),
+    lastSeen: PropTypes.string,
+  })),
+  requestCouriersByBoxField: PropTypes.func.isRequired
+};
+
+CouriersMap.defaultProps = {
+  couriers: [],
+};
 
 export default CouriersMap;
