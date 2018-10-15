@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
@@ -40,8 +40,8 @@ class App extends Component {
     });
 
     return (
-      <div>
-        <CourierMap couriers={couriers} {...this.boundActionCreators} />
+      <Fragment>
+        <CouriersMap couriers={couriers} {...this.boundActionCreators} />
         <Sidebar>
           {rows.length > 0 && (
             <StyledCard>
@@ -51,7 +51,7 @@ class App extends Component {
             </StyledCard>
           )}
         </Sidebar>
-      </div>
+      </Fragment>
     );
   }
 }
