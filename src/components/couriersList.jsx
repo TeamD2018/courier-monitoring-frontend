@@ -12,6 +12,7 @@ const Body = styled.div`
 const Row = styled.div`
   width: 100%;
   padding: 0.8rem;
+  cursor: pointer;
   
   &:nth-of-type(odd) {
     background: rgba(191, 204, 214, 0.15);
