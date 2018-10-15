@@ -8,11 +8,10 @@ const StyledDiv = styled.div`
   z-index: 0;
   top: 0;
   left: 0;
-  width: 25rem;
+  width: 20rem;
   height: 100vh;
   
-  padding: 0.5rem;
-  margin: 0.5rem;
+  padding: 1rem;
 `;
 
 class Sidebar extends PureComponent {

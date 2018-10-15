@@ -7,7 +7,7 @@ import CourierMap from '../components/couriersMap';
 
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
-import Table from '../components/table';
+import CouriersList from '../components/couriersList';
 
 const StyledCard = styled(Card)`
   margin: 0;
@@ -24,29 +24,18 @@ class App extends Component {
     this.boundActionCreators = bindActionCreators(actions, dispatch);
   }
 
-
-  static onRowClick(event, row) {
-    const info = `Name: ${row.Name}\nPhone: ${row.Phone}`;
-
-    alert(info);
-  }
-
-  static extractRowID(row) {
-    return row.id;
-  }
-
   render() {
-    const { couriers, highlightedRowId } = this.props;
+    const { couriers } = this.props;
 
-    const headers = ['Name', 'Phone', 'Last seen'];
     const rows = couriers.map((courier) => {
       const d = new Date(courier.last_seen * 1000);
 
       return {
-        Name: courier.name,
-        Phone: `+${courier.phone}`,
-        'Last seen': d.toLocaleString(),
+        name: courier.name,
+        phone: `+${courier.phone}`,
+        lastSeen: d.toLocaleString(),
         id: courier.id,
+        location: courier.location,
       };
     });
 
@@ -56,12 +45,8 @@ class App extends Component {
         <Sidebar>
           {rows.length > 0 && (
             <StyledCard>
-              <Table
-                headers={headers}
-                rows={rows}
-                // onRowClick={App.onRowClick}
-                rowId={App.extractRowID}
-                highlightedRowId={highlightedRowId}
+              <CouriersList
+                couriers={rows}
               />
             </StyledCard>
           )}
