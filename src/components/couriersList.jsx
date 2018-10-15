@@ -48,12 +48,6 @@ const LastSeen = styled.div`
 `;
 
 class CouriersList extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.renderRow = this.renderRow.bind(this);
-  }
-
   static renderRow(courier) {
     return (
       <Row
