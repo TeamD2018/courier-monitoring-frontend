@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Card } from '@blueprintjs/core';
 import styled from 'styled-components';
-import CourierMap from '../components/couriersMap';
+import CouriersMap from '../components/couriersMap';
 
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
