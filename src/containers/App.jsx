@@ -10,7 +10,6 @@ import Sidebar from '../components/sidebar';
 import CouriersList from '../components/couriersList';
 
 const StyledCard = styled(Card)`
-  margin: 0;
   padding: 0;
   max-height: 100%;
   overflow: auto;

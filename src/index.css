@@ -2,6 +2,10 @@
 @import '@blueprintjs/core/lib/css/blueprint.css';
 
 html, body, root {
+  top: 0;
+  left: 0;
+  position: absolute;
+  overflow: hidden;
   width: 100%;
   height: 100%;
 }
