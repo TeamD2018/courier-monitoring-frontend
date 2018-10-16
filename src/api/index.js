@@ -42,3 +42,14 @@ export const getCouriersByBoxField = (topLeftLat, topLeftLon, bottomRightLat, bo
   return fetch(url)
     .then(res => res.json());
 };
+
+export const getSuggestions = (prefix, limit) => {
+  const url = new URL('suggestions/couriers', API_URL);
+  url.search = new URLSearchParams({
+    prefix,
+    limit,
+  });
+
+  return fetch(url)
+    .then(res => res.json());
+};
