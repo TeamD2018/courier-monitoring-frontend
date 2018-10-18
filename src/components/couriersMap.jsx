@@ -43,8 +43,6 @@ class CouriersMap extends Component {
   }
 
   refreshMarkers() {
-    console.log('Markers refreshing...');
-
     const topLeftLat = this.bounds.nw.lat;
     const topLeftLon = this.bounds.nw.lng;
 
