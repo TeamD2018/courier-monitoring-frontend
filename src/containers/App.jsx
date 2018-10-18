@@ -14,6 +14,7 @@ const StyledCard = styled(Card)`
   max-height: 100%;
   overflow: auto;
 `;
+import SearchBar from '../components/searchBar';
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class App extends Component {
         <Sidebar>
           {rows.length > 0 && (
             <StyledCard>
+          <SearchBar {...this.boundActionCreators} />
               <CouriersList
                 couriers={rows}
               />
