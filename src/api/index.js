@@ -1,4 +1,4 @@
-const API_URL = 'http://dc.utkin.xyz:8081/';
+const { API_URL } = process.env;
 
 export const getCourierById = (courierId) => {
   const url = new URL(`courier/${courierId}`, API_URL);

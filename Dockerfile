@@ -1,6 +1,7 @@
 FROM node:10.11 as build
 
 ARG API_KEY
+ARG API_URL
 
 ENV NODE_ENV production
 RUN yarn global add parcel-bundler
