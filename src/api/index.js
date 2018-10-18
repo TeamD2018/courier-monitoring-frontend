@@ -18,6 +18,13 @@ export const getCourierOrders = (courierId, since, asc) => {
     .then(res => res.json());
 };
 
+export const getOrder = (courierId, orderId) => {
+  const url = new URL(`courier/${courierId}/orders${orderId}`, API_URL);
+
+  return fetch(url)
+    .then(res => res.json());
+};
+
 export const getCouriersByCircleField = (lat, lon, radius) => {
   const url = new URL('couriers', API_URL);
   url.search = new URLSearchParams({
