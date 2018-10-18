@@ -1,19 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Card } from '@blueprintjs/core';
-import styled from 'styled-components';
 import CouriersMap from '../components/couriersMap';
 
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
 import CouriersList from '../components/couriersList';
-
-const StyledCard = styled(Card)`
-  padding: 0;
-  max-height: 100%;
-  overflow: auto;
-`;
 import SearchBar from '../components/searchBar';
 
 class App extends Component {
@@ -50,12 +42,10 @@ class App extends Component {
         />
         <Sidebar>
           {rows.length > 0 && (
-            <StyledCard>
           <SearchBar {...this.boundActionCreators} />
               <CouriersList
                 couriers={rows}
               />
-            </StyledCard>
           )}
         </Sidebar>
       </Fragment>
