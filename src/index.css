@@ -1,10 +1,14 @@
 @import 'normalize.css';
 @import '@blueprintjs/core/lib/css/blueprint.css';
 
+*:focus {
+  outline: none;
+}
+
 html, body, root {
   top: 0;
   left: 0;
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   width: 100%;
   height: 100%;
