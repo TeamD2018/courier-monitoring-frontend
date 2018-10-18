@@ -23,8 +23,6 @@ class App extends Component {
     this.boundActionCreators = bindActionCreators(actions, dispatch);
   }
 
-  render() {
-    const { couriers } = this.props;
 
     const rows = couriers.map((courier) => {
       const d = new Date(courier.last_seen * 1000);
@@ -37,10 +35,18 @@ class App extends Component {
         location: courier.location,
       };
     });
+  render() {
+    const {
+      couriers, center,
+    } = this.props;
 
     return (
       <Fragment>
-        <CouriersMap couriers={couriers} {...this.boundActionCreators} />
+        <CouriersMap
+          couriers={couriers}
+          center={center}
+          {...this.boundActionCreators}
+        />
         <Sidebar>
           {rows.length > 0 && (
             <StyledCard>

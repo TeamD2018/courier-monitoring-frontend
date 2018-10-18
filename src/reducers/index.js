@@ -1,9 +1,12 @@
 import * as actions from '../actions';
 
+const MOCKBA = { lat: 55.751244, lng: 37.618423 };
+
 const initialState = {
   couriers: [],
   highlightedCourierId: '',
   center: { lat: 55.751244, lng: 37.618423 },
+  center: MOCKBA,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -14,14 +17,6 @@ const rootReducer = (state = initialState, action) => {
         couriers: action.couriers,
       };
     }
-
-    case actions.CHANGE_CENTER: {
-      return {
-        ...state,
-        center: action.newCenter,
-      };
-    }
-
     case actions.HIGHLIGHT_COURIER: {
       return {
         ...state,
@@ -32,6 +27,12 @@ const rootReducer = (state = initialState, action) => {
     default: {
       return state;
     }
+
+    case actions.PAN: return {
+      ...state,
+      center: action.location,
+    };
+
   }
 };
 

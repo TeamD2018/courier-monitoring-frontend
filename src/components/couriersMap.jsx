@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import CourierMarker from './courierMarker';
 
-const MOSCOW = { lat: 55.751244, lng: 37.618423 };
+const MOCKBA = { lat: 55.751244, lng: 37.618423 };
 const KEY = process.env.API_KEY;
 const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
@@ -35,12 +35,11 @@ class CouriersMap extends Component {
   }
 
   onMove({ center, bounds }) {
+    const { pan } = this.props;
+    pan(center);
+
     this.bounds = bounds;
     this.refreshMarkers();
-
-    // const { lat, lng } = center;
-    // const { changeCenter } = this.props;
-    // changeCenter({ lat, lng });
   }
 
   refreshMarkers() {
@@ -74,12 +73,13 @@ class CouriersMap extends Component {
   }
 
   render() {
-    const { couriers } = this.props;
+    const { couriers, center } = this.props;
 
     return (
       <GoogleMapReact
         bootstrapURLKeys={{ key: KEY }}
-        defaultCenter={MOSCOW}
+        defaultCenter={MOCKBA}
+        center={center}
         defaultZoom={DEFAULT_ZOOM}
         onChange={this.onMove}
         options={CouriersMap.createOptions}
@@ -101,7 +101,12 @@ CouriersMap.propTypes = {
     }),
     lastSeen: PropTypes.string,
   })),
-  requestCouriersByBoxField: PropTypes.func.isRequired
+  requestCouriersByBoxField: PropTypes.func.isRequired,
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }).isRequired,
+  pan: PropTypes.func.isRequired,
 };
 
 CouriersMap.defaultProps = {
