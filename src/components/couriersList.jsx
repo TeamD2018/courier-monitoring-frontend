@@ -1,12 +1,16 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { H5 } from '@blueprintjs/core';
+import {
+  Button, Card, Collapse, H5,
+} from '@blueprintjs/core';
 
 const Body = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  
+  -webkit-overflow-scrolling: touch;
 `;
 
 const Row = styled.div`
@@ -27,8 +31,13 @@ const Row = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled(H5)`
+  display: block;
   width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
 `;
 
 const Info = styled.div`
@@ -48,29 +57,83 @@ const LastSeen = styled.div`
   text-align: right;
 `;
 
+const StyledCard = styled(Card)`
+  padding: 0;
+  margin: 0.5rem;
+  max-height: 100%;
+  overflow: auto;
+`;
+
+const StyledButton = styled(Button)`
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 1) none !important;
+  z-index: 100;
+`;
+
 class CouriersList extends PureComponent {
-  static renderRow(courier) {
+  constructor(props) {
+    super(props);
+
+    this.toggleList = this.toggleList.bind(this);
+    this.renderRow = this.renderRow.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
+  }
+
+  onRowClick(courier) {
+    const { pan } = this.props;
+
+    pan({
+      lat: courier.location.point.lat,
+      lng: courier.location.point.lon,
+    });
+  }
+
+  toggleList() {
+    const { isOpen, showCouriersList, hideCouriersList } = this.props;
+
+    if (isOpen) {
+      hideCouriersList();
+    } else {
+      showCouriersList();
+    }
+  }
+
+  renderRow(courier) {
     return (
       <Row
         key={courier.id}
-        id={courier.id}
+        onClick={() => this.onRowClick(courier)}
       >
-        <Title><H5>{ courier.name }</H5></Title>
+        <Title>{ courier.name }</Title>
         <Info>
-          <Phone>{ courier.phone }</Phone>
-          <LastSeen>{ courier.lastSeen }</LastSeen>
+          <Phone>{ `+${courier.phone}` }</Phone>
+          <LastSeen>{ new Date(courier.last_seen * 1000).toLocaleString() }</LastSeen>
         </Info>
       </Row>
     );
   }
 
   render() {
-    const { couriers } = this.props;
+    const { couriers, isOpen } = this.props;
 
     return (
-      <Body>
-        { couriers.map(CouriersList.renderRow) }
-      </Body>
+      <StyledCard>
+        <StyledButton
+          icon={isOpen ? 'caret-up' : 'caret-down'}
+          fill
+          large
+          minimal
+          onClick={this.toggleList}
+        >
+          Couriers list
+        </StyledButton>
+        <Collapse isOpen={isOpen}>
+          <Body>
+            { couriers.map(this.renderRow) }
+          </Body>
+        </Collapse>
+      </StyledCard>
     );
   }
 }
@@ -86,10 +149,15 @@ CouriersList.propTypes = {
     }),
     lastSeen: PropTypes.string,
   })),
+  isOpen: PropTypes.bool,
+  showCouriersList: PropTypes.func.isRequired,
+  hideCouriersList: PropTypes.func.isRequired,
+  pan: PropTypes.func.isRequired,
 };
 
 CouriersList.defaultProps = {
   couriers: [],
+  isOpen: false,
 };
 
 export default CouriersList;

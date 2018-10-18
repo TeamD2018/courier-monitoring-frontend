@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CouriersMap from '../components/couriersMap';
 
+import CouriersMap from '../components/couriersMap';
 import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
 import CouriersList from '../components/couriersList';
@@ -16,21 +16,9 @@ class App extends Component {
     this.boundActionCreators = bindActionCreators(actions, dispatch);
   }
 
-
-    const rows = couriers.map((courier) => {
-      const d = new Date(courier.last_seen * 1000);
-
-      return {
-        name: courier.name,
-        phone: `+${courier.phone}`,
-        lastSeen: d.toLocaleString(),
-        id: courier.id,
-        location: courier.location,
-      };
-    });
   render() {
     const {
-      couriers, center,
+      couriers, center, isCouriersListOpen,
     } = this.props;
 
     return (
@@ -41,12 +29,16 @@ class App extends Component {
           {...this.boundActionCreators}
         />
         <Sidebar>
-          {rows.length > 0 && (
           <SearchBar {...this.boundActionCreators} />
+          {
+            couriers.length > 0 && (
               <CouriersList
-                couriers={rows}
+                isOpen={isCouriersListOpen}
+                couriers={couriers}
+                {...this.boundActionCreators}
               />
-          )}
+            )
+          }
         </Sidebar>
       </Fragment>
     );
@@ -57,6 +49,7 @@ const mapStateToProps = state => ({
   couriers: state.couriers,
   center: state.center,
   highlightedRowId: state.highlightedRowId,
+  isCouriersListOpen: state.isCouriersListOpen,
 });
 
 export default connect(mapStateToProps)(App);
