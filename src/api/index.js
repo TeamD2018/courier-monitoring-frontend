@@ -30,7 +30,9 @@ export const getCouriersByCircleField = (lat, lon, radius) => {
     .then(res => res.json());
 };
 
-export const getCouriersByBoxField = (topLeftLat, topLeftLon, bottomRightLat, bottomRightLon) => {
+export const getCouriersByBoxField = ({
+  topLeftLat, topLeftLon, bottomRightLat, bottomRightLon,
+}) => {
   const url = new URL('couriers', API_URL);
   url.search = new URLSearchParams({
     top_left_lat: topLeftLat,

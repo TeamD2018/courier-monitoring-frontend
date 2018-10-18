@@ -1,24 +1,20 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import * as actions from '../actions';
-import * as Api from '../api';
+import { getCouriersByBoxField } from '../api';
+import { receiveCouriers, receiverCouriersFailed, REQUEST_COURIERS_BY_BOX_FIELD } from '../actions';
 
 function* couriersFetch(action) {
   try {
-    const {
-      topLeftLat, topLeftLon, bottomRightLat, bottomRightLon,
-    } = action.boxField;
-    const couriers = yield call(Api.getCouriersByBoxField,
-      topLeftLat, topLeftLon, bottomRightLat, bottomRightLon);
-    yield put({ type: actions.RECEIVE_COURIERS, couriers, center: action.center });
+    const couriers = yield call(getCouriersByBoxField, action.boxField);
+
+    yield put(receiveCouriers(couriers));
   } catch (e) {
-    yield put({ type: actions.RECEIVE_COURIERS_FAILED });
+    yield put(receiverCouriersFailed());
   }
 }
 
-
 function* rootSaga() {
-  yield takeLatest(actions.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch);
+  yield takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch);
 }
 
 export default rootSaga;
