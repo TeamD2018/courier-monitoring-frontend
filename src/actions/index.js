@@ -6,8 +6,6 @@ export const SHOW_COURIERS_LIST = 'SHOW_COURIERS_LIST';
 export const HIDE_COURIERS_LIST = 'HIDE_COURIERS_LIST';
 
 export const PAN = 'PAN';
-export const SHOW_ALL_COURIERS = 'SHOW_ALL_COURIERS';
-export const SHOW_COURIER_ORDER = 'SHOW_COURIER_ORDER';
 
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
@@ -34,13 +32,4 @@ export const hideCouriersList = () => ({
 export const pan = location => ({
   type: PAN,
   location,
-});
-
-export const showAllCouriers = () => ({
-  type: SHOW_ALL_COURIERS,
-});
-
-export const showCourierOrder = courierId => ({
-  type: SHOW_COURIER_ORDER,
-  courierId,
 });

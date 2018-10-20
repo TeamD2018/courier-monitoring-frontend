@@ -48,7 +48,6 @@ class App extends Component {
 const mapStateToProps = state => ({
   couriers: state.couriers,
   center: state.center,
-  highlightedRowId: state.highlightedRowId,
   isCouriersListOpen: state.isCouriersListOpen,
 });
 
