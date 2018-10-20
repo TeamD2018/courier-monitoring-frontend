@@ -27,7 +27,10 @@ class CouriersMap extends Component {
     super(props);
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
+
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
+
+    this.handleNativeEvents = this.handleNativeEvents.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +65,25 @@ class CouriersMap extends Component {
     });
   }
 
+
+  handleNativeEvents(google) {
+    const { activeCourier } = this.props;
+    if (!activeCourier.geoHistory) {
+      return;
+    }
+    const history = activeCourier.geoHistory.map(point => ({
+      lat: point.lat,
+      lng: point.lng,
+    }));
+    google.maps.Polyline({
+      path: history,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+    })
+      .setMap(google.map);
+  }
+
   renderCourierMarker(courier) {
     const { requestActiveCourier } = this.props;
     return (
@@ -88,6 +110,7 @@ class CouriersMap extends Component {
         defaultZoom={DEFAULT_ZOOM}
         onChange={this.onMove}
         options={CouriersMap.createOptions}
+        onGoogleApiLoaded={this.handleNativeEvents}
       >
         {couriers.map(this.renderCourierMarker)}
       </GoogleMapReact>
@@ -113,10 +136,18 @@ CouriersMap.propTypes = {
     lng: PropTypes.number,
   }).isRequired,
   pan: PropTypes.func.isRequired,
+  activeCourier: PropTypes.shape({
+    geoHistory: PropTypes.arrayOf(PropTypes.shape({
+      lat: PropTypes.number,
+      lon: PropTypes.number,
+    })),
+    courierId: PropTypes.string,
+  }),
 };
 
 CouriersMap.defaultProps = {
   couriers: [],
+  activeCourier: {},
 };
 
 export default CouriersMap;

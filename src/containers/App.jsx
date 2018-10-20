@@ -18,7 +18,7 @@ class App extends Component {
 
   render() {
     const {
-      couriers, center, isCouriersListOpen,
+      couriers, center, isCouriersListOpen, activeCourier,
     } = this.props;
 
     return (
@@ -26,6 +26,7 @@ class App extends Component {
         <CouriersMap
           couriers={couriers}
           center={center}
+          activeCourier={activeCourier}
           {...this.boundActionCreators}
         />
         <Sidebar>
@@ -47,6 +48,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   couriers: state.couriers,
+  activeCourier: state.activeCourier,
   center: state.center,
   isCouriersListOpen: state.isCouriersListOpen,
 });

@@ -1,5 +1,5 @@
 import {
-  call, put, takeLatest, all,
+  call, put, takeLatest, all, select,
 } from 'redux-saga/effects';
 
 import { getCourierById, getCouriersByBoxField, getGeoHistory } from '../api';
@@ -47,14 +47,24 @@ function* historyFetch(action) {
 
 function* fetchActiveCourier(action) {
   try {
+    let activeCourier = yield select(state => state.activeCourier);
+    if (!activeCourier) {
+      activeCourier = {};
+    }
+    const currentHistory = activeCourier.geoHistory || [];
+
+    const latest = (activeCourier.id === action.courierId) ? currentHistory[currentHistory.length - 1].timestamp : action.since;
+
     const [courier, history] = yield all([
       call(getCourierById, action.courierId),
-      call(getGeoHistory, action.courierId, action.since),
+      call(getGeoHistory, action.courierId, latest),
     ]);
+
+    const shouldUpdate = activeCourier.id === action.courierId;
 
     yield all([
       put(receiveActiveCourier(courier)),
-      put(receiveGeoHistory(history.geo_history)),
+      put(receiveGeoHistory(history.geo_history, shouldUpdate)),
     ]);
   } catch (e) {
     yield put(receiveActiveCourierFailed());

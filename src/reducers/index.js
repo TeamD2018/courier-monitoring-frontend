@@ -53,11 +53,29 @@ const rootReducer = (state = initialState, action) => {
       console.log('FAIL TO RECIEVE GEO HISTORY');
       return { ...state };
     }
+    case actions.RECEIVE_ACTIVE_COURIER: {
+      let current = state.activeCourier || {};
+      if (current.id && current.id !== action.activeCourier.id) {
+        current = {};
+      }
+      const activeCourier = { ...current, ...action.activeCourier };
+      console.log(activeCourier);
+      return {
+        ...state,
+        activeCourier,
+      };
+    }
     case actions.RECEIVE_GEO_HISTORY: {
-      const activeCourier = state.activeCourier || {};
-      const geoHistory = activeCourier.geoHistory || [];
-      geoHistory.concat(action.geoHistory);
-      activeCourier.geoHistory = geoHistory;
+      let { activeCourier } = state;
+      let { geoHistory } = action;
+      if (action.shouldUpdate) {
+        geoHistory = activeCourier.geoHistory.concat(geoHistory);
+      }
+      activeCourier = {
+        ...activeCourier,
+        geoHistory,
+      };
+      console.log(activeCourier)
       return {
         ...state,
         activeCourier,
