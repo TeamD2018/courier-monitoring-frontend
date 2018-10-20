@@ -1,6 +1,8 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  call, put, takeLatest, all,
+} from 'redux-saga/effects';
 
-import { getCouriersByBoxField, getGeoHistory } from '../api';
+import { getCourierById, getCouriersByBoxField, getGeoHistory } from '../api';
 import {
   receiveCouriers,
   receiverCouriersFailed,
@@ -8,8 +10,10 @@ import {
   receiveOrdersFailed,
   receiveGeoHistoryFailed,
   receiveGeoHistory,
+  receiveActiveCourierFailed,
+  receiveActiveCourier,
   REQUEST_COURIERS_BY_BOX_FIELD,
-  REQUEST_RECENT_ORDERS, REQUEST_GEO_HISTORY,
+  REQUEST_RECENT_ORDERS, REQUEST_GEO_HISTORY, REQUEST_ACTIVE_COURIER,
 } from '../actions';
 import { fetchRecentOrders } from '../services/index';
 
@@ -26,7 +30,6 @@ function* couriersFetch(action) {
 function* ordersFetch(action) {
   try {
     const orders = yield call(fetchRecentOrders, action.courierId, action.period);
-    console.log(orders);
     yield put(receiveOrders(orders));
   } catch (e) {
     yield put(receiveOrdersFailed());
@@ -36,10 +39,25 @@ function* ordersFetch(action) {
 function* historyFetch(action) {
   try {
     const history = yield call(getGeoHistory, action.courierId, action.since);
-    console.log(history);
     yield put(receiveGeoHistory(history));
   } catch (e) {
     yield put(receiveGeoHistoryFailed());
+  }
+}
+
+function* fetchActiveCourier(action) {
+  try {
+    const [courier, history] = yield all([
+      call(getCourierById, action.courierId),
+      call(getGeoHistory, action.courierId, action.since),
+    ]);
+
+    yield all([
+      put(receiveActiveCourier(courier)),
+      put(receiveGeoHistory(history.geo_history)),
+    ]);
+  } catch (e) {
+    yield put(receiveActiveCourierFailed());
   }
 }
 
@@ -47,6 +65,7 @@ function* rootSaga() {
   yield takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch);
   yield takeLatest(REQUEST_RECENT_ORDERS, ordersFetch);
   yield takeLatest(REQUEST_GEO_HISTORY, historyFetch);
+  yield takeLatest(REQUEST_ACTIVE_COURIER, fetchActiveCourier);
 }
 
 export default rootSaga;

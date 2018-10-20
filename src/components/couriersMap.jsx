@@ -4,7 +4,10 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import CourierMarker from './courierMarker';
 
-const MOCKBA = { lat: 55.751244, lng: 37.618423 };
+const MOCKBA = {
+  lat: 55.751244,
+  lng: 37.618423,
+};
 const KEY = process.env.API_KEY;
 const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
@@ -24,6 +27,7 @@ class CouriersMap extends Component {
     super(props);
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
+    this.renderCourierMarker = this.renderCourierMarker.bind(this);
   }
 
   componentDidMount() {
@@ -58,12 +62,15 @@ class CouriersMap extends Component {
     });
   }
 
-  static renderCourierMarker(courier) {
+  renderCourierMarker(courier) {
+    const { requestActiveCourier } = this.props;
     return (
       <CourierMarker
         key={courier.id}
+        courierId={courier.id}
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
+        requestActiveCourier={requestActiveCourier}
         name={courier.name}
         phone={`+${courier.phone}`}
       />
@@ -82,7 +89,7 @@ class CouriersMap extends Component {
         onChange={this.onMove}
         options={CouriersMap.createOptions}
       >
-        {couriers.map(CouriersMap.renderCourierMarker)}
+        {couriers.map(this.renderCourierMarker)}
       </GoogleMapReact>
     );
   }
@@ -100,6 +107,7 @@ CouriersMap.propTypes = {
     lastSeen: PropTypes.string,
   })),
   requestCouriersByBoxField: PropTypes.func.isRequired,
+  requestActiveCourier: PropTypes.func.isRequired,
   center: PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
