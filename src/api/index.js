@@ -2,7 +2,7 @@ const { API_URL } = process.env;
 
 export const getCourierById = (courierId) => {
   const url = new URL(`couriers/${courierId}`, API_URL);
-
+  console.log('geoCourierById')
   return fetch(url)
     .then(res => res.json());
 };
