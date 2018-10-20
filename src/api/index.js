@@ -1,17 +1,18 @@
 const { API_URL } = process.env;
 
 export const getCourierById = (courierId) => {
-  const url = new URL(`courier/${courierId}`, API_URL);
+  const url = new URL(`couriers/${courierId}`, API_URL);
 
   return fetch(url)
     .then(res => res.json());
 };
 
-export const getCourierOrders = (courierId, since, asc) => {
-  const url = new URL(`courier/${courierId}/orders`, API_URL);
+export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
+  const url = new URL(`couriers/${courierId}/orders`, API_URL);
   url.search = new URLSearchParams({
     since,
     asc,
+    excludeDelivered,
   });
 
   return fetch(url)
@@ -19,7 +20,7 @@ export const getCourierOrders = (courierId, since, asc) => {
 };
 
 export const getOrder = (courierId, orderId) => {
-  const url = new URL(`courier/${courierId}/orders${orderId}`, API_URL);
+  const url = new URL(`couriers/${courierId}/orders${orderId}`, API_URL);
 
   return fetch(url)
     .then(res => res.json());
@@ -58,7 +59,8 @@ export const getSuggestions = (prefix, limit) => {
     prefix,
     limit,
   });
-
   return fetch(url)
     .then(res => res.json());
 };
+
+

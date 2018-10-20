@@ -29,8 +29,18 @@ const rootReducer = (state = initialState, action) => {
       ...state,
       center: action.location,
     };
-
-
+    case actions.RECEIVE_ORDERS: {
+      const activeCourier = state.activeCourier || {};
+      activeCourier.orders = action.order;
+      console.log(...state);
+      return {
+        ...state,
+      };
+    }
+    case actions.RECEIVE_ORDERS_FAILED: {
+      console.log('FAIL TO RECIEVE ORDERS');
+      return { ...state };
+    }
     default: return state;
   }
 };

@@ -1,6 +1,7 @@
 export const REQUEST_COURIERS_BY_BOX_FIELD = 'REQUEST_COURIERS_BY_BOX_FIELD';
 export const RECEIVE_COURIERS = 'RECEIVE_COURIERS';
 export const RECEIVE_COURIERS_FAILED = 'RECEIVE_COURIERS_FAILED';
+export const REQUEST_RECENT_ORDERS = 'REQUEST_RECENT_ORDERS';
 
 export const SHOW_COURIERS_LIST = 'SHOW_COURIERS_LIST';
 export const HIDE_COURIERS_LIST = 'HIDE_COURIERS_LIST';
@@ -8,6 +9,8 @@ export const HIDE_COURIERS_LIST = 'HIDE_COURIERS_LIST';
 export const PAN = 'PAN';
 export const SHOW_ALL_COURIERS = 'SHOW_ALL_COURIERS';
 export const SHOW_COURIER_ORDER = 'SHOW_COURIER_ORDER';
+export const RECEIVE_ORDERS = 'RECEIVE_ORDERS';
+export const RECEIVE_ORDERS_FAILED = 'RECIVE_ORDERS_FAILED';
 
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
@@ -30,6 +33,21 @@ export const showCouriersList = () => ({
 export const hideCouriersList = () => ({
   type: HIDE_COURIERS_LIST,
 });
+
+export const receiveOrders = orders => ({
+  type: RECEIVE_ORDERS,
+  orders,
+});
+
+export const fetchRecentOrders = (courierId, period) => ({
+  type: REQUEST_RECENT_ORDERS,
+  courierId,
+  period,
+});
+export const receiveOrdersFailed = () => ({
+  type: RECEIVE_COURIERS_FAILED,
+});
+
 
 export const pan = location => ({
   type: PAN,
