@@ -63,4 +63,11 @@ export const getSuggestions = (prefix, limit) => {
     .then(res => res.json());
 };
 
-
+export const getGeoHistory = (courierId, since) => {
+  const url = new URL(`couriers/${courierId}/geo_history`, API_URL);
+  url.search = new URLSearchParams({
+    since,
+  });
+  return fetch(url)
+    .then(res => res.json());
+};
