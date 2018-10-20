@@ -11,8 +11,10 @@ export const PAN = 'PAN';
 export const SHOW_ALL_COURIERS = 'SHOW_ALL_COURIERS';
 export const SHOW_COURIER_ORDER = 'SHOW_COURIER_ORDER';
 export const RECEIVE_ORDERS = 'RECEIVE_ORDERS';
-export const RECEIVE_ORDERS_FAILED = 'RECIVE_ORDERS_FAILED';
-
+export const RECEIVE_ORDERS_FAILED = 'RECEIVE_ORDERS_FAILED';
+export const RECEIVE_GEO_HISTORY = 'RECEIVE_GEO_HISTORY';
+export const RECEIVE_GEO_HISTORY_FAILED = 'RECEIVE_GEO_HISTORY_FAIL';
+export const REQUEST_GEO_HISTORY = 'REQUEST_GEO_HISTORY';
 
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
@@ -50,6 +52,19 @@ export const receiveOrdersFailed = () => ({
   type: RECEIVE_COURIERS_FAILED,
 });
 
+export const receiveGeoHistory = geoHistory => ({
+  type: RECEIVE_GEO_HISTORY,
+  geoHistory,
+});
+export const receiveGeoHistoryFailed = () => ({
+  type: RECEIVE_GEO_HISTORY_FAILED,
+});
+
+export const requestGeoHistory = (courierId, since) => ({
+  type: REQUEST_GEO_HISTORY,
+  courierId,
+  since,
+});
 
 export const pan = location => ({
   type: PAN,
