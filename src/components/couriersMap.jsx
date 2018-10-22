@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
 import CourierMarker from './courierMarker';
+import Track from './track';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -30,7 +31,7 @@ class CouriersMap extends Component {
 
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
 
-    this.handleNativeEvents = this.handleNativeEvents.bind(this);
+    this.handleNativeApi = this.handleNativeApi.bind(this);
   }
 
   componentDidMount() {
@@ -56,32 +57,28 @@ class CouriersMap extends Component {
     const bottomRightLat = this.bounds.se.lat;
     const bottomRightLon = this.bounds.se.lng;
 
-    const { requestCouriersByBoxField } = this.props;
+    const { requestCouriersByBoxField, requestActiveCourier } = this.props;
     requestCouriersByBoxField({
       topLeftLat,
       topLeftLon,
       bottomRightLat,
       bottomRightLon,
     });
+    const { activeCourier } = this.props;
+    console.log((activeCourier), 'n');
+    if (activeCourier && activeCourier.id) {
+      console.log((activeCourier), 'm');
+      requestActiveCourier(activeCourier.id, 0);
+    }
   }
 
 
-  handleNativeEvents(google) {
-    const { activeCourier } = this.props;
-    if (!activeCourier.geoHistory) {
-      return;
-    }
-    const history = activeCourier.geoHistory.map(point => ({
-      lat: point.lat,
-      lng: point.lng,
-    }));
-    google.maps.Polyline({
-      path: history,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-    })
-      .setMap(google.map);
+  handleNativeApi({ maps, map }) {
+    this.setState({
+      maps,
+      map,
+      mapLoaded: true,
+    });
   }
 
   renderCourierMarker(courier) {
@@ -100,20 +97,28 @@ class CouriersMap extends Component {
   }
 
   render() {
-    const { couriers, center } = this.props;
+    const {
+      couriers, center, activeCourier,
+    } = this.props;
 
+    const { maps, map, mapLoaded } = (this.state || {});
     return (
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: KEY }}
-        defaultCenter={MOCKBA}
-        center={center}
-        defaultZoom={DEFAULT_ZOOM}
-        onChange={this.onMove}
-        options={CouriersMap.createOptions}
-        onGoogleApiLoaded={this.handleNativeEvents}
-      >
-        {couriers.map(this.renderCourierMarker)}
-      </GoogleMapReact>
+      <Fragment>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: KEY }}
+          defaultCenter={MOCKBA}
+          center={center}
+          defaultZoom={DEFAULT_ZOOM}
+          onChange={this.onMove}
+          options={CouriersMap.createOptions}
+          onGoogleApiLoaded={this.handleNativeApi}
+          yesIWantToUseGoogleMapApiInternals
+        >
+          {couriers.map(this.renderCourierMarker)}
+        </GoogleMapReact>
+        {mapLoaded && activeCourier && activeCourier.geoHistory
+        && <Track map={map} maps={maps} history={activeCourier.geoHistory}/>}
+      </Fragment>
     );
   }
 }

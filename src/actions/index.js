@@ -18,6 +18,8 @@ export const REQUEST_GEO_HISTORY = 'REQUEST_GEO_HISTORY';
 export const RECEIVE_ACTIVE_COURIER = 'RECEIVE_ACTIVE_COURIER';
 export const RECEIVE_ACTIVE_COURIER_FAIL = 'RECEIVE_ACTIVE_COURIER_FAIL';
 export const REQUEST_ACTIVE_COURIER = 'REQUEST_ACTIVE_COURIER';
+export const SET_GOOGLE_MAPS_API = 'SET_GOOGLE_MAPS_API';
+
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
   boxField,
@@ -82,7 +84,10 @@ export const requestActiveCourier = (courierId, since) => ({
   courierId,
   since,
 });
-
+export const setGoogleMapsApi = google => ({
+  type: SET_GOOGLE_MAPS_API,
+  google,
+});
 export const pan = location => ({
   type: PAN,
   location,

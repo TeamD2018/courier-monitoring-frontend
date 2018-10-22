@@ -39,18 +39,16 @@ const rootReducer = (state = initialState, action) => {
     case actions.RECEIVE_ORDERS: {
       const activeCourier = state.activeCourier || {};
       activeCourier.orders = action.order;
-      console.log(...state);
       return {
         ...state,
         activeCourier,
       };
     }
     case actions.RECEIVE_ORDERS_FAILED: {
-      console.log('FAIL TO RECIEVE ORDERS');
       return { ...state };
     }
+
     case actions.RECEIVE_GEO_HISTORY_FAILED: {
-      console.log('FAIL TO RECIEVE GEO HISTORY');
       return { ...state };
     }
     case actions.RECEIVE_ACTIVE_COURIER: {
@@ -59,7 +57,7 @@ const rootReducer = (state = initialState, action) => {
         current = {};
       }
       const activeCourier = { ...current, ...action.activeCourier };
-      console.log(activeCourier);
+
       return {
         ...state,
         activeCourier,
@@ -68,14 +66,27 @@ const rootReducer = (state = initialState, action) => {
     case actions.RECEIVE_GEO_HISTORY: {
       let { activeCourier } = state;
       let { geoHistory } = action;
-      if (action.shouldUpdate) {
+      const { shouldUpdate } = action;
+
+      geoHistory = geoHistory.map(historyPoint => ({
+        lat: historyPoint.point.lat,
+        lng: historyPoint.point.lon,
+      }));
+
+      if (!activeCourier) {
+        activeCourier = { geoHistory: [] };
+      }
+      if (!activeCourier.geoHistory) {
+        activeCourier.geoHistory = [];
+      }
+      if (shouldUpdate) {
         geoHistory = activeCourier.geoHistory.concat(geoHistory);
       }
+
       activeCourier = {
         ...activeCourier,
         geoHistory,
       };
-      console.log(activeCourier)
       return {
         ...state,
         activeCourier,

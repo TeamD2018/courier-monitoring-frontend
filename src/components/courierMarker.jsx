@@ -16,13 +16,25 @@ const StyledIcon = styled(Icon)`
 `;
 
 class CourierMarker extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.exposeActiveCourier = this.exposeActiveCourier.bind(this);
+  }
+
+  exposeActiveCourier() {
+    const {
+      requestActiveCourier, courierId,
+    } = this.props;
+    requestActiveCourier(courierId, 0);
+  }
+
   render() {
-    const { phone, name, requestActiveCourier, courierId } = this.props;
+    const { phone, name } = this.props;
 
     return (
       <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
         <StyledIcon
-          onClick={() => requestActiveCourier(courierId, 8)}
+          onClick={this.exposeActiveCourier}
           icon={IconNames.MAP_MARKER}
           intent={Intent.DANGER}
           iconSize={32}

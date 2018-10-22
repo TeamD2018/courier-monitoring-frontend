@@ -8,12 +8,11 @@ import {
   receiverCouriersFailed,
   receiveOrders,
   receiveOrdersFailed,
-  receiveGeoHistoryFailed,
   receiveGeoHistory,
   receiveActiveCourierFailed,
   receiveActiveCourier,
   REQUEST_COURIERS_BY_BOX_FIELD,
-  REQUEST_RECENT_ORDERS, REQUEST_GEO_HISTORY, REQUEST_ACTIVE_COURIER,
+  REQUEST_RECENT_ORDERS, REQUEST_ACTIVE_COURIER,
 } from '../actions';
 import { fetchRecentOrders } from '../services/index';
 
@@ -36,14 +35,6 @@ function* ordersFetch(action) {
   }
 }
 
-function* historyFetch(action) {
-  try {
-    const history = yield call(getGeoHistory, action.courierId, action.since);
-    yield put(receiveGeoHistory(history));
-  } catch (e) {
-    yield put(receiveGeoHistoryFailed());
-  }
-}
 
 function* fetchActiveCourier(action) {
   try {
@@ -51,16 +42,15 @@ function* fetchActiveCourier(action) {
     if (!activeCourier) {
       activeCourier = {};
     }
-    const currentHistory = activeCourier.geoHistory || [];
+    const shouldUpdate = activeCourier.id === action.courierId;
 
-    const latest = (activeCourier.id === action.courierId) ? currentHistory[currentHistory.length - 1].timestamp : action.since;
+    const latest = (shouldUpdate)
+      ? (activeCourier.last_seen) : action.since;
 
     const [courier, history] = yield all([
       call(getCourierById, action.courierId),
       call(getGeoHistory, action.courierId, latest),
     ]);
-
-    const shouldUpdate = activeCourier.id === action.courierId;
 
     yield all([
       put(receiveActiveCourier(courier)),
@@ -72,10 +62,11 @@ function* fetchActiveCourier(action) {
 }
 
 function* rootSaga() {
-  yield takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch);
-  yield takeLatest(REQUEST_RECENT_ORDERS, ordersFetch);
-  yield takeLatest(REQUEST_GEO_HISTORY, historyFetch);
-  yield takeLatest(REQUEST_ACTIVE_COURIER, fetchActiveCourier);
+  yield all([
+    takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
+    takeLatest(REQUEST_RECENT_ORDERS, ordersFetch),
+    takeLatest(REQUEST_ACTIVE_COURIER, fetchActiveCourier),
+  ]);
 }
 
 export default rootSaga;
