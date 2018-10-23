@@ -12,7 +12,7 @@ const SUGGESTIONS_COUNT = 5;
 const StyledCard = styled(Card)`
   margin: 0.5rem;
   padding: 0.3rem;
-  
+  flex-grow: 0;
   & span.bp3-popover-target {
     width: 100%;
   }
@@ -69,7 +69,7 @@ class SearchBar extends PureComponent {
           suggestions,
         }));
       } catch (e) {
-        alert(e);
+        console.error(e);
       }
     } else {
       this.setState((state, props) => ({

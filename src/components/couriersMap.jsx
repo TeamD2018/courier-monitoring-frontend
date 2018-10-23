@@ -65,9 +65,7 @@ class CouriersMap extends Component {
       bottomRightLon,
     });
     const { activeCourier } = this.props;
-    console.log((activeCourier), 'n');
     if (activeCourier && activeCourier.id) {
-      console.log((activeCourier), 'm');
       requestActiveCourier(activeCourier.id, 0);
     }
   }
@@ -82,7 +80,7 @@ class CouriersMap extends Component {
   }
 
   renderCourierMarker(courier) {
-    const { requestActiveCourier } = this.props;
+    const { requestActiveCourier, hideCouriersList } = this.props;
     return (
       <CourierMarker
         key={courier.id}
@@ -90,6 +88,7 @@ class CouriersMap extends Component {
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
         requestActiveCourier={requestActiveCourier}
+        hideCouriersList={hideCouriersList}
         name={courier.name}
         phone={`+${courier.phone}`}
       />
@@ -117,7 +116,7 @@ class CouriersMap extends Component {
           {couriers.map(this.renderCourierMarker)}
         </GoogleMapReact>
         {mapLoaded && activeCourier && activeCourier.geoHistory
-        && <Track map={map} maps={maps} history={activeCourier.geoHistory}/>}
+        && <Track map={map} maps={maps} history={activeCourier.geoHistory} />}
       </Fragment>
     );
   }

@@ -6,13 +6,12 @@ import { Portal } from '@blueprintjs/core';
 const StyledPortal = styled(Portal)`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  position: fixed;
+  flex-wrap: wrap;
+
   z-index: 0;
-  top: 0;
-  left: 0;
+
+  flex-grow: 2;
   width: 20rem;
-  max-height: 100%;
   
   padding: 0.5rem;
   

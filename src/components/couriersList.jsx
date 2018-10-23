@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, H5,
 } from '@blueprintjs/core';
+import CourierCard from './courierCard';
 
 const Body = styled.div`
   width: 100%;
@@ -60,7 +61,6 @@ const LastSeen = styled.div`
 const StyledCard = styled(Card)`
   padding: 0;
   margin: 0.5rem;
-  max-height: 100%;
   overflow: auto;
 `;
 
@@ -81,12 +81,14 @@ class CouriersList extends PureComponent {
   }
 
   onRowClick(courier) {
-    const { pan } = this.props;
+    const { pan, hideCouriersList, requestActiveCourier } = this.props;
 
     pan({
       lat: courier.location.point.lat,
       lng: courier.location.point.lon,
     });
+    requestActiveCourier(courier.id, 0);
+    hideCouriersList();
   }
 
   toggleList() {
@@ -105,10 +107,10 @@ class CouriersList extends PureComponent {
         key={courier.id}
         onClick={() => this.onRowClick(courier)}
       >
-        <Title>{ courier.name }</Title>
+        <Title>{courier.name}</Title>
         <Info>
-          <Phone>{ `+${courier.phone}` }</Phone>
-          <LastSeen>{ new Date(courier.last_seen * 1000).toLocaleString() }</LastSeen>
+          <Phone>{`+${courier.phone}`}</Phone>
+          <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
         </Info>
       </Row>
     );
@@ -126,11 +128,11 @@ class CouriersList extends PureComponent {
           minimal
           onClick={this.toggleList}
         >
-          Couriers list
+          Couriers
         </StyledButton>
         <Collapse isOpen={isOpen}>
           <Body>
-            { couriers.map(this.renderRow) }
+            {couriers.map(this.renderRow)}
           </Body>
         </Collapse>
       </StyledCard>

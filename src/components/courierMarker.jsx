@@ -23,9 +23,10 @@ class CourierMarker extends PureComponent {
 
   exposeActiveCourier() {
     const {
-      requestActiveCourier, courierId,
+      requestActiveCourier, courierId, hideCouriersList,
     } = this.props;
     requestActiveCourier(courierId, 0);
+    hideCouriersList();
   }
 
   render() {
