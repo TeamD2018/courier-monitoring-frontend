@@ -7,6 +7,8 @@ import * as actions from '../actions';
 import Sidebar from '../components/sidebar';
 import CouriersList from '../components/couriersList';
 import SearchBar from '../components/searchBar';
+import CourierCard from '../components/courierCard';
+
 
 class App extends Component {
   constructor(props) {
@@ -30,17 +32,28 @@ class App extends Component {
           {...this.boundActionCreators}
         />
         <Sidebar>
+
           <SearchBar {...this.boundActionCreators} />
+
           {
             couriers.length > 0 && (
               <CouriersList
                 isOpen={isCouriersListOpen}
                 couriers={couriers}
+                activeCourier={activeCourier}
                 {...this.boundActionCreators}
               />
             )
           }
+          {activeCourier && (
+            <CourierCard
+              activeCourier={activeCourier}
+              isOpen={!isCouriersListOpen}
+              {...this.boundActionCreators}
+            />)}
         </Sidebar>
+
+
       </Fragment>
     );
   }
