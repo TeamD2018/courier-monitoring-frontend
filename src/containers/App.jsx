@@ -62,8 +62,8 @@ class App extends Component {
 const mapStateToProps = state => ({
   couriers: state.couriers,
   activeCourier: state.activeCourier,
-  center: state.center,
-  isCouriersListOpen: state.isCouriersListOpen,
+  center: state.map.center,
+  isCouriersListOpen: state.couriersList.isOpen,
 });
 
 export default connect(mapStateToProps)(App);
