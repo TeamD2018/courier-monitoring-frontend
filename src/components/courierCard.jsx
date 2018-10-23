@@ -1,5 +1,5 @@
 import {
-  Button, Card, Collapse,
+  Button, Card, Collapse, Icon,
 } from '@blueprintjs/core';
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
@@ -18,20 +18,46 @@ const StyledCard = styled(Card)`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
+const InfoText = styled.p`
+  margin-left: 1rem;
+  text-align: left;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 class CourierCard extends PureComponent {
-  static renderOrder(order) {
+  constructor(props) {
+    super(props);
+
+    this.renderOrder = this.renderOrder.bind(this);
+  }
+
+  renderOrder(order) {
+    const { pan } = this.props;
     return (
-      <Row key={order.id}>
-        <p>
-          {order.source.address}
-        </p>
-        <p>
-          {order.destination.address}
-        </p>
-      </Row>
+
+      <Column key={order.id}>
+        <Row onClick={() => pan(order.source.point)}>
+          <Icon icon="shop"/>
+          <InfoText className="bp3-text-small">
+            {order.source.address}
+          </InfoText>
+        </Row>
+        <Row onClick={() => pan(order.destination.point)}>
+          <Icon icon={'home'}/>
+          <InfoText className="bp3-text-small">
+            {order.destination.address}
+          </InfoText>
+        </Row>
+      </Column>
+
     );
   }
 
@@ -47,13 +73,14 @@ class CourierCard extends PureComponent {
         <StyledCard interactive={false} onClick={() => pan(activeCourier.location)}>
 
           <Row>
-            <span>{activeCourier.name}</span>
-            {' '}
+            <h4>{activeCourier.name}</h4>
+
             <Button
               onClick={() => disableActiveCourier()}
               icon="cross"
+              minimal
             />
-            {' '}
+
 
           </Row>
           <Row>{activeCourier.phone}</Row>
@@ -61,7 +88,7 @@ class CourierCard extends PureComponent {
             Активных заказов:
             {ordersNumber}
           </Row>
-          {orders.map(CourierCard.renderOrder)}
+          {orders.map(this.renderOrder)}
         </StyledCard>
       </Collapse>);
   }
