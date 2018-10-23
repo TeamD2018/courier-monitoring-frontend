@@ -13,6 +13,8 @@ const StyledDiv = styled.div`
 
 const StyledIcon = styled(Icon)`
   cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, -100%);
 `;
 
 class CourierMarker extends PureComponent {
