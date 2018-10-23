@@ -32,8 +32,9 @@
     "parcel-bundler": "^1.10.1"
   },
   "scripts": {
+    "build": "npx parcel build src/index.html",
     "start": "npx parcel server src/index.html",
-    "lint": "eslint --fix src/**/*.js"
+    "lint": "eslint --fix src/**/*.js*"
   },
   "private": true
 }
