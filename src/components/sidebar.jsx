@@ -6,8 +6,8 @@ import { Portal } from '@blueprintjs/core';
 const StyledPortal = styled(Portal)`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
 
+  max-height: 100%;
   z-index: 0;
 
   flex-grow: 2;
