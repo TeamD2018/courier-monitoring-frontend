@@ -38,7 +38,8 @@ const rootReducer = (state = initialState, action) => {
       };
     case actions.RECEIVE_ORDERS: {
       const activeCourier = state.activeCourier || {};
-      activeCourier.orders = action.order;
+      activeCourier.orders = action.orders;
+
       return {
         ...state,
         activeCourier,
@@ -61,6 +62,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         activeCourier,
+      };
+    }
+    case actions.DISABLE_ACTIVE_COURIER: {
+      return {
+        ...state,
+        activeCourier: null,
       };
     }
     case actions.RECEIVE_GEO_HISTORY: {

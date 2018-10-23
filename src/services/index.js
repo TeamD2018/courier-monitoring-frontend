@@ -5,7 +5,7 @@ export const fetchRecentOrders = (courierId, period) => {
   const MINUTE = 60 * SECOND;
   const HOUR = 60 * MINUTE;
   const periodAgo = Math.floor((Date.now() - HOUR * period) / SECOND);
-  return getCourierOrders(courierId, periodAgo, true);
+  return getCourierOrders(courierId, periodAgo, true, true);
 };
 
 export default { fetchRecentOrders };

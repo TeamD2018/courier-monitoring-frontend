@@ -20,6 +20,8 @@ export const RECEIVE_ACTIVE_COURIER_FAIL = 'RECEIVE_ACTIVE_COURIER_FAIL';
 export const REQUEST_ACTIVE_COURIER = 'REQUEST_ACTIVE_COURIER';
 
 
+export const DISABLE_ACTIVE_COURIER = 'DISABLE_ACTIVE_COURIER';
+
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
   boxField,
@@ -88,4 +90,7 @@ export const requestActiveCourier = (courierId, since) => ({
 export const pan = location => ({
   type: PAN,
   location,
+});
+export const disableActiveCourier = () => ({
+  type: DISABLE_ACTIVE_COURIER,
 });
