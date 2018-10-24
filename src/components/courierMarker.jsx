@@ -53,7 +53,7 @@ class CourierMarker extends PureComponent {
         />
         <StyledDiv>
           <div className="bp3-text-large">{courier.name}</div>
-          {courier.phone && <div className="bp3-text-muted">{courier.phone}</div>}
+          {courier.phone && <div className="bp3-text-muted">{`+${courier.phone}`}</div>}
         </StyledDiv>
       </Popover>
     );

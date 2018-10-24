@@ -83,7 +83,7 @@ class CourierCard extends PureComponent {
 
 
           </Row>
-          <Row>{activeCourier.phone}</Row>
+          <Row>{`+${activeCourier.phone}`}</Row>
           <Row>
             Активных заказов:
             {ordersNumber}
