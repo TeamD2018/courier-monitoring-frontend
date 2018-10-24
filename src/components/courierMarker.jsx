@@ -25,14 +25,19 @@ class CourierMarker extends PureComponent {
 
   exposeActiveCourier() {
     const {
-      requestActiveCourier, courierId, hideCouriersList,
+      requestActiveCourier, courier, hideCouriersList, pan
     } = this.props;
-    requestActiveCourier(courierId, 0);
+    requestActiveCourier(courier.id, 0);
     hideCouriersList();
+
+    pan({
+      lat: courier.location.point.lat,
+      lng: courier.location.point.lon,
+    });
   }
 
   render() {
-    const { phone, name } = this.props;
+    const { courier } = this.props;
 
     return (
       <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
@@ -43,8 +48,8 @@ class CourierMarker extends PureComponent {
           iconSize={32}
         />
         <StyledDiv>
-          <div className="bp3-text-large">{name}</div>
-          {phone && <div className="bp3-text-muted">{phone}</div>}
+          <div className="bp3-text-large">{courier.name}</div>
+          {courier.phone && <div className="bp3-text-muted">{courier.phone}</div>}
         </StyledDiv>
       </Popover>
     );
@@ -52,12 +57,7 @@ class CourierMarker extends PureComponent {
 }
 
 CourierMarker.propTypes = {
-  phone: PropTypes.string,
-  name: PropTypes.string.isRequired,
-};
-
-CourierMarker.defaultProps = {
-  phone: null,
+  courier: PropTypes.object.isRequired,
 };
 
 export default CourierMarker;
