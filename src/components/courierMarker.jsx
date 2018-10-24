@@ -40,7 +40,11 @@ class CourierMarker extends PureComponent {
     const { courier } = this.props;
 
     return (
-      <Popover interactionKind={PopoverInteractionKind.HOVER} transitionDuration={100}>
+      <Popover
+        interactionKind={PopoverInteractionKind.HOVER}
+        transitionDuration={100}
+        position="bottom"
+      >
         <StyledIcon
           onClick={this.exposeActiveCourier}
           icon={IconNames.MAP_MARKER}
