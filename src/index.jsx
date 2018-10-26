@@ -1,3 +1,5 @@
+import './index.css';
+
 import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';

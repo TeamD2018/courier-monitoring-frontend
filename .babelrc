@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "useBuiltIns": "entry",
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    ["babel-plugin-styled-components", {
+      "minify": true
+    }]
+  ]
+}

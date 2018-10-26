@@ -1,5 +1,5 @@
-@import 'normalize.css';
-@import '@blueprintjs/core/lib/css/blueprint.css';
+@import '~normalize.css';
+@import '~@blueprintjs/core/lib/css/blueprint.css';
 
 *:focus {
   outline: none;
