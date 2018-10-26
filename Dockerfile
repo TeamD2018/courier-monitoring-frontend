@@ -4,10 +4,10 @@ ARG API_KEY
 ARG API_URL
 
 ENV NODE_ENV production
-RUN yarn global add parcel-bundler
 
 WORKDIR /root
 COPY ./src ./src
+COPY ./dist ./dist
 COPY package.json .
 COPY yarn.lock .
 
