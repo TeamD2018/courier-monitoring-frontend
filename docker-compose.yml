@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   courier-monitoring-frontend:
-    image: teamd2018/courier-monitoring-frontend:latest
+    image: teamd2018/courier-monitoring-frontend:9b7cc22d7ae418eacd0c3cc96ae351bbc009f282
     ports:
     - 8082:2015
     deploy:
