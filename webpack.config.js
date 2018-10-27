@@ -1,5 +1,6 @@
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 
 module.exports = (env, argv) => ({
   entry: './src/index.jsx',
@@ -43,5 +44,6 @@ module.exports = (env, argv) => ({
     new Dotenv({
       systemvars: true,
     }),
+    new CssoWebpackPlugin(),
   ],
 });
