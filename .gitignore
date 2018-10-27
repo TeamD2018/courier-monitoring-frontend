@@ -62,4 +62,5 @@ typings/
 
 .cache
 dist/bundle.js
+dist/main.css
 .idea
