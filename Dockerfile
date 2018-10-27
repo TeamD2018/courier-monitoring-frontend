@@ -4,6 +4,7 @@ ARG API_KEY
 ARG API_URL
 
 ENV NODE_ENV production
+RUN yarn global add webpack
 
 WORKDIR /root
 COPY ./src ./src
