@@ -3,7 +3,7 @@ import {
   RECEIVE_ACTIVE_COURIER, RECEIVE_GEO_HISTORY,
   RECEIVE_GEO_HISTORY_FAILED,
   RECEIVE_ORDERS,
-  RECEIVE_ORDERS_FAILED,
+  RECEIVE_ORDERS_FAILED, RESET_ACTIVE_COURIER,
 } from '../actions';
 
 const initialState = null;
@@ -68,7 +68,17 @@ export default (state = initialState, action) => {
 
       return activeCourier;
     }
-
+    case RESET_ACTIVE_COURIER: {
+      if (state && state.id === action.courierId) {
+        return state;
+      }
+      return {
+        id: action.courierId,
+        geoHistory: [],
+        orders: [],
+        last_seen: 0,
+      };
+    }
     default:
       return state;
   }

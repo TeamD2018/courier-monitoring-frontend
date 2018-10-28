@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, H5,
 } from '@blueprintjs/core';
-import CourierCard from './courierCard';
 
 const Body = styled.div`
   width: 100%;

@@ -18,7 +18,7 @@ export const REQUEST_GEO_HISTORY = 'REQUEST_GEO_HISTORY';
 export const RECEIVE_ACTIVE_COURIER = 'RECEIVE_ACTIVE_COURIER';
 export const RECEIVE_ACTIVE_COURIER_FAIL = 'RECEIVE_ACTIVE_COURIER_FAIL';
 export const REQUEST_ACTIVE_COURIER = 'REQUEST_ACTIVE_COURIER';
-
+export const RESET_ACTIVE_COURIER = 'RESET_ACTIVE_COURIER';
 
 export const DISABLE_ACTIVE_COURIER = 'DISABLE_ACTIVE_COURIER';
 
@@ -93,4 +93,9 @@ export const pan = location => ({
 });
 export const disableActiveCourier = () => ({
   type: DISABLE_ACTIVE_COURIER,
+});
+
+export const resetActiveCourier = courierId => ({
+  type: RESET_ACTIVE_COURIER,
+  courierId,
 });

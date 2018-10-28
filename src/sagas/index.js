@@ -1,5 +1,5 @@
 import {
-  call, put, takeLatest, all, select, takeEvery,
+  call, put, takeLatest, all, select,
 } from 'redux-saga/effects';
 
 import { getCourierById, getCouriersByBoxField, getGeoHistory } from '../api';
@@ -52,6 +52,7 @@ function* fetchActiveCourier(action) {
       call(getGeoHistory, action.courierId, latest),
       call(fetchRecentOrders, action.courierId, 8),
     ]);
+
     yield all([
       put(receiveActiveCourier(courier)),
       put(receiveGeoHistory(history.geo_history, shouldUpdate)),
@@ -66,7 +67,7 @@ function* rootSaga() {
   yield all([
     takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
     takeLatest(REQUEST_RECENT_ORDERS, ordersFetch),
-    takeEvery(REQUEST_ACTIVE_COURIER, fetchActiveCourier),
+    takeLatest(REQUEST_ACTIVE_COURIER, fetchActiveCourier),
   ]);
 }
 

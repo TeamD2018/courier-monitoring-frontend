@@ -45,13 +45,13 @@ class CourierCard extends PureComponent {
 
       <Column key={order.id}>
         <Row onClick={() => pan(order.source.point)}>
-          <Icon icon="shop"/>
+          <Icon icon="shop" />
           <InfoText className="bp3-text-small">
             {order.source.address}
           </InfoText>
         </Row>
         <Row onClick={() => pan(order.destination.point)}>
-          <Icon icon={'home'}/>
+          <Icon icon="home" />
           <InfoText className="bp3-text-small">
             {order.destination.address}
           </InfoText>

@@ -80,7 +80,9 @@ class CouriersMap extends Component {
   }
 
   renderCourierMarker(courier) {
-    const { requestActiveCourier, hideCouriersList, pan } = this.props;
+    const {
+      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+    } = this.props;
     return (
       <CourierMarker
         key={courier.id}
@@ -89,6 +91,7 @@ class CouriersMap extends Component {
         lng={courier.location.point.lon}
         requestActiveCourier={requestActiveCourier}
         hideCouriersList={hideCouriersList}
+        resetActiveCourier={resetActiveCourier}
         pan={pan}
         courier={courier}
       />
