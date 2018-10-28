@@ -4,6 +4,8 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import CourierMarker from './courierMarker';
 import Track from './track';
+import OrderMarker from './orderMarker';
+import { IconNames } from '@blueprintjs/icons';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -98,12 +100,37 @@ class CouriersMap extends Component {
     );
   }
 
+  static renderSourceMarker(order) {
+    return (
+      <OrderMarker
+        key={order.id}
+        lat={order.source.point.lat}
+        lng={order.source.point.lon}
+        address={order.source.address}
+        icon={IconNames.SHOP}
+      />
+    );
+  }
+
+  static renderDestMarker(order) {
+    return (
+      <OrderMarker
+        key={order.id}
+        lat={order.destination.point.lat}
+        lng={order.destination.point.lon}
+        address={order.destination.address}
+        icon={IconNames.HOME}
+      />
+    );
+  }
+
   render() {
     const {
       couriers, center, activeCourier,
     } = this.props;
 
     const { maps, map, mapLoaded } = (this.state || {});
+    const orders = (activeCourier && activeCourier.orders) || [];
     return (
       <Fragment>
         <GoogleMapReact
@@ -117,6 +144,8 @@ class CouriersMap extends Component {
           yesIWantToUseGoogleMapApiInternals
         >
           {couriers.map(this.renderCourierMarker)}
+          {orders.map(CouriersMap.renderSourceMarker)}
+          {orders.map(CouriersMap.renderDestMarker)}
         </GoogleMapReact>
         {
           mapLoaded && activeCourier && activeCourier.geoHistory
