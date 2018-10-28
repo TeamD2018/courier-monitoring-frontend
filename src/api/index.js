@@ -1,9 +1,16 @@
 const { API_URL } = process.env;
 
+const responseHandler = (response) => {
+  if (response.status === 200) {
+    return response.json();
+  }
+  throw new Error(response.status);
+};
+
 export const getCourierById = (courierId) => {
   const url = new URL(`couriers/${courierId}`, API_URL);
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
@@ -15,14 +22,14 @@ export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
   });
 
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getOrder = (courierId, orderId) => {
   const url = new URL(`couriers/${courierId}/orders${orderId}`, API_URL);
 
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getCouriersByCircleField = (lat, lon, radius) => {
@@ -34,7 +41,7 @@ export const getCouriersByCircleField = (lat, lon, radius) => {
   });
 
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getCouriersByBoxField = ({
@@ -49,7 +56,7 @@ export const getCouriersByBoxField = ({
   });
 
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getSuggestions = (prefix, limit) => {
@@ -59,7 +66,7 @@ export const getSuggestions = (prefix, limit) => {
     limit,
   });
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
 
 export const getGeoHistory = (courierId, since) => {
@@ -68,5 +75,5 @@ export const getGeoHistory = (courierId, since) => {
     since,
   });
   return fetch(url)
-    .then(res => res.json());
+    .then(responseHandler);
 };
