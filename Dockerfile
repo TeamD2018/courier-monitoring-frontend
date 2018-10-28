@@ -1,7 +1,9 @@
-FROM node:10.11 as build
+FROM node:10.12-alpine as build
 
 ARG API_KEY
 ARG API_URL
+
+RUN apk --update add ca-certificates
 
 WORKDIR /root
 COPY ./src ./src
@@ -21,6 +23,7 @@ FROM scratch as runtime
 
 COPY --from=build /usr/local/bin /usr/bin
 COPY --from=build /root/dist /var/www
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY Caddyfile /etc/Caddyfile
 
 ENV NODE_ENV production
