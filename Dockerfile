@@ -3,7 +3,7 @@ FROM node:10.12-alpine as build
 ARG API_KEY
 ARG API_URL
 
-RUN apk --update add ca-certificates
+RUN apk --update add ca-certificates curl bash
 
 WORKDIR /root
 COPY ./src ./src
