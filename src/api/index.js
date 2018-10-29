@@ -4,6 +4,7 @@ const responseHandler = (response) => {
   if (response.status === 200) {
     return response.json();
   }
+
   throw new Error(response.status);
 };
 
@@ -59,12 +60,10 @@ export const getCouriersByBoxField = ({
     .then(responseHandler);
 };
 
-export const getSuggestions = (prefix, limit) => {
-  const url = new URL('suggestions/couriers', API_URL);
-  url.search = new URLSearchParams({
-    prefix,
-    limit,
-  });
+export const getSuggestions = (input) => {
+  const url = new URL('suggestions', API_URL);
+  url.search = new URLSearchParams({ input });
+
   return fetch(url)
     .then(responseHandler);
 };
