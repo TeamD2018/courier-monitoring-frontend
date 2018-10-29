@@ -108,10 +108,10 @@ class CourierDetails extends PureComponent {
   }
 
   toggleList() {
-    const { isOpen, showCourierDetails, hideCouriersDetails } = this.props;
+    const { isOpen, showCourierDetails, hideCourierDetails } = this.props;
 
     if (isOpen) {
-      hideCouriersDetails();
+      hideCourierDetails();
     } else {
       showCourierDetails();
     }
@@ -219,7 +219,7 @@ CourierDetails.propTypes = {
   }).isRequired,
   isOpen: PropTypes.bool,
   showCourierDetails: PropTypes.func.isRequired,
-  hideCouriersDetails: PropTypes.func.isRequired,
+  hideCourierDetails: PropTypes.func.isRequired,
   closeCourierDetails: PropTypes.func.isRequired,
   showCouriersList: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,

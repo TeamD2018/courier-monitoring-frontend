@@ -6,6 +6,10 @@ export const REQUEST_RECENT_ORDERS = 'REQUEST_RECENT_ORDERS';
 export const SHOW_COURIERS_LIST = 'SHOW_COURIERS_LIST';
 export const HIDE_COURIERS_LIST = 'HIDE_COURIERS_LIST';
 
+export const SHOW_COURIER_DETAILS = 'SHOW_COURIER_DETAILS';
+export const HIDE_COURIER_DETAILS = 'HIDE_COURIER_DETAILS';
+export const CLOSE_COURIER_DETAILS = 'CLOSE_COURIER_DETAILS';
+
 export const PAN = 'PAN';
 
 export const SHOW_ALL_COURIERS = 'SHOW_ALL_COURIERS';
@@ -42,6 +46,18 @@ export const showCouriersList = () => ({
 
 export const hideCouriersList = () => ({
   type: HIDE_COURIERS_LIST,
+});
+
+export const showCourierDetails = () => ({
+  type: SHOW_COURIER_DETAILS,
+});
+
+export const hideCourierDetails = () => ({
+  type: HIDE_COURIER_DETAILS,
+});
+
+export const closeCourierDetails = () => ({
+  type: CLOSE_COURIER_DETAILS,
 });
 
 export const receiveOrders = orders => ({
