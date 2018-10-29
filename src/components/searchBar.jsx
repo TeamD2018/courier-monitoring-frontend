@@ -23,37 +23,32 @@ const customStyles = {
 };
 
 class SearchBar extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.onItemClick = this.onItemClick.bind(this);
-  }
-
-  onItemClick(item) {
-    const {
-      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
-    } = this.props;
-    resetActiveCourier(item.courier.id);
-    requestActiveCourier(item.courier.id, 0);
-    hideCouriersList();
-
-    pan({
-      lat: item.courier.location.point.lat,
-      lng: item.courier.location.point.lon,
-    });
-  }
-
-  promiseOptions(query) {
+  static promiseOptions(query) {
     return new Promise(async (resolve) => {
       if (query !== '') {
         try {
           const suggestions = await getSuggestions(query);
 
-          const options = suggestions.couriers.map(suggestion => ({
-            value: suggestion.id,
-            label: suggestion.name,
-            courier: suggestion,
-          }));
+          const options = [
+            {
+              label: 'Couriers',
+              options: suggestions.couriers.map(suggestion => ({
+                value: suggestion.id,
+                label: suggestion.name,
+                type: 'courier',
+                ...suggestion,
+              })),
+            },
+            {
+              label: 'Destinations',
+              options: suggestions.orders.map(suggestion => ({
+                value: suggestion.id,
+                label: suggestion.destination.address,
+                type: 'order',
+                ...suggestion,
+              })),
+            },
+          ];
 
           resolve(options);
         } catch (e) {
@@ -65,11 +60,47 @@ class SearchBar extends PureComponent {
     });
   }
 
+  constructor(props) {
+    super(props);
+
+    this.onItemClick = this.onItemClick.bind(this);
+  }
+
+  onItemClick(item) {
+    const {
+      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+    } = this.props;
+
+    switch (item.type) {
+      case 'courier':
+        resetActiveCourier(item.id);
+        requestActiveCourier(item.id, 0);
+        hideCouriersList();
+
+        pan({
+          lat: item.location.point.lat,
+          lng: item.location.point.lon,
+        });
+
+        break;
+
+      case 'order':
+        pan({
+          lat: item.destination.point.lat,
+          lng: item.destination.point.lon,
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
   render() {
     return (
       <StyledCard>
         <AsyncSelect
-          loadOptions={this.promiseOptions}
+          loadOptions={SearchBar.promiseOptions}
           onChange={this.onItemClick}
           styles={customStyles}
           openMenuOnClick={false}
