@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popover, PopoverInteractionKind } from '@blueprintjs/core';
+import styled from 'styled-components';
 
+const StyledDiv = styled.div`
+  padding: 1rem;
+`;
 
 class OrderMarker extends PureComponent {
   render() {
@@ -15,7 +19,7 @@ class OrderMarker extends PureComponent {
           icon={icon}
           iconSize={32}
         />
-        <div className="bp3-text-large">{address}</div>
+        <StyledDiv className="bp3-text-large">{address}</StyledDiv>
       </Popover>
     );
   }
