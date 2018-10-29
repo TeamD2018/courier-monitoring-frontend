@@ -1,13 +1,10 @@
 import React, { PureComponent } from 'react';
+import AsyncSelect from 'react-select/lib/Async';
 import styled from 'styled-components';
-import {
-  Card, Classes, MenuItem,
-} from '@blueprintjs/core';
+import { Card } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
 
-import { Suggest } from '@blueprintjs/select';
-import * as api from '../api';
-
-const SUGGESTIONS_COUNT = 5;
+import { getSuggestions } from '../api';
 
 const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -18,90 +15,76 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const StyledSuggest = styled(Suggest)`
-  width: 100%;
-`;
+const customStyles = {
+  menu: base => ({
+    ...base,
+    zIndex: '1000',
+  }),
+};
 
 class SearchBar extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.onQueryChange = this.onQueryChange.bind(this);
     this.onItemClick = this.onItemClick.bind(this);
-    this.itemRenderer = this.itemRenderer.bind(this);
-
-    this.state = {
-      suggestions: [],
-    };
   }
 
-  static inputValueRenderer(item) {
-    return item.name;
-  }
-
-  onItemClick(courier) {
-    const { pan } = this.props;
+  onItemClick(item) {
+    const {
+      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+    } = this.props;
+    resetActiveCourier(item.courier.id);
+    requestActiveCourier(item.courier.id, 0);
+    hideCouriersList();
 
     pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
+      lat: item.courier.location.point.lat,
+      lng: item.courier.location.point.lon,
     });
   }
 
-  itemRenderer(item, itemProps) {
-    return (
-      <MenuItem
-        key={item.id}
-        text={item.name}
-        label={item.phone}
-        onClick={() => this.onItemClick(item)}
-      />
-    );
-  }
+  promiseOptions(query) {
+    return new Promise(async (resolve) => {
+      if (query !== '') {
+        try {
+          const suggestions = await getSuggestions(query);
 
-  async onQueryChange(query, event) {
-    if (query !== '') {
-      try {
-        const suggestions = await api.getSuggestions(query, SUGGESTIONS_COUNT);
+          const options = suggestions.couriers.map(suggestion => ({
+            value: suggestion.id,
+            label: suggestion.name,
+            courier: suggestion,
+          }));
 
-        this.setState((state, props) => ({
-          ...state,
-          suggestions,
-        }));
-      } catch (e) {
-        console.error(e);
+          resolve(options);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        resolve([]);
       }
-    } else {
-      this.setState((state, props) => ({
-        ...state,
-        suggestions: [],
-      }));
-    }
+    });
   }
 
   render() {
-    const { suggestions } = this.state;
-
     return (
       <StyledCard>
-        <StyledSuggest
-          onQueryChange={this.onQueryChange}
-          inputProps={{
-            fill: true,
-            leftIcon: 'search',
-          }}
-          inputValueRenderer={SearchBar.inputValueRenderer}
-          itemRenderer={this.itemRenderer}
-          items={suggestions}
-          popoverProps={{
-            popoverClassName: Classes.MINIMAL,
-          }}
-          noResults={<MenuItem disabled text="No results." />}
-          openOnKeyDown
+        <AsyncSelect
+          loadOptions={this.promiseOptions}
+          onChange={this.onItemClick}
+          styles={customStyles}
+          openMenuOnClick={false}
         />
       </StyledCard>
     );
   }
 }
+
+SearchBar.propTypes = {
+  pan: PropTypes.func.isRequired,
+  requestActiveCourier: PropTypes.func.isRequired,
+  hideCouriersList: PropTypes.func.isRequired,
+  resetActiveCourier: PropTypes.func.isRequired,
+};
+
 
 export default SearchBar;
