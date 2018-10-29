@@ -1,17 +1,16 @@
 import React, { PureComponent } from 'react';
-import {
-  Icon, Intent, Popover, PopoverInteractionKind,
-} from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
 
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import courierMarker from '../images/Courier.png';
 
 const StyledDiv = styled.div`
   padding: 1rem;
 `;
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled.img`
+  width: 32px;
   cursor: pointer;
   position: absolute;
   transform: translate(-50%, -100%);
@@ -48,9 +47,7 @@ class CourierMarker extends PureComponent {
       >
         <StyledIcon
           onClick={this.exposeActiveCourier}
-          icon={IconNames.MAP_MARKER}
-          intent={Intent.DANGER}
-          iconSize={32}
+          src={courierMarker}
         />
         <StyledDiv>
           <div className="bp3-text-large">{courier.name}</div>

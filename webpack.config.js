@@ -19,6 +19,17 @@ module.exports = (env, argv) => ({
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              emitFile: true,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {

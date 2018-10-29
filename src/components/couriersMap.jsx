@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
+import { IconNames } from '@blueprintjs/icons';
 import CourierMarker from './courierMarker';
 import Track from './track';
 import OrderMarker from './orderMarker';
-import { IconNames } from '@blueprintjs/icons';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -108,6 +108,7 @@ class CouriersMap extends Component {
         lng={order.source.point.lon}
         address={order.source.address}
         icon={IconNames.SHOP}
+        type={false}
       />
     );
   }
@@ -119,7 +120,7 @@ class CouriersMap extends Component {
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         address={order.destination.address}
-        icon={IconNames.HOME}
+        type={true}
       />
     );
   }
