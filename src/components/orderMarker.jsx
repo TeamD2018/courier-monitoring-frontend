@@ -18,7 +18,7 @@ const StyledIcon = styled.img`
 
 class OrderMarker extends PureComponent {
   render() {
-    const { address, type } = this.props;
+    const { address, isDest } = this.props;
     return (
       <Popover
         interactionKind={PopoverInteractionKind.HOVER}
@@ -27,7 +27,7 @@ class OrderMarker extends PureComponent {
       >
         <StyledIcon
           onClick={this.exposeActiveCourier}
-          src={type ? homeMarker : shopMarker}
+          src={isDest ? homeMarker : shopMarker}
         />
         <StyledDiv className="bp3-text-large">{address}</StyledDiv>
       </Popover>
@@ -37,7 +37,7 @@ class OrderMarker extends PureComponent {
 
 OrderMarker.propTypes = {
   address: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  isDest: PropTypes.bool.isRequired,
 };
 
 export default OrderMarker;

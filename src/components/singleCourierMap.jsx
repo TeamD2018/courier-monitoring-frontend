@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
-import { IconNames } from '@blueprintjs/icons';
 import CourierMarker from './courierMarker';
 import Track from './track';
 import OrderMarker from './orderMarker';
@@ -15,7 +14,7 @@ const KEY = process.env.API_KEY;
 const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
 
-class CouriersMap extends Component {
+class SingleCourierMap extends Component {
   static createOptions(map) {
     return {
       fullscreenControl: false,
@@ -30,8 +29,6 @@ class CouriersMap extends Component {
     super(props);
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
-
-    this.renderCourierMarker = this.renderCourierMarker.bind(this);
 
     this.handleNativeApi = this.handleNativeApi.bind(this);
   }
@@ -53,22 +50,14 @@ class CouriersMap extends Component {
   }
 
   refreshMarkers() {
-    const topLeftLat = this.bounds.nw.lat;
-    const topLeftLon = this.bounds.nw.lng;
+    const { requestActiveCourier } = this.props;
 
-    const bottomRightLat = this.bounds.se.lat;
-    const bottomRightLon = this.bounds.se.lng;
-
-    const { requestCouriersByBoxField, requestActiveCourier } = this.props;
-    requestCouriersByBoxField({
-      topLeftLat,
-      topLeftLon,
-      bottomRightLat,
-      bottomRightLon,
-    });
     const { activeCourier } = this.props;
     if (activeCourier && activeCourier.id) {
-      requestActiveCourier(activeCourier.id, 0);
+      requestActiveCourier(activeCourier.id, activeCourier.last_seen);
+    } else {
+      const { exposeActiveOrderInfo, orderId, courierId } = this.props;
+      exposeActiveOrderInfo(courierId, orderId);
     }
   }
 
@@ -83,7 +72,7 @@ class CouriersMap extends Component {
 
   renderCourierMarker(courier) {
     const {
-      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+      requestActiveCourier, pan, resetActiveCourier,
     } = this.props;
     return (
       <CourierMarker
@@ -92,7 +81,6 @@ class CouriersMap extends Component {
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
         requestActiveCourier={requestActiveCourier}
-        hideCouriersList={hideCouriersList}
         resetActiveCourier={resetActiveCourier}
         pan={pan}
         courier={courier}
@@ -101,37 +89,37 @@ class CouriersMap extends Component {
   }
 
   static renderSourceMarker(order) {
+
     return (
       <OrderMarker
-        key={order.id}
+        key={`${order.id}src`}
         lat={order.source.point.lat}
         lng={order.source.point.lon}
         address={order.source.address}
-        icon={IconNames.SHOP}
-        type={false}
+        isDest={false}
       />
     );
   }
 
   static renderDestMarker(order) {
+
     return (
       <OrderMarker
-        key={order.id}
+        key={`${order.id}dst`}
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         address={order.destination.address}
-        type
+        isDest
       />
     );
   }
 
   render() {
     const {
-      couriers, center, activeCourier,
+      center, activeCourier, activeOrder,
     } = this.props;
-
     const { maps, map, mapLoaded } = (this.state || {});
-    const orders = (activeCourier && activeCourier.orders) || [];
+
     return (
       <Fragment>
         <GoogleMapReact
@@ -140,13 +128,14 @@ class CouriersMap extends Component {
           center={center}
           defaultZoom={DEFAULT_ZOOM}
           onChange={this.onMove}
-          options={CouriersMap.createOptions}
+          options={SingleCourierMap.createOptions}
           onGoogleApiLoaded={this.handleNativeApi}
           yesIWantToUseGoogleMapApiInternals
         >
-          {couriers.map(this.renderCourierMarker)}
-          {orders.map(CouriersMap.renderSourceMarker)}
-          {orders.map(CouriersMap.renderDestMarker)}
+          {activeCourier && this.renderCourierMarker(activeCourier)}
+          {activeOrder && SingleCourierMap.renderDestMarker(activeOrder)}
+          {activeOrder && SingleCourierMap.renderSourceMarker(activeOrder)}
+
         </GoogleMapReact>
         {
           mapLoaded && activeCourier && activeCourier.geoHistory
@@ -163,18 +152,8 @@ class CouriersMap extends Component {
   }
 }
 
-CouriersMap.propTypes = {
-  couriers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    phone: PropTypes.string,
-    location: PropTypes.shape({
-      lat: PropTypes.number,
-      lng: PropTypes.number,
-    }),
-    lastSeen: PropTypes.string,
-  })),
-  requestCouriersByBoxField: PropTypes.func.isRequired,
+SingleCourierMap.propTypes = {
+
   requestActiveCourier: PropTypes.func.isRequired,
   center: PropTypes.shape({
     lat: PropTypes.number,
@@ -188,11 +167,32 @@ CouriersMap.propTypes = {
     })),
     courierId: PropTypes.string,
   }),
+  exposeActiveOrderInfo: PropTypes.func.isRequired,
+  orderId: PropTypes.string.isRequired,
+  courierId: PropTypes.string.isRequired,
+  resetActiveCourier: PropTypes.func.isRequired,
+  activeOrder: PropTypes.shape({
+    source: PropTypes.shape({
+      address: PropTypes.string,
+      point: PropTypes.shape({
+        lat: PropTypes.number,
+        lon: PropTypes.number,
+      }),
+    }),
+    destination: PropTypes.shape({
+      address: PropTypes.string,
+      point: PropTypes.shape({
+        lat: PropTypes.number,
+        lon: PropTypes.number,
+      }),
+    }),
+    order_number: PropTypes.number,
+  }),
 };
 
-CouriersMap.defaultProps = {
-  couriers: [],
-  activeCourier: {},
+SingleCourierMap.defaultProps = {
+  activeCourier: null,
+  activeOrder: null,
 };
 
-export default CouriersMap;
+export default SingleCourierMap;

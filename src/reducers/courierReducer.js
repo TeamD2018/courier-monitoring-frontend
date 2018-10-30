@@ -41,7 +41,6 @@ export default (state = initialState, action) => {
       let activeCourier = state;
       let { geoHistory } = action;
       const { shouldUpdate } = action;
-
       geoHistory = geoHistory.map(historyPoint => ({
         lat: historyPoint.point.lat,
         lng: historyPoint.point.lon,

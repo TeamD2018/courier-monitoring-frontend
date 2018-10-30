@@ -27,7 +27,8 @@ export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
 };
 
 export const getOrder = (courierId, orderId) => {
-  const url = new URL(`couriers/${courierId}/orders${orderId}`, API_URL);
+  console.log(courierId, orderId, API_URL);
+  const url = new URL(`couriers/${courierId}/orders/${orderId}`, API_URL);
 
   return fetch(url)
     .then(responseHandler);

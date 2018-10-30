@@ -122,7 +122,7 @@ class CourierDetails extends PureComponent {
 
     return (
       <Waypoint
-        key={waypoint.id}
+        key={waypoint.id + (waypoint.type ? 'home' : 'shop')}
         onClick={() => pan(waypoint.location.point)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
@@ -136,7 +136,8 @@ class CourierDetails extends PureComponent {
 
     orders.forEach((order) => {
       if (waypointsMap.has(order.source.address)) {
-        waypointsMap.get(order.source.address).push(order);
+        waypointsMap.get(order.source.address)
+          .push(order);
       } else {
         waypointsMap.set(order.source.address, [order]);
       }

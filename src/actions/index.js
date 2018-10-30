@@ -25,6 +25,8 @@ export const REQUEST_ACTIVE_COURIER = 'REQUEST_ACTIVE_COURIER';
 export const RESET_ACTIVE_COURIER = 'RESET_ACTIVE_COURIER';
 
 export const DISABLE_ACTIVE_COURIER = 'DISABLE_ACTIVE_COURIER';
+export const RECEIVE_ACTIVE_ORDER = 'RECEIVE_ACTIVE_ORDER';
+export const REQUEST_ORDER_INFO = 'REQUEST_ORDER_INFO';
 
 export const requestCouriersByBoxField = boxField => ({
   type: REQUEST_COURIERS_BY_BOX_FIELD,
@@ -114,4 +116,15 @@ export const disableActiveCourier = () => ({
 export const resetActiveCourier = courierId => ({
   type: RESET_ACTIVE_COURIER,
   courierId,
+});
+
+export const receiveActiveOrder = order => ({
+  type: RECEIVE_ACTIVE_ORDER,
+  order,
+});
+
+export const exposeActiveOrderInfo = (courierId, orderId) => ({
+  type: REQUEST_ORDER_INFO,
+  courierId,
+  orderId,
 });
