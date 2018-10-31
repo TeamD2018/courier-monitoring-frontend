@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, H5, Icon,
+  Button, Card, Collapse, Divider, H5, Icon,
 } from '@blueprintjs/core';
 
 const SOURCE = false;
@@ -23,7 +23,7 @@ const Waypoint = styled.div`
   display: flex;
   flex-direction: row;
   
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     background: rgba(191, 204, 214, 0.15);
   }
   
@@ -193,6 +193,7 @@ class CourierDetails extends PureComponent {
               <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
             </Info>
           </CourierInfo>
+          <Divider />
           {
             courier.orders && (
               <WaypointsList>
