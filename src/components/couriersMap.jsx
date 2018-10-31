@@ -34,6 +34,9 @@ class CouriersMap extends Component {
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
     this.handleNativeApi = this.handleNativeApi.bind(this);
     this.exposeActiveCourier = this.exposeActiveCourier.bind(this);
+    this.onOrderMarkerClick = this.onOrderMarkerClick.bind(this);
+    this.renderCourierMarker = this.renderCourierMarker.bind(this);
+    this.renderSourceMarker = this.renderSourceMarker.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +53,15 @@ class CouriersMap extends Component {
 
     this.bounds = bounds;
     this.refreshMarkers();
+  }
+
+  onOrderMarkerClick(location) {
+    const { pan } = this.props;
+
+    pan({
+      lat: location.lat,
+      lng: location.lon,
+    });
   }
 
   refreshMarkers() {
@@ -107,7 +119,7 @@ class CouriersMap extends Component {
     );
   }
 
-  static renderSourceMarker(order) {
+  renderSourceMarker(order) {
     return (
       <OrderMarker
         key={order.id}
@@ -115,17 +127,19 @@ class CouriersMap extends Component {
         lng={order.source.point.lon}
         address={order.source.address}
         icon={IconNames.SHOP}
+        onClick={() => this.onOrderMarkerClick(order.source.point)}
         type={false}
       />
     );
   }
 
-  static renderDestMarker(order) {
+  renderDestMarker(order) {
     return (
       <OrderMarker
         key={order.id}
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
+        onClick={() => this.onOrderMarkerClick(order.destination.point)}
         address={order.destination.address}
         type
       />
@@ -152,12 +166,11 @@ class CouriersMap extends Component {
           yesIWantToUseGoogleMapApiInternals
         >
           {couriers.map(this.renderCourierMarker)}
-          {orders.map(CouriersMap.renderSourceMarker)}
-          {orders.map(CouriersMap.renderDestMarker)}
+          {orders.map(this.renderSourceMarker)}
+          {orders.map(this.renderDestMarker)}
         </GoogleMapReact>
         {
-          mapLoaded && activeCourier && activeCourier.geoHistory
-          && (
+          mapLoaded && activeCourier && activeCourier.geoHistory && (
             <Track
               map={map}
               maps={maps}
