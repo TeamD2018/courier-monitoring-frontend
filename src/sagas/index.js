@@ -34,7 +34,6 @@ function* ordersFetch(action) {
   }
 }
 
-
 function* fetchActiveCourier(action) {
   try {
     let activeCourier = yield select(state => state.activeCourier);
@@ -43,8 +42,9 @@ function* fetchActiveCourier(action) {
     }
     const shouldUpdate = activeCourier.id === action.courierId;
 
-    const latest = (shouldUpdate)
-      ? (activeCourier.last_seen) : action.since;
+    const latest = shouldUpdate
+      ? activeCourier.last_seen
+      : action.since;
 
     const [courier, history, orders] = yield all([
       call(getCourierById, action.courierId),
