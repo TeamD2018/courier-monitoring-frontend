@@ -84,7 +84,6 @@ class SearchBar extends PureComponent {
         break;
 
       case 'order':
-        resetActiveCourier(item.courier_id);
         requestActiveCourier(item.courier_id, 0);
         hideCouriersList();
 

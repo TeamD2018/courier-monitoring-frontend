@@ -13,9 +13,6 @@ export default (state = initialState, action) => {
     case types.RECEIVE_ORDERS_FAILED:
       return state;
 
-    case types.RECEIVE_GEO_HISTORY_FAILED:
-      return state;
-
     case types.RECEIVE_ACTIVE_COURIER: {
       let current = state || {};
       if (current.id && current.id !== action.activeCourier.id) {
@@ -28,7 +25,19 @@ export default (state = initialState, action) => {
       };
     }
 
-    case types.DISABLE_ACTIVE_COURIER:
+    case types.REQUEST_ACTIVE_COURIER:
+      if (state && state.id === action.courierId) {
+        return state;
+      }
+
+      return {
+        id: action.courierId,
+        geoHistory: [],
+        orders: [],
+        last_seen: 0,
+      };
+
+    case types.RESET_ACTIVE_COURIER:
       return null;
 
     case types.RECEIVE_GEO_HISTORY: {
@@ -62,17 +71,10 @@ export default (state = initialState, action) => {
 
       return activeCourier;
     }
-    case types.RESET_ACTIVE_COURIER: {
-      if (state && state.id === action.courierId) {
-        return state;
-      }
-      return {
-        id: action.courierId,
-        geoHistory: [],
-        orders: [],
-        last_seen: 0,
-      };
-    }
+
+    case types.RECEIVE_GEO_HISTORY_FAILED:
+      return state;
+
     default:
       return state;
   }

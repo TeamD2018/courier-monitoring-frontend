@@ -25,15 +25,6 @@ function* couriersFetch(action) {
   }
 }
 
-function* ordersFetch(action) {
-  try {
-    const orders = yield call(fetchRecentOrders, action.courierId, action.period);
-    yield put(receiveOrders(orders));
-  } catch (e) {
-    yield put(receiveOrdersFailed());
-  }
-}
-
 function* fetchActiveCourier(action) {
   try {
     let activeCourier = yield select(state => state.activeCourier);
@@ -65,7 +56,6 @@ function* fetchActiveCourier(action) {
 function* rootSaga() {
   yield all([
     takeLatest(types.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
-    takeLatest(types.REQUEST_RECENT_ORDERS, ordersFetch),
     takeLatest(types.REQUEST_ACTIVE_COURIER, fetchActiveCourier),
   ]);
 }

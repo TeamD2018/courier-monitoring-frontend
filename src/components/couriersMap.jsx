@@ -66,6 +66,7 @@ class CouriersMap extends Component {
       bottomRightLat,
       bottomRightLon,
     });
+
     const { activeCourier } = this.props;
     if (activeCourier && activeCourier.id) {
       requestActiveCourier(activeCourier.id, 0);
@@ -74,9 +75,9 @@ class CouriersMap extends Component {
 
   exposeActiveCourier(courier) {
     const {
-      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+      requestActiveCourier, hideCouriersList, pan,
     } = this.props;
-    resetActiveCourier(courier.id);
+
     requestActiveCourier(courier.id, 0);
     hideCouriersList();
 
@@ -95,20 +96,12 @@ class CouriersMap extends Component {
   }
 
   renderCourierMarker(courier) {
-    const {
-      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
-    } = this.props;
     return (
       <CourierMarker
         onClick={this.exposeActiveCourier}
         key={courier.id}
-        courierId={courier.id}
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
-        requestActiveCourier={requestActiveCourier}
-        hideCouriersList={hideCouriersList}
-        resetActiveCourier={resetActiveCourier}
-        pan={pan}
         courier={courier}
       />
     );
@@ -203,7 +196,6 @@ CouriersMap.propTypes = {
     courierId: PropTypes.string,
   }),
   hideCouriersList: PropTypes.func.isRequired,
-  resetActiveCourier: PropTypes.func.isRequired,
 };
 
 CouriersMap.defaultProps = {

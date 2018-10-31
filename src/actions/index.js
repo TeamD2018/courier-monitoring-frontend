@@ -49,11 +49,6 @@ export const receiveOrders = orders => ({
   orders,
 });
 
-export const fetchRecentOrders = (courierId, period) => ({
-  type: types.REQUEST_RECENT_ORDERS,
-  courierId,
-  period,
-});
 export const receiveOrdersFailed = () => ({
   type: types.RECEIVE_COURIERS_FAILED,
 });
@@ -65,14 +60,9 @@ export const receiveGeoHistory = (geoHistory, shouldUpdate) => ({
   geoHistory,
   shouldUpdate,
 });
+
 export const receiveGeoHistoryFailed = () => ({
   type: types.RECEIVE_GEO_HISTORY_FAILED,
-});
-
-export const requestGeoHistory = (courierId, since) => ({
-  type: types.REQUEST_GEO_HISTORY,
-  courierId,
-  since,
 });
 
 
@@ -91,13 +81,8 @@ export const requestActiveCourier = (courierId, since) => ({
   since,
 });
 
-export const disableActiveCourier = () => ({
-  type: types.DISABLE_ACTIVE_COURIER,
-});
-
-export const resetActiveCourier = courierId => ({
+export const resetActiveCourier = () => ({
   type: types.RESET_ACTIVE_COURIER,
-  courierId,
 });
 
 
