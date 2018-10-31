@@ -7,12 +7,10 @@ class Track extends React.PureComponent {
     this.line = null;
   }
 
-
   render() {
     if (this.line) {
       this.line.setMap(null);
     }
-
 
     const { maps, map, history } = this.props;
     const line = new maps.Polyline({
@@ -28,13 +26,14 @@ class Track extends React.PureComponent {
 }
 
 Track.propTypes = {
-  maps: PropTypes.any.isRequired,
+  maps: PropTypes.shape({
+    Polyline: PropTypes.func.isRequired,
+  }).isRequired,
   map: PropTypes.any.isRequired,
   history: PropTypes.arrayOf(PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
   })).isRequired,
 };
-
 
 export default Track;

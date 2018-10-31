@@ -126,7 +126,7 @@ class CourierDetails extends PureComponent {
 
     return (
       <Waypoint
-        key={waypoint.id}
+        key={`${waypoint.orderNumber}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => pan(waypoint.location.point)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>

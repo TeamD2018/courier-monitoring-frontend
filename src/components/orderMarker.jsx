@@ -37,7 +37,7 @@ class OrderMarker extends PureComponent {
 
 OrderMarker.propTypes = {
   address: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.bool.isRequired,
 };
 
 export default OrderMarker;

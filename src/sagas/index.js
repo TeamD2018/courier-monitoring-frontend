@@ -13,7 +13,7 @@ import {
   receiveActiveCourier,
   types,
 } from '../actions';
-import { fetchRecentOrders } from '../services/index';
+import { fetchRecentOrders } from '../services';
 
 function* couriersFetch(action) {
   try {
