@@ -11,8 +11,7 @@ import {
   receiveGeoHistory,
   receiveActiveCourierFailed,
   receiveActiveCourier,
-  REQUEST_COURIERS_BY_BOX_FIELD,
-  REQUEST_RECENT_ORDERS, REQUEST_ACTIVE_COURIER,
+  types,
 } from '../actions';
 import { fetchRecentOrders } from '../services/index';
 
@@ -65,9 +64,9 @@ function* fetchActiveCourier(action) {
 
 function* rootSaga() {
   yield all([
-    takeLatest(REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
-    takeLatest(REQUEST_RECENT_ORDERS, ordersFetch),
-    takeLatest(REQUEST_ACTIVE_COURIER, fetchActiveCourier),
+    takeLatest(types.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
+    takeLatest(types.REQUEST_RECENT_ORDERS, ordersFetch),
+    takeLatest(types.REQUEST_ACTIVE_COURIER, fetchActiveCourier),
   ]);
 }
 

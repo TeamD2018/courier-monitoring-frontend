@@ -1,18 +1,24 @@
 import { types } from '../actions';
 
 const initialState = {
-  isOpen: false,
+  isOpen: true,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.SHOW_COURIERS_LIST:
+    case types.SHOW_ORDER_DETAILS:
       return {
         ...state,
         isOpen: true,
       };
 
-    case types.HIDE_COURIERS_LIST:
+    case types.HIDE_ORDER_DETAILS:
+      return {
+        ...state,
+        isOpen: false,
+      };
+
+    case types.CLOSE_ORDER_DETAILS:
       return {
         ...state,
         isOpen: false,

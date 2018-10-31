@@ -1,28 +1,22 @@
-import {
-  DISABLE_ACTIVE_COURIER,
-  RECEIVE_ACTIVE_COURIER, RECEIVE_GEO_HISTORY,
-  RECEIVE_GEO_HISTORY_FAILED,
-  RECEIVE_ORDERS,
-  RECEIVE_ORDERS_FAILED, RESET_ACTIVE_COURIER,
-} from '../actions';
+import { types } from '../actions';
 
 const initialState = null;
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_ORDERS:
+    case types.RECEIVE_ORDERS:
       return {
         ...state,
         orders: action.orders,
       };
 
-    case RECEIVE_ORDERS_FAILED:
+    case types.RECEIVE_ORDERS_FAILED:
       return state;
 
-    case RECEIVE_GEO_HISTORY_FAILED:
+    case types.RECEIVE_GEO_HISTORY_FAILED:
       return state;
 
-    case RECEIVE_ACTIVE_COURIER: {
+    case types.RECEIVE_ACTIVE_COURIER: {
       let current = state || {};
       if (current.id && current.id !== action.activeCourier.id) {
         current = {};
@@ -34,10 +28,10 @@ export default (state = initialState, action) => {
       };
     }
 
-    case DISABLE_ACTIVE_COURIER:
+    case types.DISABLE_ACTIVE_COURIER:
       return null;
 
-    case RECEIVE_GEO_HISTORY: {
+    case types.RECEIVE_GEO_HISTORY: {
       let activeCourier = state;
       let { geoHistory } = action;
       const { shouldUpdate } = action;
@@ -68,7 +62,7 @@ export default (state = initialState, action) => {
 
       return activeCourier;
     }
-    case RESET_ACTIVE_COURIER: {
+    case types.RESET_ACTIVE_COURIER: {
       if (state && state.id === action.courierId) {
         return state;
       }

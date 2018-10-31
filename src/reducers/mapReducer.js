@@ -1,4 +1,4 @@
-import { PAN } from '../actions';
+import { types } from '../actions';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -11,7 +11,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case PAN:
+    case types.PAN:
       return {
         ...state,
         center: action.location,
