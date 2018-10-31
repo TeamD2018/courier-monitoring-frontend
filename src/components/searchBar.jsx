@@ -81,10 +81,13 @@ class SearchBar extends PureComponent {
           lat: item.location.point.lat,
           lng: item.location.point.lon,
         });
-
         break;
 
       case 'order':
+        resetActiveCourier(item.courier_id);
+        requestActiveCourier(item.courier_id, 0);
+        hideCouriersList();
+
         pan({
           lat: item.destination.point.lat,
           lng: item.destination.point.lon,
@@ -111,10 +114,10 @@ class SearchBar extends PureComponent {
 }
 
 SearchBar.propTypes = {
-  pan: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
   resetActiveCourier: PropTypes.func.isRequired,
+  pan: PropTypes.func.isRequired,
 };
 
 
