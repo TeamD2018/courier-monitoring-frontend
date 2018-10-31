@@ -28,12 +28,12 @@ class CouriersMap extends Component {
 
   constructor(props) {
     super(props);
+
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
-
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
-
     this.handleNativeApi = this.handleNativeApi.bind(this);
+    this.exposeActiveCourier = this.exposeActiveCourier.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +72,19 @@ class CouriersMap extends Component {
     }
   }
 
+  exposeActiveCourier(courier) {
+    const {
+      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+    } = this.props;
+    resetActiveCourier(courier.id);
+    requestActiveCourier(courier.id, 0);
+    hideCouriersList();
+
+    pan({
+      lat: courier.location.point.lat,
+      lng: courier.location.point.lon,
+    });
+  }
 
   handleNativeApi({ maps, map }) {
     this.setState({
@@ -87,6 +100,7 @@ class CouriersMap extends Component {
     } = this.props;
     return (
       <CourierMarker
+        onClick={this.exposeActiveCourier}
         key={courier.id}
         courierId={courier.id}
         lat={courier.location.point.lat}
@@ -120,7 +134,7 @@ class CouriersMap extends Component {
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         address={order.destination.address}
-        type={true}
+        type
       />
     );
   }
@@ -188,6 +202,8 @@ CouriersMap.propTypes = {
     })),
     courierId: PropTypes.string,
   }),
+  hideCouriersList: PropTypes.func.isRequired,
+  resetActiveCourier: PropTypes.func.isRequired,
 };
 
 CouriersMap.defaultProps = {
