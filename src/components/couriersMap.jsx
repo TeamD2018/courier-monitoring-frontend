@@ -37,6 +37,7 @@ class CouriersMap extends Component {
     this.onOrderMarkerClick = this.onOrderMarkerClick.bind(this);
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
     this.renderSourceMarker = this.renderSourceMarker.bind(this);
+    this.renderDestMarker = this.renderDestMarker.bind(this);
   }
 
   componentDidMount() {
