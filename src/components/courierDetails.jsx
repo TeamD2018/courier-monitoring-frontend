@@ -79,6 +79,10 @@ const StyledCard = styled(Card)`
   overflow: auto;
 `;
 
+const BoldDiv = styled.div`
+  font-weight: bold;
+`;
+
 const StyledButton = styled(Button)`
   position: sticky;
   top: 0;
@@ -126,7 +130,10 @@ class CourierDetails extends PureComponent {
         onClick={() => pan(waypoint.location.point)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
-        <div>{waypoint.location.address}</div>
+        <div>
+          <BoldDiv>{waypoint.orderNumber}</BoldDiv>
+          {waypoint.location.address}
+        </div>
       </Waypoint>
     );
   }
@@ -157,6 +164,7 @@ class CourierDetails extends PureComponent {
 
       ordersOfSource.forEach(order => waypoints.push({
         type: DESTINATION,
+        orderNumber: order.order_number,
         created_at: order.created_at,
         location: {
           address: order.destination.address,
