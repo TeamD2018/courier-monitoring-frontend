@@ -43,7 +43,7 @@ class SearchBar extends PureComponent {
               label: 'Destinations',
               options: suggestions.orders.map(suggestion => ({
                 value: suggestion.id,
-                label: suggestion.destination.address,
+                label: `${suggestion.order_number}: ${suggestion.destination.address}`,
                 type: 'order',
                 ...suggestion,
               })),
@@ -81,10 +81,12 @@ class SearchBar extends PureComponent {
           lat: item.location.point.lat,
           lng: item.location.point.lon,
         });
-
         break;
 
       case 'order':
+        requestActiveCourier(item.courier_id, 0);
+        hideCouriersList();
+
         pan({
           lat: item.destination.point.lat,
           lng: item.destination.point.lon,
@@ -111,10 +113,10 @@ class SearchBar extends PureComponent {
 }
 
 SearchBar.propTypes = {
-  pan: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
   resetActiveCourier: PropTypes.func.isRequired,
+  pan: PropTypes.func.isRequired,
 };
 
 

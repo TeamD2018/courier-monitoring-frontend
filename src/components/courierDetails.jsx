@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, H5, Icon,
+  Button, Card, Collapse, Divider, H5, Icon,
 } from '@blueprintjs/core';
 
 const SOURCE = false;
@@ -23,7 +23,7 @@ const Waypoint = styled.div`
   display: flex;
   flex-direction: row;
   
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     background: rgba(191, 204, 214, 0.15);
   }
   
@@ -79,6 +79,10 @@ const StyledCard = styled(Card)`
   overflow: auto;
 `;
 
+const BoldDiv = styled.div`
+  font-weight: bold;
+`;
+
 const StyledButton = styled(Button)`
   position: sticky;
   top: 0;
@@ -122,11 +126,14 @@ class CourierDetails extends PureComponent {
 
     return (
       <Waypoint
-        key={waypoint.id + (waypoint.type ? 'home' : 'shop')}
+        key={`${waypoint.orderNumber}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => pan(waypoint.location.point)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
-        <div>{waypoint.location.address}</div>
+        <div>
+          <BoldDiv>{waypoint.orderNumber}</BoldDiv>
+          {waypoint.location.address}
+        </div>
       </Waypoint>
     );
   }
@@ -136,8 +143,7 @@ class CourierDetails extends PureComponent {
 
     orders.forEach((order) => {
       if (waypointsMap.has(order.source.address)) {
-        waypointsMap.get(order.source.address)
-          .push(order);
+        waypointsMap.get(order.source.address).push(order);
       } else {
         waypointsMap.set(order.source.address, [order]);
       }
@@ -158,6 +164,7 @@ class CourierDetails extends PureComponent {
 
       ordersOfSource.forEach(order => waypoints.push({
         type: DESTINATION,
+        orderNumber: order.order_number,
         created_at: order.created_at,
         location: {
           address: order.destination.address,
@@ -194,6 +201,7 @@ class CourierDetails extends PureComponent {
               <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
             </Info>
           </CourierInfo>
+          <Divider />
           {
             courier.orders && (
               <WaypointsList>

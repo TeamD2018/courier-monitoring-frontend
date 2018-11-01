@@ -1,4 +1,4 @@
-import { HIDE_COURIERS_LIST, SHOW_COURIERS_LIST } from '../actions';
+import { types } from '../actions';
 
 const initialState = {
   isOpen: false,
@@ -6,13 +6,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SHOW_COURIERS_LIST:
+    case types.SHOW_COURIERS_LIST:
       return {
         ...state,
         isOpen: true,
       };
 
-    case HIDE_COURIERS_LIST:
+    case types.HIDE_COURIERS_LIST:
       return {
         ...state,
         isOpen: false,

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
-
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import courierMarker from '../images/Courier.png';
@@ -17,27 +16,8 @@ const StyledIcon = styled.img`
 `;
 
 class CourierMarker extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.exposeActiveCourier = this.exposeActiveCourier.bind(this);
-  }
-
-  exposeActiveCourier() {
-    const {
-      requestActiveCourier, courier, hideCouriersList, pan, resetActiveCourier,
-    } = this.props;
-    resetActiveCourier(courier.id);
-    requestActiveCourier(courier.id, 0);
-    hideCouriersList();
-
-    pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
-    });
-  }
-
   render() {
-    const { courier } = this.props;
+    const { courier, onClick } = this.props;
 
     return (
       <Popover
@@ -46,7 +26,7 @@ class CourierMarker extends PureComponent {
         position="bottom"
       >
         <StyledIcon
-          onClick={this.exposeActiveCourier}
+          onClick={() => onClick(courier)}
           src={courierMarker}
         />
         <StyledDiv>
@@ -59,7 +39,11 @@ class CourierMarker extends PureComponent {
 }
 
 CourierMarker.propTypes = {
-  courier: PropTypes.object.isRequired,
+  courier: PropTypes.shape({
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CourierMarker;

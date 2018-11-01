@@ -86,6 +86,7 @@ class CouriersList extends PureComponent {
       lat: courier.location.point.lat,
       lng: courier.location.point.lon,
     });
+
     requestActiveCourier(courier.id, 0);
     hideCouriersList();
   }
@@ -154,6 +155,7 @@ CouriersList.propTypes = {
   showCouriersList: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
+  requestActiveCourier: PropTypes.func.isRequired,
 };
 
 CouriersList.defaultProps = {
