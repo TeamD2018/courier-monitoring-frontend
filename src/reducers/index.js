@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import mapReducer from './mapReducer';
 import courierListReducer from './couriersListReducer';
-import couriersReducer from './courierReducers';
+import couriersReducer from './couriersReducer';
 import activeCourierReducer from './activeCourierReducer';
 import courierDetailsReducer from './courierDetailsReducer';
 
