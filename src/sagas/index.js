@@ -7,7 +7,6 @@ import {
   receiveCouriers,
   receiverCouriersFailed,
   receiveOrders,
-  receiveOrdersFailed,
   receiveGeoHistory,
   receiveActiveCourierFailed,
   receiveActiveCourier,
@@ -21,6 +20,7 @@ function* couriersFetch(action) {
 
     yield put(receiveCouriers(couriers));
   } catch (e) {
+    console.error(e);
     yield put(receiverCouriersFailed());
   }
 }
@@ -49,6 +49,7 @@ function* fetchActiveCourier(action) {
       put(receiveOrders(orders)),
     ]);
   } catch (e) {
+    console.error(e);
     yield put(receiveActiveCourierFailed());
   }
 }
