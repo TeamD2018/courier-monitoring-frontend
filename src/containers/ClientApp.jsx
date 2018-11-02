@@ -48,7 +48,6 @@ class ClientApp extends Component {
 const mapStateToProps = state => ({
   activeCourier: state.activeCourier,
   center: state.map.center,
-  activeOrder: state.activeOrder,
 });
 
 export default connect(mapStateToProps)(ClientApp);

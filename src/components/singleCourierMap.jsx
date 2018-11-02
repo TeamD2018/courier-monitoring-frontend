@@ -27,9 +27,9 @@ class SingleCourierMap extends Component {
 
   constructor(props) {
     super(props);
+
     this.onMove = this.onMove.bind(this);
     this.refreshMarkers = this.refreshMarkers.bind(this);
-
     this.handleNativeApi = this.handleNativeApi.bind(this);
   }
 
@@ -50,17 +50,16 @@ class SingleCourierMap extends Component {
   }
 
   refreshMarkers() {
-    const { requestActiveCourier } = this.props;
+    const {
+      requestActiveCourierWithOnlyOrder, orderId, courierId, activeCourier,
+    } = this.props;
 
-    const { activeCourier } = this.props;
-    if (activeCourier && activeCourier.id) {
-      requestActiveCourier(activeCourier.id, activeCourier.last_seen);
-    } else {
-      const { exposeActiveOrderInfo, orderId, courierId } = this.props;
-      exposeActiveOrderInfo(courierId, orderId);
-    }
+    const since = activeCourier && activeCourier.id
+      ? activeCourier.last_seen
+      : 0;
+
+    requestActiveCourierWithOnlyOrder(courierId, orderId, since);
   }
-
 
   handleNativeApi({ maps, map }) {
     this.setState({
@@ -71,53 +70,58 @@ class SingleCourierMap extends Component {
   }
 
   renderCourierMarker(courier) {
-    const {
-      requestActiveCourier, pan, resetActiveCourier,
-    } = this.props;
+    const { pan } = this.props;
     return (
       <CourierMarker
         key={courier.id}
         courierId={courier.id}
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
-        requestActiveCourier={requestActiveCourier}
-        resetActiveCourier={resetActiveCourier}
-        pan={pan}
+        onClick={() => pan({
+          lat: courier.location.point.lat,
+          lng: courier.location.point.lon,
+        })}
         courier={courier}
       />
     );
   }
 
-  static renderSourceMarker(order) {
-
+  renderSourceMarker(order) {
+    const { pan } = this.props;
     return (
       <OrderMarker
         key={`${order.id}src`}
         lat={order.source.point.lat}
         lng={order.source.point.lon}
         address={order.source.address}
-        isDest={false}
+        type={false}
+        onClick={() => pan({
+          lat: order.source.point.lat,
+          lng: order.source.point.lon,
+        })}
       />
     );
   }
 
-  static renderDestMarker(order) {
-
+  renderDestMarker(order) {
+    const { pan } = this.props;
     return (
       <OrderMarker
         key={`${order.id}dst`}
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         address={order.destination.address}
-        isDest
+        type
+        onClick={() => pan({
+          lat: order.destination.point.lat,
+          lng: order.destination.point.lon,
+        })}
       />
     );
   }
 
   render() {
-    const {
-      center, activeCourier, activeOrder,
-    } = this.props;
+    const { center, activeCourier } = this.props;
     const { maps, map, mapLoaded } = (this.state || {});
 
     return (
@@ -133,10 +137,10 @@ class SingleCourierMap extends Component {
           yesIWantToUseGoogleMapApiInternals
         >
           {activeCourier && this.renderCourierMarker(activeCourier)}
-          {activeOrder && SingleCourierMap.renderDestMarker(activeOrder)}
-          {activeOrder && SingleCourierMap.renderSourceMarker(activeOrder)}
-
+          {activeCourier && this.renderDestMarker(activeCourier.orders[0])}
+          {activeCourier && this.renderSourceMarker(activeCourier.orders[0])}
         </GoogleMapReact>
+
         {
           mapLoaded && activeCourier && activeCourier.geoHistory
           && (
@@ -153,8 +157,6 @@ class SingleCourierMap extends Component {
 }
 
 SingleCourierMap.propTypes = {
-
-  requestActiveCourier: PropTypes.func.isRequired,
   center: PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
@@ -167,10 +169,8 @@ SingleCourierMap.propTypes = {
     })),
     courierId: PropTypes.string,
   }),
-  exposeActiveOrderInfo: PropTypes.func.isRequired,
   orderId: PropTypes.string.isRequired,
   courierId: PropTypes.string.isRequired,
-  resetActiveCourier: PropTypes.func.isRequired,
   activeOrder: PropTypes.shape({
     source: PropTypes.shape({
       address: PropTypes.string,
@@ -188,6 +188,7 @@ SingleCourierMap.propTypes = {
     }),
     order_number: PropTypes.number,
   }),
+  requestActiveCourierWithOnlyOrder: PropTypes.func.isRequired,
 };
 
 SingleCourierMap.defaultProps = {

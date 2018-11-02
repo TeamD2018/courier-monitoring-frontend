@@ -70,6 +70,13 @@ export const requestActiveCourier = (courierId, since) => ({
   since,
 });
 
+export const requestActiveCourierWithOnlyOrder = (courierId, orderId, since) => ({
+  type: types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER,
+  courierId,
+  orderId,
+  since,
+});
+
 export const resetActiveCourier = () => ({
   type: types.RESET_ACTIVE_COURIER,
 });

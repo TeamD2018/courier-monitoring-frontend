@@ -11,13 +11,18 @@ import ClientApp from './containers/ClientApp';
 
 const store = configureStore();
 store.runSaga(rootSaga);
+
 const urlParams = new URLSearchParams(window.location.search);
-const order_id = urlParams.get('order_id');
-const courier_id = urlParams.get('courier_id');
-console.log(order_id, courier_id)
+const orderId = urlParams.get('order_id');
+const courierId = urlParams.get('courier_id');
+
 ReactDOM.render(
   <Provider store={store}>
-    {order_id ? (<ClientApp orderId={order_id} courierId={courier_id}/>) : (<App/>)}
+    {
+      orderId
+        ? <ClientApp orderId={orderId} courierId={courierId} />
+        : <App />
+    }
   </Provider>,
   document.getElementById('root'),
 );
