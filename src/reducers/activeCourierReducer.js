@@ -25,18 +25,6 @@ export default (state = initialState, action) => {
       };
     }
 
-    case types.REQUEST_ACTIVE_COURIER:
-      if (state && state.id === action.courierId) {
-        return state;
-      }
-
-      return {
-        id: action.courierId,
-        geoHistory: [],
-        orders: [],
-        last_seen: 0,
-      };
-
     case types.RESET_ACTIVE_COURIER:
       return null;
 

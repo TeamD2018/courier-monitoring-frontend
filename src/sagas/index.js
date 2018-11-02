@@ -28,6 +28,16 @@ function* couriersFetch(action) {
 function* fetchActiveCourier(action) {
   try {
     let activeCourier = yield select(state => state.activeCourier);
+
+    if (!activeCourier || activeCourier.id !== action.courierId) {
+      yield put(receiveActiveCourier({
+        id: action.courierId,
+        geoHistory: [],
+        orders: [],
+        last_seen: 0,
+      }));
+    }
+
     if (!activeCourier) {
       activeCourier = {};
     }
