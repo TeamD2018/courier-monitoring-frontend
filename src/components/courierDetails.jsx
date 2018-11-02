@@ -126,7 +126,7 @@ class CourierDetails extends PureComponent {
 
     return (
       <Waypoint
-        key={`${waypoint.orderNumber}_${(waypoint.type ? 'dst' : 'src')}`}
+        key={`${waypoint.orderId}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => pan(waypoint.location.point)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
@@ -153,6 +153,7 @@ class CourierDetails extends PureComponent {
     waypointsMap.forEach((ordersOfSource) => {
       waypoints.push({
         type: SOURCE,
+        orderId: ordersOfSource[0].id,
         location: {
           address: ordersOfSource[0].source.address,
           point: {
@@ -164,6 +165,7 @@ class CourierDetails extends PureComponent {
 
       ordersOfSource.forEach(order => waypoints.push({
         type: DESTINATION,
+        orderId: order.id,
         orderNumber: order.order_number,
         created_at: order.created_at,
         location: {
