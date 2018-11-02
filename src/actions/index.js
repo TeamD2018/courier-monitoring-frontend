@@ -43,17 +43,6 @@ export const closeCourierDetails = () => ({
 });
 
 
-// Orders actions
-export const receiveOrders = orders => ({
-  type: types.RECEIVE_ORDERS,
-  orders,
-});
-
-export const receiveOrdersFailed = () => ({
-  type: types.RECEIVE_COURIERS_FAILED,
-});
-
-
 // Geo history actions
 export const receiveGeoHistory = (geoHistory, shouldUpdate) => ({
   type: types.RECEIVE_GEO_HISTORY,

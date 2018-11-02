@@ -53,10 +53,11 @@ function* fetchActiveCourier(action) {
       call(fetchRecentOrders, action.courierId, 8),
     ]);
 
+    courier.orders = orders;
+
     yield all([
       put(receiveActiveCourier(courier)),
       put(receiveGeoHistory(history.geo_history, shouldUpdate)),
-      put(receiveOrders(orders)),
     ]);
   } catch (e) {
     console.error(e);

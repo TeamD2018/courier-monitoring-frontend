@@ -4,15 +4,6 @@ const initialState = null;
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.RECEIVE_ORDERS:
-      return {
-        ...state,
-        orders: action.orders,
-      };
-
-    case types.RECEIVE_ORDERS_FAILED:
-      return state;
-
     case types.RECEIVE_ACTIVE_COURIER: {
       let current = state || {};
       if (current.id && current.id !== action.activeCourier.id) {
