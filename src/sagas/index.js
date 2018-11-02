@@ -6,7 +6,6 @@ import { getCourierById, getCouriersByBoxField, getGeoHistory } from '../api';
 import {
   receiveCouriers,
   receiverCouriersFailed,
-  receiveOrders,
   receiveGeoHistory,
   receiveActiveCourierFailed,
   receiveActiveCourier,
