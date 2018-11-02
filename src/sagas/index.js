@@ -8,9 +8,8 @@ import {
 import {
   receiveCouriers,
   receiverCouriersFailed,
-  receiveGeoHistory,
-  receiveActiveCourierFailed,
   receiveActiveCourier,
+  receiveActiveCourierFailed,
   types,
 } from '../actions';
 import { fetchRecentOrders } from '../services';
@@ -30,23 +29,20 @@ function* fetchActiveCourier(action) {
   try {
     let activeCourier = yield select(state => state.activeCourier);
 
-    if (!activeCourier || activeCourier.id !== action.courierId) {
-      yield put(receiveActiveCourier({
+    const overwrite = !activeCourier || activeCourier.id !== action.courierId;
+
+    if (overwrite) {
+      activeCourier = {
         id: action.courierId,
         geoHistory: [],
         orders: [],
         last_seen: 0,
-      }));
+      };
     }
 
-    if (!activeCourier) {
-      activeCourier = {};
-    }
-    const shouldUpdate = activeCourier.id === action.courierId;
-
-    const latest = shouldUpdate
-      ? activeCourier.last_seen
-      : action.since;
+    const latest = overwrite
+      ? action.since
+      : activeCourier.last_seen;
 
     const [courier, history, orders] = yield all([
       call(getCourierById, action.courierId),
@@ -55,11 +51,16 @@ function* fetchActiveCourier(action) {
     ]);
 
     courier.orders = orders;
+    const geoHistory = history.geo_history.map(historyPoint => ({
+      lat: historyPoint.point.lat,
+      lng: historyPoint.point.lon,
+    }));
 
-    yield all([
-      put(receiveActiveCourier(courier)),
-      put(receiveGeoHistory(history.geo_history, shouldUpdate)),
-    ]);
+    courier.geoHistory = overwrite
+      ? geoHistory
+      : activeCourier.geoHistory.concat(geoHistory);
+
+    yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
     yield put(receiveActiveCourierFailed());
@@ -70,7 +71,9 @@ function* fetchActiveCourierWithOnlyOrder(action) {
   try {
     let activeCourier = yield select(state => state.activeCourier);
 
-    if (!activeCourier) {
+    const overwrite = !activeCourier || activeCourier.id !== action.courierId;
+
+    if (overwrite) {
       activeCourier = {
         id: action.courierId,
         geoHistory: [],
@@ -78,11 +81,10 @@ function* fetchActiveCourierWithOnlyOrder(action) {
         last_seen: 0,
       };
     }
-    const shouldUpdate = activeCourier.id === action.courierId;
 
-    const latest = shouldUpdate
-      ? activeCourier.last_seen
-      : action.since;
+    const latest = overwrite
+      ? action.since
+      : activeCourier.last_seen;
 
     const [courier, history, order] = yield all([
       call(getCourierById, action.courierId),
@@ -91,11 +93,16 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     ]);
 
     courier.orders = [order];
+    const geoHistory = history.geo_history.map(historyPoint => ({
+      lat: historyPoint.point.lat,
+      lng: historyPoint.point.lon,
+    }));
 
-    yield all([
-      put(receiveActiveCourier(courier)),
-      put(receiveGeoHistory(history.geo_history, shouldUpdate)),
-    ]);
+    courier.geoHistory = overwrite
+      ? geoHistory
+      : activeCourier.geoHistory.concat(geoHistory);
+
+    yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
     yield put(receiveActiveCourierFailed());

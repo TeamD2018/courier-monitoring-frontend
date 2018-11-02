@@ -214,7 +214,7 @@ CouriersMap.propTypes = {
 
 CouriersMap.defaultProps = {
   couriers: [],
-  activeCourier: {},
+  activeCourier: null,
 };
 
 export default CouriersMap;

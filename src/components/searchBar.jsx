@@ -68,12 +68,11 @@ class SearchBar extends PureComponent {
 
   onItemClick(item) {
     const {
-      requestActiveCourier, hideCouriersList, pan, resetActiveCourier,
+      requestActiveCourier, hideCouriersList, pan,
     } = this.props;
 
     switch (item.type) {
       case 'courier':
-        resetActiveCourier(item.id);
         requestActiveCourier(item.id, 0);
         hideCouriersList();
 
@@ -115,7 +114,6 @@ class SearchBar extends PureComponent {
 SearchBar.propTypes = {
   requestActiveCourier: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
-  resetActiveCourier: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
 };
 

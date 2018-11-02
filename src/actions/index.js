@@ -43,18 +43,6 @@ export const closeCourierDetails = () => ({
 });
 
 
-// Geo history actions
-export const receiveGeoHistory = (geoHistory, shouldUpdate) => ({
-  type: types.RECEIVE_GEO_HISTORY,
-  geoHistory,
-  shouldUpdate,
-});
-
-export const receiveGeoHistoryFailed = () => ({
-  type: types.RECEIVE_GEO_HISTORY_FAILED,
-});
-
-
 // Active courier actions
 export const receiveActiveCourier = activeCourier => ({
   type: types.RECEIVE_ACTIVE_COURIER,
