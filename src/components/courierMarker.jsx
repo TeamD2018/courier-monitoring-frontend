@@ -3,6 +3,7 @@ import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import courierMarker from '../images/Courier.png';
+import busyCourierMarker from '../images/Busy courier.png';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -27,7 +28,7 @@ class CourierMarker extends PureComponent {
       >
         <StyledIcon
           onClick={() => onClick(courier)}
-          src={courierMarker}
+          src={courier.orders_count > 0 ? busyCourierMarker : courierMarker}
         />
         <StyledDiv>
           <div className="bp3-text-large">{courier.name}</div>
@@ -42,6 +43,7 @@ CourierMarker.propTypes = {
   courier: PropTypes.shape({
     phone: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    orders_count: PropTypes.number.isRequired,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
