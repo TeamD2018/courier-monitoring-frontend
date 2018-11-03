@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Icon,
 } from '@blueprintjs/core';
-import { setZoom } from '../actions';
 
 const SOURCE = false;
 const DESTINATION = true;
@@ -40,6 +39,7 @@ const Waypoint = styled.div`
 const CourierInfo = styled.div`
   width: 100%;
   padding: 0.8rem;
+  cursor: pointer;
 `;
 
 const Title = styled(H5)`
