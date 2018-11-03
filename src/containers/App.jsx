@@ -60,7 +60,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   couriers: state.couriers,
-  activeCourier: state.activeCourier,
+  activeCourier: state.activeCourier.courier,
   mapCenter: state.map.center,
   isCouriersListOpen: state.couriersList.isOpen,
   areCourierDetailsOpen: state.courierDetails.isOpen,

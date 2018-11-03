@@ -52,17 +52,15 @@ export const receiveActiveCourierFailed = () => ({
   type: types.RECEIVE_ACTIVE_COURIER_FAIL,
 });
 
-export const requestActiveCourier = (courierId, since) => ({
+export const requestActiveCourier = courierId => ({
   type: types.REQUEST_ACTIVE_COURIER,
   courierId,
-  since,
 });
 
-export const requestActiveCourierWithOnlyOrder = (courierId, orderId, since) => ({
+export const requestActiveCourierWithOnlyOrder = (courierId, orderId) => ({
   type: types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER,
   courierId,
   orderId,
-  since,
 });
 
 export const resetActiveCourier = () => ({

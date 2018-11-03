@@ -1,22 +1,36 @@
 import { types } from '../actions';
 
-const initialState = null;
+const initialState = {
+  requestedId: null,
+  courier: null,
+  isFetching: true,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.RECEIVE_ACTIVE_COURIER:
-      return action.activeCourier;
+      return {
+        ...state,
+        courier: action.activeCourier,
+        isFetching: false,
+      };
 
     case types.REQUEST_ACTIVE_COURIER:
-      return state && state.id !== action.id
-        ? {
-          ...state,
-          id: action.id,
-        }
-        : state;
+      return {
+        ...state,
+        requestedId: action.id,
+        isFetching: true,
+      };
+
+    case types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER:
+      return {
+        ...state,
+        requestedId: action.id,
+        isFetching: true,
+      };
 
     case types.RESET_ACTIVE_COURIER:
-      return null;
+      return initialState;
 
     default:
       return state;

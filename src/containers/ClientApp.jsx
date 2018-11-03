@@ -47,7 +47,7 @@ class ClientApp extends Component {
 }
 
 const mapStateToProps = state => ({
-  activeCourier: state.activeCourier,
+  activeCourier: state.activeCourier.courier,
   mapCenter: state.map.center,
   mapZoom: state.map.zoom,
 });

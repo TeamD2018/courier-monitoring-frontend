@@ -27,22 +27,12 @@ function* couriersFetch(action) {
 
 function* fetchActiveCourier(action) {
   try {
-    let activeCourier = yield select(state => state.activeCourier);
-
-    const overwrite = !activeCourier || activeCourier.id !== action.courierId;
-
-    if (overwrite) {
-      activeCourier = {
-        id: action.courierId,
-        geoHistory: [],
-        orders: [],
-        last_seen: 0,
-      };
-    }
+    const activeCourier = yield select(state => state.activeCourier);
+    const overwrite = !activeCourier.courier || activeCourier.courier.id !== action.courierId;
 
     const latest = overwrite
-      ? action.since
-      : activeCourier.last_seen;
+      ? 0
+      : activeCourier.courier.last_seen;
 
     const [courier, history, orders] = yield all([
       call(getCourierById, action.courierId),
@@ -51,14 +41,14 @@ function* fetchActiveCourier(action) {
     ]);
 
     courier.orders = orders;
+
     const geoHistory = history.geo_history.map(historyPoint => ({
       lat: historyPoint.point.lat,
       lng: historyPoint.point.lon,
     }));
-
     courier.geoHistory = overwrite
       ? geoHistory
-      : activeCourier.geoHistory.concat(geoHistory);
+      : activeCourier.courier.geoHistory.concat(geoHistory);
 
     yield put(receiveActiveCourier(courier));
   } catch (e) {
@@ -69,22 +59,12 @@ function* fetchActiveCourier(action) {
 
 function* fetchActiveCourierWithOnlyOrder(action) {
   try {
-    let activeCourier = yield select(state => state.activeCourier);
-
-    const overwrite = !activeCourier || activeCourier.id !== action.courierId;
-
-    if (overwrite) {
-      activeCourier = {
-        id: action.courierId,
-        geoHistory: [],
-        orders: [],
-        last_seen: 0,
-      };
-    }
+    const activeCourier = yield select(state => state.activeCourier);
+    const overwrite = !activeCourier.courier || activeCourier.courier.id !== action.courierId;
 
     const latest = overwrite
-      ? action.since
-      : activeCourier.last_seen;
+      ? 0
+      : activeCourier.courier.last_seen;
 
     const [courier, history, order] = yield all([
       call(getCourierById, action.courierId),
@@ -93,11 +73,11 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     ]);
 
     courier.orders = [order];
+
     const geoHistory = history.geo_history.map(historyPoint => ({
       lat: historyPoint.point.lat,
       lng: historyPoint.point.lon,
     }));
-
     courier.geoHistory = overwrite
       ? geoHistory
       : activeCourier.geoHistory.concat(geoHistory);

@@ -59,14 +59,10 @@ class SingleCourierMap extends Component {
 
   refreshMarkers() {
     const {
-      requestActiveCourierWithOnlyOrder, orderId, courierId, activeCourier,
+      requestActiveCourierWithOnlyOrder, orderId, courierId,
     } = this.props;
 
-    const since = activeCourier && activeCourier.id
-      ? activeCourier.last_seen
-      : 0;
-
-    requestActiveCourierWithOnlyOrder(courierId, orderId, since);
+    requestActiveCourierWithOnlyOrder(courierId, orderId);
   }
 
   handleNativeApi({ maps, map }) {

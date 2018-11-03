@@ -91,7 +91,7 @@ class CouriersMap extends Component {
 
     const { activeCourier } = this.props;
     if (activeCourier && activeCourier.id) {
-      requestActiveCourier(activeCourier.id, 0);
+      requestActiveCourier(activeCourier.id);
     }
   }
 
