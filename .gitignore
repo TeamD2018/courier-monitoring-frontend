@@ -61,6 +61,5 @@ typings/
 .next
 
 .cache
-dist/bundle.js
-dist/main.css
+dist
 .idea
