@@ -18,14 +18,14 @@ export default (state = initialState, action) => {
     case types.REQUEST_ACTIVE_COURIER:
       return {
         ...state,
-        requestedId: action.id,
+        requestedId: action.courierId,
         isFetching: true,
       };
 
     case types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER:
       return {
         ...state,
-        requestedId: action.id,
+        requestedId: action.courierId,
         isFetching: true,
       };
 

@@ -78,7 +78,6 @@ class SingleCourierMap extends Component {
     return (
       <CourierMarker
         key={courier.id}
-        courierId={courier.id}
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
         onClick={() => pan({
@@ -94,7 +93,7 @@ class SingleCourierMap extends Component {
     const { pan } = this.props;
     return (
       <OrderMarker
-        key={`${order.id}src`}
+        key={`${order.id}_src`}
         lat={order.source.point.lat}
         lng={order.source.point.lon}
         address={order.source.address}
@@ -111,7 +110,7 @@ class SingleCourierMap extends Component {
     const { pan } = this.props;
     return (
       <OrderMarker
-        key={`${order.id}dst`}
+        key={`${order.id}_dst`}
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         address={order.destination.address}
@@ -173,7 +172,7 @@ SingleCourierMap.propTypes = {
       })),
       courierId: PropTypes.string,
     }),
-    requestedId: PropTypes.number,
+    requestedId: PropTypes.string,
   }),
   orderId: PropTypes.string.isRequired,
   courierId: PropTypes.string.isRequired,

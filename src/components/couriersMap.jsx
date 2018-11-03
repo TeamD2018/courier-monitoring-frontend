@@ -100,7 +100,7 @@ class CouriersMap extends Component {
       requestActiveCourier, hideCouriersList, pan,
     } = this.props;
 
-    requestActiveCourier(courier.id, 0);
+    requestActiveCourier(courier.id);
     hideCouriersList();
 
     pan({
@@ -132,7 +132,7 @@ class CouriersMap extends Component {
   renderSourceMarker(order) {
     return (
       <OrderMarker
-        key={order.id}
+        key={`${order.id}_src`}
         lat={order.source.point.lat}
         lng={order.source.point.lon}
         address={order.source.address}
@@ -146,7 +146,7 @@ class CouriersMap extends Component {
   renderDestMarker(order) {
     return (
       <OrderMarker
-        key={order.id}
+        key={`${order.id}_dst`}
         lat={order.destination.point.lat}
         lng={order.destination.point.lon}
         onClick={() => this.onOrderMarkerClick(order.destination.point)}
@@ -222,7 +222,7 @@ CouriersMap.propTypes = {
       })),
       courierId: PropTypes.string,
     }),
-    requestedId: PropTypes.number,
+    requestedId: PropTypes.string,
   }),
   hideCouriersList: PropTypes.func.isRequired,
 };
