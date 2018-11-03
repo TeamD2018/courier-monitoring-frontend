@@ -1,13 +1,14 @@
 jobs:
   include:
   - stage: linter check
-    language: node.js
+    language: node_js
     nodejs:
     - '10.11'
     install:
     - yarn install --production=false --frozen-lockfile
     script:
     - yarn lint
+    cache: yarn
 
   - stage: Build docker images
     language: minimal
