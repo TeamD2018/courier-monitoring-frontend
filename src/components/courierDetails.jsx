@@ -125,7 +125,11 @@ class CourierDetails extends PureComponent {
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
         <div>
-          <BoldDiv>{waypoint.orderNumber}</BoldDiv>
+          {
+            waypoint.type && (
+              <BoldDiv>{`№${waypoint.orderNumber}`}</BoldDiv>
+            )
+          }
           {waypoint.location.address}
         </div>
       </Waypoint>

@@ -43,7 +43,7 @@ class SearchBar extends PureComponent {
               label: 'Destinations',
               options: suggestions.orders.map(suggestion => ({
                 value: suggestion.id,
-                label: `${suggestion.order_number}: ${suggestion.destination.address}`,
+                label: `№${suggestion.order_number}: ${suggestion.destination.address}`,
                 type: 'order',
                 ...suggestion,
               })),
