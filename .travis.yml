@@ -2,6 +2,8 @@ jobs:
   include:
   - stage: linter check
     language: node.js
+    nodejs:
+    - '10.11'
     install:
     - yarn install --production=false --frozen-lockfile
     script:
