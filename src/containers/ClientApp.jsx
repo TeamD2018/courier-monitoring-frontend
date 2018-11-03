@@ -36,6 +36,7 @@ class ClientApp extends Component {
             activeCourier.courier && (
               <CourierDetails
                 courier={activeCourier.courier}
+                isFetching={activeCourier.isFetching}
                 {...this.boundActionCreators}
               />
             )

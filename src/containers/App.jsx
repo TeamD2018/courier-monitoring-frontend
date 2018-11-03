@@ -46,6 +46,7 @@ class App extends Component {
             activeCourier.courier && (
               <CourierDetails
                 courier={activeCourier.courier}
+                isFetching={activeCourier.isFetching}
                 isOpen={areCourierDetailsOpen}
                 {...this.boundActionCreators}
               />

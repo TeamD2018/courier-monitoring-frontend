@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, Divider, H5, Icon,
+  Button, Card, Collapse, Divider, H5, Icon, Classes,
 } from '@blueprintjs/core';
 
 const SOURCE = false;
@@ -129,13 +129,17 @@ class CourierDetails extends PureComponent {
   }
 
   renderWaypoint(waypoint) {
+    const { isFetching } = this.props;
+
     return (
       <Waypoint
         key={`${waypoint.orderId}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => this.onRowClick(waypoint)}
       >
-        <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
-        <div>
+        <StyledDiv className={isFetching && Classes.SKELETON}>
+          <Icon icon={waypoint.type ? 'home' : 'shop'} />
+        </StyledDiv>
+        <div className={isFetching && Classes.SKELETON}>
           {
             waypoint.type && (
               <BoldDiv>{`№${waypoint.orderNumber}`}</BoldDiv>
@@ -191,7 +195,7 @@ class CourierDetails extends PureComponent {
   }
 
   render() {
-    const { courier, isOpen } = this.props;
+    const { courier, isOpen, isFetching } = this.props;
 
     return (
       <StyledCard>
@@ -208,10 +212,12 @@ class CourierDetails extends PureComponent {
           <CourierInfo
             onClick={() => this.onCourierClick(courier)}
           >
-            <Title>{courier.name}</Title>
+            <Title className={isFetching && Classes.SKELETON}>{courier.name}</Title>
             <Info>
-              <Phone>{`+${courier.phone}`}</Phone>
-              <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
+              <Phone className={isFetching && Classes.SKELETON}>{`+${courier.phone}`}</Phone>
+              <LastSeen className={isFetching && Classes.SKELETON}>
+                {new Date(courier.last_seen * 1000).toLocaleString()}
+              </LastSeen>
             </Info>
           </CourierInfo>
           {
@@ -246,10 +252,12 @@ CourierDetails.propTypes = {
   hideCourierDetails: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
 };
 
 CourierDetails.defaultProps = {
   isOpen: true,
+  isFetching: false,
 };
 
 export default CourierDetails;

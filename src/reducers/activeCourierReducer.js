@@ -19,14 +19,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         requestedId: action.courierId,
-        isFetching: true,
+        isFetching: state.courier && state.courier.id !== action.courierId,
       };
 
     case types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER:
       return {
         ...state,
         requestedId: action.courierId,
-        isFetching: true,
+        isFetching: state.courier && state.courier.id !== action.courierId,
       };
 
     case types.RESET_ACTIVE_COURIER:
