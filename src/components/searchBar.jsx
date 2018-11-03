@@ -101,7 +101,7 @@ class SearchBar extends PureComponent {
 
   render() {
     return (
-      <StyledCard>
+      <StyledCard elevation={2}>
         <AsyncSelect
           loadOptions={SearchBar.promiseOptions}
           onChange={this.onItemClick}

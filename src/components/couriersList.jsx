@@ -124,7 +124,7 @@ class CouriersList extends PureComponent {
     const { couriers, isOpen } = this.props;
 
     return (
-      <StyledCard>
+      <StyledCard elevation={2}>
         <StyledButton
           icon={isOpen ? 'caret-up' : 'caret-down'}
           fill
