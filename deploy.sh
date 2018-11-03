@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 SWARM_MANAGER_IP=$1
+VERSION=$2
+
 DEPLOY_USER=travis
 echo "Deploying to $SERVER_IP"
 
@@ -13,4 +15,4 @@ echo "Uploading..."
 scp -P 228 -r docker-compose.yml $DEPLOY_USER@$SWARM_MANAGER_IP:/tmp/
 
 echo "Pushing stack to swarm..."
-ssh -p 228 $DEPLOY_USER@$SWARM_MANAGER_IP "docker stack deploy --compose-file /tmp/docker-compose.yml courier-monitoring-frontend"
+ssh -p 228 $DEPLOY_USER@$SWARM_MANAGER_IP "VERSION=${VERSION} docker stack deploy --compose-file /tmp/docker-compose.yml courier-monitoring-frontend"

@@ -32,12 +32,12 @@ jobs:
     deploy:
     - provider: script
       skip_cleanup: true
-      script: bash deploy.sh $DEPLOY_TARGET
+      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
       on:
         branch: master
     - provider: script
       skip_cleanup: true
-      script: bash deploy.sh $DEPLOY_TARGET
+      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
       on:
         branch: develop
     branches:
