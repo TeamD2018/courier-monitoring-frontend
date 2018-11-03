@@ -90,8 +90,8 @@ class CouriersMap extends Component {
     });
 
     const { activeCourier } = this.props;
-    if (activeCourier && activeCourier.id) {
-      requestActiveCourier(activeCourier.id);
+    if (activeCourier.requestedId) {
+      requestActiveCourier(activeCourier.requestedId);
     }
   }
 
@@ -162,7 +162,7 @@ class CouriersMap extends Component {
     } = this.props;
 
     const { maps, map, mapLoaded } = (this.state || {});
-    const orders = (activeCourier && activeCourier.orders) || [];
+    const orders = (activeCourier.courier && activeCourier.courier.orders) || [];
     return (
       <Fragment>
         <GoogleMapReact
@@ -181,11 +181,11 @@ class CouriersMap extends Component {
           {orders.map(this.renderDestMarker)}
         </GoogleMapReact>
         {
-          mapLoaded && activeCourier && activeCourier.geoHistory && (
+          mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
             <Track
               map={map}
               maps={maps}
-              history={activeCourier.geoHistory}
+              history={activeCourier.courier.geoHistory}
             />
           )
         }
@@ -215,11 +215,14 @@ CouriersMap.propTypes = {
   pan: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
   activeCourier: PropTypes.shape({
-    geoHistory: PropTypes.arrayOf(PropTypes.shape({
-      lat: PropTypes.number,
-      lon: PropTypes.number,
-    })),
-    courierId: PropTypes.string,
+    courier: PropTypes.shape({
+      geoHistory: PropTypes.arrayOf(PropTypes.shape({
+        lat: PropTypes.number,
+        lon: PropTypes.number,
+      })),
+      courierId: PropTypes.string,
+    }),
+    requestedId: PropTypes.number,
   }),
   hideCouriersList: PropTypes.func.isRequired,
 };

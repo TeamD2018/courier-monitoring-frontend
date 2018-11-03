@@ -33,9 +33,9 @@ class ClientApp extends Component {
         />
         <Sidebar>
           {
-            activeCourier && (
+            activeCourier.courier && (
               <CourierDetails
-                courier={activeCourier}
+                courier={activeCourier.courier}
                 {...this.boundActionCreators}
               />
             )
@@ -47,7 +47,7 @@ class ClientApp extends Component {
 }
 
 const mapStateToProps = state => ({
-  activeCourier: state.activeCourier.courier,
+  activeCourier: state.activeCourier,
   mapCenter: state.map.center,
   mapZoom: state.map.zoom,
 });

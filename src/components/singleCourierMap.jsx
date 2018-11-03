@@ -141,18 +141,16 @@ class SingleCourierMap extends Component {
           onGoogleApiLoaded={this.handleNativeApi}
           yesIWantToUseGoogleMapApiInternals
         >
-          {activeCourier && this.renderCourierMarker(activeCourier)}
-          {activeCourier && this.renderDestMarker(activeCourier.orders[0])}
-          {activeCourier && this.renderSourceMarker(activeCourier.orders[0])}
+          {activeCourier.courier && this.renderCourierMarker(activeCourier.courier)}
+          {activeCourier.courier && this.renderDestMarker(activeCourier.courier.orders[0])}
+          {activeCourier.courier && this.renderSourceMarker(activeCourier.courier.orders[0])}
         </GoogleMapReact>
-
         {
-          mapLoaded && activeCourier && activeCourier.geoHistory
-          && (
+          mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
             <Track
               map={map}
               maps={maps}
-              history={activeCourier.geoHistory}
+              history={activeCourier.courier.geoHistory}
             />
           )
         }
@@ -168,11 +166,14 @@ SingleCourierMap.propTypes = {
   }).isRequired,
   pan: PropTypes.func.isRequired,
   activeCourier: PropTypes.shape({
-    geoHistory: PropTypes.arrayOf(PropTypes.shape({
-      lat: PropTypes.number,
-      lon: PropTypes.number,
-    })),
-    courierId: PropTypes.string,
+    courier: PropTypes.shape({
+      geoHistory: PropTypes.arrayOf(PropTypes.shape({
+        lat: PropTypes.number,
+        lon: PropTypes.number,
+      })),
+      courierId: PropTypes.string,
+    }),
+    requestedId: PropTypes.number,
   }),
   orderId: PropTypes.string.isRequired,
   courierId: PropTypes.string.isRequired,

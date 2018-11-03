@@ -38,15 +38,14 @@ class App extends Component {
               <CouriersList
                 isOpen={isCouriersListOpen}
                 couriers={couriers}
-                activeCourier={activeCourier}
                 {...this.boundActionCreators}
               />
             )
           }
           {
-            activeCourier && (
+            activeCourier.courier && (
               <CourierDetails
-                courier={activeCourier}
+                courier={activeCourier.courier}
                 isOpen={areCourierDetailsOpen}
                 {...this.boundActionCreators}
               />
@@ -60,7 +59,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   couriers: state.couriers,
-  activeCourier: state.activeCourier.courier,
+  activeCourier: state.activeCourier,
   mapCenter: state.map.center,
   isCouriersListOpen: state.couriersList.isOpen,
   areCourierDetailsOpen: state.courierDetails.isOpen,
