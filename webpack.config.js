@@ -1,6 +1,7 @@
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => ({
   entry: './src/index.jsx',
@@ -47,14 +48,22 @@ module.exports = (env, argv) => ({
       'local.debug',
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'styles.css',
     }),
     new Dotenv({
       systemvars: true,
     }),
     new CssoWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      hash: true,
+    }),
   ],
 });
