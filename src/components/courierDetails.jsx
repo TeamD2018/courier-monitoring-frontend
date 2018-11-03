@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Icon,
 } from '@blueprintjs/core';
+import { setZoom } from '../actions';
 
 const SOURCE = false;
 const DESTINATION = true;
@@ -107,6 +108,16 @@ class CourierDetails extends PureComponent {
     pan(waypoint.location.point);
   }
 
+  onCourierClick(courier) {
+    const { setZoom, pan } = this.props;
+
+    setZoom(13);
+    pan({
+      lat: courier.location.point.lat,
+      lng: courier.location.point.lon,
+    });
+  }
+
   toggleList() {
     const { isOpen, showCourierDetails, hideCourierDetails } = this.props;
 
@@ -194,19 +205,23 @@ class CourierDetails extends PureComponent {
           Courier Info
         </StyledButton>
         <Collapse isOpen={isOpen}>
-          <CourierInfo>
+          <CourierInfo
+            onClick={() => this.onCourierClick(courier)}
+          >
             <Title>{courier.name}</Title>
             <Info>
               <Phone>{`+${courier.phone}`}</Phone>
               <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
             </Info>
           </CourierInfo>
-          <Divider />
           {
             courier.orders && (
-              <WaypointsList>
-                {this.renderWaypoints(courier.orders)}
-              </WaypointsList>
+              <Fragment>
+                <Divider />
+                <WaypointsList>
+                  {this.renderWaypoints(courier.orders)}
+                </WaypointsList>
+              </Fragment>
             )
           }
         </Collapse>
