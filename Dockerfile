@@ -7,7 +7,6 @@ RUN apk --update add ca-certificates curl bash
 
 WORKDIR /root
 COPY ./src ./src
-COPY ./dist ./dist
 COPY package.json .
 COPY webpack.config.js .
 COPY .babelrc .
