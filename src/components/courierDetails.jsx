@@ -244,8 +244,6 @@ CourierDetails.propTypes = {
   isOpen: PropTypes.bool,
   showCourierDetails: PropTypes.func.isRequired,
   hideCourierDetails: PropTypes.func.isRequired,
-  hideCouriersList: PropTypes.func.isRequired,
-  requestActiveCourier: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
 };

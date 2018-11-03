@@ -29,6 +29,7 @@ Track.propTypes = {
   maps: PropTypes.shape({
     Polyline: PropTypes.func.isRequired,
   }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   map: PropTypes.any.isRequired,
   history: PropTypes.arrayOf(PropTypes.shape({
     lat: PropTypes.number,

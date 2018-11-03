@@ -66,11 +66,13 @@ class SingleCourierMap extends Component {
   }
 
   handleNativeApi({ maps, map }) {
+    /* eslint-disable react/no-unused-state */
     this.setState({
       maps,
       map,
       mapLoaded: true,
     });
+    /* eslint-enable react/no-unused-state */
   }
 
   renderCourierMarker(courier) {
