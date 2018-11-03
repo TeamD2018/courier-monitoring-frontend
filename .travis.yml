@@ -1,7 +1,11 @@
 jobs:
   include:
+  - stage: linter check
+    language: node
+    script:
+    - yarn lint
+
   - stage: Build docker images
-    name: Caddy
     language: minimal
     services:
     - docker
