@@ -2,6 +2,8 @@ jobs:
   include:
   - stage: linter check
     language: node.js
+    install:
+    - yarn install --production=false --frozen-lockfile
     script:
     - yarn lint
 
