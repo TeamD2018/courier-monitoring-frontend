@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Portal } from '@blueprintjs/core';
 
-const StyledPortal = styled(Portal)`
+const StyledDiv = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
+
+  top: 0;
+  left: 0;
 
   max-height: 100%;
   z-index: 0;
@@ -30,9 +33,9 @@ class Sidebar extends PureComponent {
   render() {
     const { children } = this.props;
     return (
-      <StyledPortal>
+      <StyledDiv>
         {children}
-      </StyledPortal>
+      </StyledDiv>
     );
   }
 }
