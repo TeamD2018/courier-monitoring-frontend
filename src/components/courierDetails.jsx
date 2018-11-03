@@ -100,15 +100,11 @@ class CourierDetails extends PureComponent {
     this.onRowClick = this.onRowClick.bind(this);
   }
 
-  onRowClick(courier) {
-    const { pan, hideCouriersList, requestActiveCourier } = this.props;
+  onRowClick(waypoint) {
+    const { pan, setZoom } = this.props;
 
-    pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
-    });
-    requestActiveCourier(courier.id, 0);
-    hideCouriersList();
+    setZoom(13);
+    pan(waypoint.location.point);
   }
 
   toggleList() {
@@ -122,12 +118,10 @@ class CourierDetails extends PureComponent {
   }
 
   renderWaypoint(waypoint) {
-    const { pan } = this.props;
-
     return (
       <Waypoint
         key={`${waypoint.orderId}_${(waypoint.type ? 'dst' : 'src')}`}
-        onClick={() => pan(waypoint.location.point)}
+        onClick={() => this.onRowClick(waypoint)}
       >
         <StyledDiv><Icon icon={waypoint.type ? 'home' : 'shop'} /></StyledDiv>
         <div>
@@ -234,6 +228,7 @@ CourierDetails.propTypes = {
   hideCouriersList: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
 };
 
 CourierDetails.defaultProps = {

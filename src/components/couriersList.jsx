@@ -80,12 +80,16 @@ class CouriersList extends PureComponent {
   }
 
   onRowClick(courier) {
-    const { pan, hideCouriersList, requestActiveCourier } = this.props;
+    const {
+      pan, hideCouriersList, requestActiveCourier, setZoom,
+    } = this.props;
 
     pan({
       lat: courier.location.point.lat,
       lng: courier.location.point.lon,
     });
+
+    setZoom(13);
 
     requestActiveCourier(courier.id, 0);
     hideCouriersList();
@@ -155,6 +159,7 @@ CouriersList.propTypes = {
   showCouriersList: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
 };
 

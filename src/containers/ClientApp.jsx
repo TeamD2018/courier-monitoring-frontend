@@ -17,13 +17,14 @@ class ClientApp extends Component {
 
   render() {
     const {
-      center, activeCourier, orderId, courierId, activeOrder,
+      mapCenter, mapZoom, activeCourier, orderId, courierId, activeOrder,
     } = this.props;
 
     return (
       <Fragment>
         <SingleCourierMap
-          center={center}
+          mapCenter={mapCenter}
+          mapZoom={mapZoom}
           activeCourier={activeCourier}
           activeOrder={activeOrder}
           courierId={courierId}
@@ -47,7 +48,8 @@ class ClientApp extends Component {
 
 const mapStateToProps = state => ({
   activeCourier: state.activeCourier,
-  center: state.map.center,
+  mapCenter: state.map.center,
+  mapZoom: state.map.zoom,
 });
 
 export default connect(mapStateToProps)(ClientApp);

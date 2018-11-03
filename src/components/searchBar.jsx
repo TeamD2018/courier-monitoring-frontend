@@ -68,7 +68,7 @@ class SearchBar extends PureComponent {
 
   onItemClick(item) {
     const {
-      requestActiveCourier, hideCouriersList, pan,
+      requestActiveCourier, hideCouriersList, pan, setZoom,
     } = this.props;
 
     switch (item.type) {
@@ -95,6 +95,8 @@ class SearchBar extends PureComponent {
       default:
         break;
     }
+
+    setZoom(13);
   }
 
   render() {
@@ -115,6 +117,7 @@ SearchBar.propTypes = {
   requestActiveCourier: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
 };
 
 

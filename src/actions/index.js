@@ -75,3 +75,8 @@ export const pan = location => ({
   type: types.PAN,
   location,
 });
+
+export const setZoom = zoom => ({
+  type: types.SET_ZOOM,
+  zoom,
+});

@@ -48,9 +48,18 @@ class CouriersMap extends Component {
     clearInterval(this.timer);
   }
 
-  onMove({ center, bounds }) {
-    const { pan } = this.props;
-    pan(center);
+  onMove({ center, bounds, zoom }) {
+    const {
+      pan, setZoom, mapCenter, mapZoom,
+    } = this.props;
+
+    if (zoom !== mapZoom) {
+      setZoom(zoom);
+    }
+
+    if (center !== mapCenter) {
+      pan(center);
+    }
 
     this.bounds = bounds;
     this.refreshMarkers();
@@ -149,7 +158,7 @@ class CouriersMap extends Component {
 
   render() {
     const {
-      couriers, center, activeCourier,
+      couriers, mapCenter, activeCourier, mapZoom,
     } = this.props;
 
     const { maps, map, mapLoaded } = (this.state || {});
@@ -159,8 +168,9 @@ class CouriersMap extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: KEY }}
           defaultCenter={MOCKBA}
-          center={center}
+          center={mapCenter}
           defaultZoom={DEFAULT_ZOOM}
+          zoom={mapZoom}
           onChange={this.onMove}
           options={CouriersMap.createOptions}
           onGoogleApiLoaded={this.handleNativeApi}
@@ -197,11 +207,13 @@ CouriersMap.propTypes = {
   })),
   requestCouriersByBoxField: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
-  center: PropTypes.shape({
+  mapCenter: PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
   }).isRequired,
+  mapZoom: PropTypes.number.isRequired,
   pan: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
   activeCourier: PropTypes.shape({
     geoHistory: PropTypes.arrayOf(PropTypes.shape({
       lat: PropTypes.number,

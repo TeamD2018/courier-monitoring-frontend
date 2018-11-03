@@ -41,11 +41,19 @@ class SingleCourierMap extends Component {
     clearInterval(this.timer);
   }
 
-  onMove({ center, bounds }) {
-    const { pan } = this.props;
-    pan(center);
+  onMove({ center, zoom }) {
+    const {
+      pan, setZoom, mapZoom, mapCenter,
+    } = this.props;
 
-    this.bounds = bounds;
+    if (zoom !== mapZoom) {
+      setZoom(zoom);
+    }
+
+    if (center !== mapCenter) {
+      pan(center);
+    }
+
     this.refreshMarkers();
   }
 
@@ -121,7 +129,7 @@ class SingleCourierMap extends Component {
   }
 
   render() {
-    const { center, activeCourier } = this.props;
+    const { mapCenter, activeCourier, mapZoom } = this.props;
     const { maps, map, mapLoaded } = (this.state || {});
 
     return (
@@ -129,8 +137,9 @@ class SingleCourierMap extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: KEY }}
           defaultCenter={MOCKBA}
-          center={center}
+          center={mapCenter}
           defaultZoom={DEFAULT_ZOOM}
+          zoom={mapZoom}
           onChange={this.onMove}
           options={SingleCourierMap.createOptions}
           onGoogleApiLoaded={this.handleNativeApi}
@@ -157,7 +166,7 @@ class SingleCourierMap extends Component {
 }
 
 SingleCourierMap.propTypes = {
-  center: PropTypes.shape({
+  mapCenter: PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
   }).isRequired,
@@ -189,6 +198,8 @@ SingleCourierMap.propTypes = {
     order_number: PropTypes.number,
   }),
   requestActiveCourierWithOnlyOrder: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
+  mapZoom: PropTypes.func.isRequired,
 };
 
 SingleCourierMap.defaultProps = {

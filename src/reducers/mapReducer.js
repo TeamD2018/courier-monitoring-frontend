@@ -7,6 +7,7 @@ const MOCKBA = {
 
 const initialState = {
   center: MOCKBA,
+  zoom: 13,
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +16,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         center: action.location,
+      };
+
+    case types.SET_ZOOM:
+      return {
+        ...state,
+        zoom: action.zoom,
       };
 
     default:

@@ -19,14 +19,15 @@ class App extends Component {
 
   render() {
     const {
-      couriers, center, isCouriersListOpen, areCourierDetailsOpen, activeCourier,
+      couriers, mapCenter, mapZoom, isCouriersListOpen, areCourierDetailsOpen, activeCourier,
     } = this.props;
 
     return (
       <Fragment>
         <CouriersMap
           couriers={couriers}
-          center={center}
+          mapCenter={mapCenter}
+          mapZoom={mapZoom}
           activeCourier={activeCourier}
           {...this.boundActionCreators}
         />
@@ -60,9 +61,10 @@ class App extends Component {
 const mapStateToProps = state => ({
   couriers: state.couriers,
   activeCourier: state.activeCourier,
-  center: state.map.center,
+  mapCenter: state.map.center,
   isCouriersListOpen: state.couriersList.isOpen,
   areCourierDetailsOpen: state.courierDetails.isOpen,
+  mapZoom: state.map.zoom,
 });
 
 export default connect(mapStateToProps)(App);
