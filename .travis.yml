@@ -1,7 +1,7 @@
 jobs:
   include:
   - stage: linter check
-    language: node
+    language: node.js
     script:
     - yarn lint
 
