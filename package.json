@@ -50,7 +50,7 @@
   "scripts": {
     "build": "npx webpack --mode production",
     "start": "npx webpack-dev-server --config ./webpack.config.js --mode development",
-    "lint": "eslint --fix src/**/*.js*"
+    "lint": "npx eslint --fix src/**/*.js*"
   },
   "private": true,
   "sideEffects": false
