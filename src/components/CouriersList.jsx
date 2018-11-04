@@ -41,23 +41,6 @@ const Title = styled(H5)`
   word-wrap: normal;
 `;
 
-const Info = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-`;
-
-const Phone = styled.div`
-  flex-grow: 1;
-  text-align: left;
-`;
-
-const LastSeen = styled.div`
-  flex-grow: 1;
-  text-align: right;
-`;
-
 const StyledCard = styled(Card)`
   padding: 0;
   margin: 0.5rem;
@@ -116,10 +99,7 @@ class CouriersList extends PureComponent {
           {courier.name}
           <StatusTag courier={courier} />
         </Title>
-        <Info>
-          <Phone>{`+${courier.phone}`}</Phone>
-          <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>
-        </Info>
+        <div>{`+${courier.phone}`}</div>
       </Row>
     );
   }
@@ -136,7 +116,7 @@ class CouriersList extends PureComponent {
           minimal
           onClick={this.toggleList}
         >
-          Couriers
+          Курьеры
         </StyledButton>
         <Collapse isOpen={isOpen}>
           <Body>
@@ -157,7 +137,7 @@ CouriersList.propTypes = {
       lat: PropTypes.number,
       lng: PropTypes.number,
     }),
-    last_seen: PropTypes.string,
+    last_seen: PropTypes.number,
   })),
   isOpen: PropTypes.bool,
   showCouriersList: PropTypes.func.isRequired,

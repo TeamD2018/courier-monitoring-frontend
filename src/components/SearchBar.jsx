@@ -31,7 +31,7 @@ class SearchBar extends PureComponent {
 
           const options = [
             {
-              label: 'Couriers',
+              label: 'Курьеры',
               options: suggestions.couriers.map(suggestion => ({
                 value: suggestion.id,
                 label: suggestion.name,
@@ -40,7 +40,7 @@ class SearchBar extends PureComponent {
               })),
             },
             {
-              label: 'Destinations',
+              label: 'Места назначения',
               options: suggestions.orders.map(suggestion => ({
                 value: suggestion.id,
                 label: `№${suggestion.order_number}: ${suggestion.destination.address}`,
@@ -107,6 +107,10 @@ class SearchBar extends PureComponent {
           onChange={this.onItemClick}
           styles={customStyles}
           openMenuOnClick={false}
+          loadingMessage={() => 'Поиск...'}
+          noOptionsMessage={() => 'Ничего не нашлось'}
+          placeholder="Курьеры, заказы, адреса..."
+          value={null}
         />
       </StyledCard>
     );

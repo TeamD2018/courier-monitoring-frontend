@@ -52,23 +52,6 @@ const Title = styled(H5)`
   word-wrap: normal;
 `;
 
-const Info = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-`;
-
-const Phone = styled.div`
-  flex-grow: 1;
-  text-align: left;
-`;
-
-const LastSeen = styled.div`
-  flex-grow: 1;
-  text-align: right;
-`;
-
 const StyledDiv = styled.div`
   margin-top: auto;
   margin-bottom: auto;
@@ -138,12 +121,12 @@ class CourierDetails extends PureComponent {
         key={`${waypoint.orderId}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => this.onRowClick(waypoint)}
       >
-        <StyledDiv className={isFetching && Classes.SKELETON}>
+        <StyledDiv className={isFetching ? Classes.SKELETON : undefined}>
           <Icon icon={waypoint.type ? 'home' : 'shop'} />
         </StyledDiv>
-        <div className={isFetching && Classes.SKELETON}>
+        <div className={isFetching ? Classes.SKELETON : undefined}>
           {waypoint.type && (
-            <BoldDiv>{`Order №${waypoint.orderNumber}`}</BoldDiv>
+            <BoldDiv>{`Заказ №${waypoint.orderNumber}`}</BoldDiv>
           )}
           {waypoint.location.address}
         </div>
@@ -206,22 +189,22 @@ class CourierDetails extends PureComponent {
           minimal
           onClick={this.toggleList}
         >
-          Courier Info
+          Информация
         </StyledButton>
         <Collapse isOpen={isOpen}>
-          <CourierInfo
-            onClick={() => this.onCourierClick(courier)}
-          >
-            <Title className={isFetching && Classes.SKELETON}>
+          <CourierInfo onClick={() => this.onCourierClick(courier)}>
+            <Title className={isFetching ? Classes.SKELETON : undefined}>
               {courier.name}
               <StatusTag courier={courier} />
             </Title>
-            <Info>
-              <Phone className={isFetching && Classes.SKELETON}>{`+${courier.phone}`}</Phone>
-              <LastSeen className={isFetching && Classes.SKELETON}>
+            <div>
+              <div className={isFetching ? Classes.SKELETON : undefined}>
+                {`+${courier.phone}`}
+              </div>
+              <div className={isFetching ? Classes.SKELETON : undefined}>
                 {new Date(courier.last_seen * 1000).toLocaleString()}
-              </LastSeen>
-            </Info>
+              </div>
+            </div>
           </CourierInfo>
           {courier.orders && (
             <Fragment>
