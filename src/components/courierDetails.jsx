@@ -146,7 +146,7 @@ class CourierDetails extends PureComponent {
         <div className={isFetching && Classes.SKELETON}>
           {
             waypoint.type && (
-              <BoldDiv>{`№${waypoint.orderNumber}`}</BoldDiv>
+              <BoldDiv>{`Order №${waypoint.orderNumber}`}</BoldDiv>
             )
           }
           {waypoint.location.address}
