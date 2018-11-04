@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Icon, Classes,
 } from '@blueprintjs/core';
+import moment from 'moment';
 import StatusTag from './StatusTag';
 
 const SOURCE = false;
@@ -40,7 +41,6 @@ const Waypoint = styled.div`
 const CourierInfo = styled.div`
   width: 100%;
   padding: 0.8rem;
-  cursor: pointer;
 `;
 
 const Title = styled(H5)`
@@ -50,18 +50,21 @@ const Title = styled(H5)`
   overflow: hidden;
   white-space: nowrap;
   word-wrap: normal;
+  cursor: pointer;
 `;
 
 const StyledDiv = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 0.4rem;
+  margin: auto 0.4rem auto 0;
 `;
 
 const StyledCard = styled(Card)`
   padding: 0;
   margin: 0.5rem;
   overflow: auto;
+`;
+
+const MarginedIcon = styled(Icon)`
+  margin: 0 0.4rem;
 `;
 
 const BoldDiv = styled.div`
@@ -79,6 +82,10 @@ const StyledButton = styled(Button)`
 class CourierDetails extends PureComponent {
   constructor(props) {
     super(props);
+    moment.locale('ru');
+    this.state = {
+      relativeLastSeen: true,
+    };
 
     this.toggleList = this.toggleList.bind(this);
     this.renderWaypoints = this.renderWaypoints.bind(this);
@@ -179,6 +186,7 @@ class CourierDetails extends PureComponent {
 
   render() {
     const { courier, isOpen, isFetching } = this.props;
+    const { relativeLastSeen } = this.state;
 
     return (
       <StyledCard elevation={2}>
@@ -192,18 +200,27 @@ class CourierDetails extends PureComponent {
           Информация
         </StyledButton>
         <Collapse isOpen={isOpen}>
-          <CourierInfo onClick={() => this.onCourierClick(courier)}>
-            <Title className={isFetching ? Classes.SKELETON : undefined}>
+          <CourierInfo>
+            <Title
+              className={isFetching ? Classes.SKELETON : undefined}
+              onClick={() => this.onCourierClick(courier)}
+            >
               {courier.name}
               <StatusTag courier={courier} />
             </Title>
-            <div>
-              <div className={isFetching ? Classes.SKELETON : undefined}>
-                {`+${courier.phone}`}
-              </div>
-              <div className={isFetching ? Classes.SKELETON : undefined}>
-                {new Date(courier.last_seen * 1000).toLocaleString()}
-              </div>
+            <div className={isFetching ? Classes.SKELETON : undefined}>
+              <MarginedIcon icon="phone" />
+              {`+${courier.phone}`}
+            </div>
+            <div
+              className={isFetching ? Classes.SKELETON : undefined}
+              onClick={() => this.setState({ relativeLastSeen: !relativeLastSeen })}
+            >
+              <MarginedIcon icon="history" />
+              {relativeLastSeen
+                ? moment.unix(courier.last_seen).startOf('hour').fromNow()
+                : moment.unix(courier.last_seen).format('HH:mm:ss DD.MM.YYYY')
+              }
             </div>
           </CourierInfo>
           {courier.orders && (
