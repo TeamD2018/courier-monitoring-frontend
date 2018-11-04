@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, H5, Intent, Tag,
+  Button, Card, Collapse, H5,
 } from '@blueprintjs/core';
+import StatusTag from './StatusTag';
 
 const Body = styled.div`
   width: 100%;
@@ -70,10 +71,6 @@ const StyledButton = styled(Button)`
   z-index: 100;
 `;
 
-const StyledTag = styled(Tag)`
-  margin-left: 0.5rem;
-`;
-
 class CouriersList extends PureComponent {
   constructor(props) {
     super(props);
@@ -117,10 +114,7 @@ class CouriersList extends PureComponent {
       >
         <Title>
           {courier.name}
-          {courier.orders_count > 0
-            ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
-            : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
-          }
+          <StatusTag courier={courier} />
         </Title>
         <Info>
           <Phone>{`+${courier.phone}`}</Phone>
