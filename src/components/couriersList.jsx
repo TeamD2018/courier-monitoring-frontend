@@ -70,6 +70,10 @@ const StyledButton = styled(Button)`
   z-index: 100;
 `;
 
+const StyledTag = styled(Tag)`
+  margin-left: 0.5rem;
+`;
+
 class CouriersList extends PureComponent {
   constructor(props) {
     super(props);
@@ -115,8 +119,8 @@ class CouriersList extends PureComponent {
           {courier.name}
           {
             courier.orders_count > 0
-              ? <Tag intent={Intent.WARNING}>Busy</Tag>
-              : <Tag intent={Intent.SUCCESS}>Free</Tag>
+              ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
+              : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
           }
         </Title>
         <Info>
