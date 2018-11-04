@@ -15,7 +15,7 @@ class Track extends React.PureComponent {
     const { maps, map, history } = this.props;
     const line = new maps.Polyline({
       path: history,
-      strokeColor: '#AB47BC',
+      strokeColor: '#9179F2',
       strokeOpacity: 1,
       strokeWeight: 2,
     });
