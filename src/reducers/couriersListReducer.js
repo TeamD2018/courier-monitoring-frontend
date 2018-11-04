@@ -18,6 +18,12 @@ export default (state = initialState, action) => {
         isOpen: false,
       };
 
+    case types.SHOW_COURIER_DETAILS:
+      return {
+        ...state,
+        isOpen: false,
+      };
+
     default:
       return state;
   }

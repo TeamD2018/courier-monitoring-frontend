@@ -24,6 +24,12 @@ export default (state = initialState, action) => {
         isOpen: false,
       };
 
+    case types.SHOW_COURIERS_LIST:
+      return {
+        ...state,
+        isOpen: false,
+      };
+
     default:
       return state;
   }
