@@ -188,6 +188,8 @@ class CourierDetails extends PureComponent {
     const { courier, isOpen, isFetching } = this.props;
     const { relativeLastSeen } = this.state;
 
+    /* eslint-disable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
     return (
       <StyledCard elevation={2}>
         <StyledButton
@@ -234,6 +236,8 @@ class CourierDetails extends PureComponent {
         </Collapse>
       </StyledCard>
     );
+    /* eslint-enable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
   }
 }
 
