@@ -1,4 +1,5 @@
-0.0.0.0
+0.0.0.0 {
+    root /var/www
+    gzip
+}
 
-root /var/www
-gzip
