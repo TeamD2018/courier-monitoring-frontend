@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
-import CourierMarker from './courierMarker';
-import Track from './track';
-import OrderMarker from './orderMarker';
+import CourierMarker from './CourierMarker';
+import Track from './Track';
+import OrderMarker from './OrderMarker';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -146,15 +146,13 @@ class SingleCourierMap extends Component {
           {activeCourier.courier && this.renderDestMarker(activeCourier.courier.orders[0])}
           {activeCourier.courier && this.renderSourceMarker(activeCourier.courier.orders[0])}
         </GoogleMapReact>
-        {
-          mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
-            <Track
-              map={map}
-              maps={maps}
-              history={activeCourier.courier.geoHistory}
-            />
-          )
-        }
+        {mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
+          <Track
+            map={map}
+            maps={maps}
+            history={activeCourier.courier.geoHistory}
+          />
+        )}
       </Fragment>
     );
   }

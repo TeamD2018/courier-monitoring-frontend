@@ -144,11 +144,9 @@ class CourierDetails extends PureComponent {
           <Icon icon={waypoint.type ? 'home' : 'shop'} />
         </StyledDiv>
         <div className={isFetching && Classes.SKELETON}>
-          {
-            waypoint.type && (
-              <BoldDiv>{`Order №${waypoint.orderNumber}`}</BoldDiv>
-            )
-          }
+          {waypoint.type && (
+            <BoldDiv>{`Order №${waypoint.orderNumber}`}</BoldDiv>
+          )}
           {waypoint.location.address}
         </div>
       </Waypoint>
@@ -218,10 +216,9 @@ class CourierDetails extends PureComponent {
           >
             <Title className={isFetching && Classes.SKELETON}>
               {courier.name}
-              {
-                courier.orders_count > 0
-                  ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
-                  : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
+              {courier.orders_count > 0
+                ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
+                : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
               }
             </Title>
             <Info>
@@ -231,16 +228,14 @@ class CourierDetails extends PureComponent {
               </LastSeen>
             </Info>
           </CourierInfo>
-          {
-            courier.orders && (
-              <Fragment>
-                <Divider />
-                <WaypointsList>
-                  {this.renderWaypoints(courier.orders)}
-                </WaypointsList>
-              </Fragment>
-            )
-          }
+          {courier.orders && (
+            <Fragment>
+              <Divider />
+              <WaypointsList>
+                {this.renderWaypoints(courier.orders)}
+              </WaypointsList>
+            </Fragment>
+          )}
         </Collapse>
       </StyledCard>
     );

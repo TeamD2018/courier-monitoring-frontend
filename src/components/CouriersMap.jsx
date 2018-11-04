@@ -3,9 +3,9 @@ import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
 import { IconNames } from '@blueprintjs/icons';
-import CourierMarker from './courierMarker';
-import Track from './track';
-import OrderMarker from './orderMarker';
+import CourierMarker from './CourierMarker';
+import Track from './Track';
+import OrderMarker from './OrderMarker';
 
 const MOCKBA = {
   lat: 55.751244,
@@ -185,15 +185,13 @@ class CouriersMap extends Component {
           {orders.map(this.renderSourceMarker)}
           {orders.map(this.renderDestMarker)}
         </GoogleMapReact>
-        {
-          mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
-            <Track
-              map={map}
-              maps={maps}
-              history={activeCourier.courier.geoHistory}
-            />
-          )
-        }
+        {mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
+          <Track
+            map={map}
+            maps={maps}
+            history={activeCourier.courier.geoHistory}
+          />
+        )}
       </Fragment>
     );
   }

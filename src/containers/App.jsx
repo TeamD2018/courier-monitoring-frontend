@@ -2,12 +2,12 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import CouriersMap from '../components/couriersMap';
+import CouriersMap from '../components/CouriersMap';
 import * as actions from '../actions';
-import Sidebar from '../components/sidebar';
-import CouriersList from '../components/couriersList';
-import SearchBar from '../components/searchBar';
-import CourierDetails from '../components/courierDetails';
+import Sidebar from '../components/Sidebar';
+import CouriersList from '../components/CouriersList';
+import SearchBar from '../components/SearchBar';
+import CourierDetails from '../components/CourierDetails';
 
 class App extends Component {
   constructor(props) {

@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import SingleCourierMap from '../components/singleCourierMap';
+import SingleCourierMap from '../components/SingleCourierMap';
 import * as actions from '../actions';
-import Sidebar from '../components/sidebar';
-import CourierDetails from '../components/courierDetails';
+import Sidebar from '../components/Sidebar';
+import CourierDetails from '../components/CourierDetails';
 
 class ClientApp extends Component {
   constructor(props) {

@@ -117,10 +117,9 @@ class CouriersList extends PureComponent {
       >
         <Title>
           {courier.name}
-          {
-            courier.orders_count > 0
-              ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
-              : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
+          {courier.orders_count > 0
+            ? <StyledTag intent={Intent.WARNING}>Busy</StyledTag>
+            : <StyledTag intent={Intent.SUCCESS}>Free</StyledTag>
           }
         </Title>
         <Info>
@@ -164,7 +163,7 @@ CouriersList.propTypes = {
       lat: PropTypes.number,
       lng: PropTypes.number,
     }),
-    lastSeen: PropTypes.string,
+    last_seen: PropTypes.string,
   })),
   isOpen: PropTypes.bool,
   showCouriersList: PropTypes.func.isRequired,
