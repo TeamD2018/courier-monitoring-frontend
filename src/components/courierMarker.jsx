@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import courierMarker from '../images/Courier.png';
 import busyCourierMarker from '../images/Busy courier.png';
+import activeCourierMarker from '../images/Active courier.png';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -18,7 +19,16 @@ const StyledIcon = styled.img`
 
 class CourierMarker extends PureComponent {
   render() {
-    const { courier, onClick } = this.props;
+    const { courier, onClick, active } = this.props;
+
+    let icon;
+    if (active) {
+      icon = activeCourierMarker;
+    } else if (courier.orders_count > 0) {
+      icon = busyCourierMarker;
+    } else {
+      icon = courierMarker;
+    }
 
     return (
       <Popover
@@ -28,7 +38,7 @@ class CourierMarker extends PureComponent {
       >
         <StyledIcon
           onClick={() => onClick(courier)}
-          src={courier.orders_count > 0 ? busyCourierMarker : courierMarker}
+          src={icon}
         />
         <StyledDiv>
           <div className="bp3-text-large">{courier.name}</div>
@@ -45,7 +55,12 @@ CourierMarker.propTypes = {
     name: PropTypes.string.isRequired,
     orders_count: PropTypes.number.isRequired,
   }).isRequired,
+  active: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+};
+
+CourierMarker.defaultProps = {
+  active: false,
 };
 
 export default CourierMarker;

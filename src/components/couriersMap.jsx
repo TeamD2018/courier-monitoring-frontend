@@ -120,6 +120,8 @@ class CouriersMap extends Component {
   }
 
   renderCourierMarker(courier) {
+    const { activeCourier } = this.props;
+
     return (
       <CourierMarker
         onClick={this.exposeActiveCourier}
@@ -127,6 +129,7 @@ class CouriersMap extends Component {
         lat={courier.location.point.lat}
         lng={courier.location.point.lon}
         courier={courier}
+        active={activeCourier.courier && courier.id === activeCourier.courier.id}
       />
     );
   }
