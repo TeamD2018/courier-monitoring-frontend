@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, H5,
+  Button, Card, Collapse, H5, Intent, Tag,
 } from '@blueprintjs/core';
 
 const Body = styled.div`
@@ -111,7 +111,14 @@ class CouriersList extends PureComponent {
         key={courier.id}
         onClick={() => this.onRowClick(courier)}
       >
-        <Title>{courier.name}</Title>
+        <Title>
+          {courier.name}
+          {
+            courier.orders_count > 0
+              ? <Tag intent={Intent.WARNING}>Busy</Tag>
+              : <Tag intent={Intent.SUCCESS}>Free</Tag>
+          }
+        </Title>
         <Info>
           <Phone>{`+${courier.phone}`}</Phone>
           <LastSeen>{new Date(courier.last_seen * 1000).toLocaleString()}</LastSeen>

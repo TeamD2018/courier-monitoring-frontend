@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, Divider, H5, Icon, Classes,
+  Button, Card, Collapse, Divider, H5, Icon, Classes, Tag, Intent,
 } from '@blueprintjs/core';
 
 const SOURCE = false;
@@ -212,7 +212,14 @@ class CourierDetails extends PureComponent {
           <CourierInfo
             onClick={() => this.onCourierClick(courier)}
           >
-            <Title className={isFetching && Classes.SKELETON}>{courier.name}</Title>
+            <Title className={isFetching && Classes.SKELETON}>
+              {courier.name}
+              {
+                courier.orders_count > 0
+                  ? <Tag intent={Intent.WARNING}>Busy</Tag>
+                  : <Tag intent={Intent.SUCCESS}>Free</Tag>
+              }
+            </Title>
             <Info>
               <Phone className={isFetching && Classes.SKELETON}>{`+${courier.phone}`}</Phone>
               <LastSeen className={isFetching && Classes.SKELETON}>
