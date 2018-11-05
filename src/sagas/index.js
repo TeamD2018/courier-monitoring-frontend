@@ -32,20 +32,15 @@ function* fetchActiveCourier(action) {
 
     const latest = overwrite
       ? 0
-      : activeCourier.courier.last_seen;
+      : activeCourier.courier.lastSeen;
 
-    const [courier, history, orders] = yield all([
+    const [courier, geoHistory, orders] = yield all([
       call(getCourierById, action.courierId),
       call(getGeoHistory, action.courierId, latest),
       call(fetchRecentOrders, action.courierId, 8),
     ]);
 
     courier.orders = orders;
-
-    const geoHistory = history.geo_history.map(historyPoint => ({
-      lat: historyPoint.point.lat,
-      lng: historyPoint.point.lon,
-    }));
     courier.geoHistory = overwrite
       ? geoHistory
       : activeCourier.courier.geoHistory.concat(geoHistory);
@@ -64,20 +59,15 @@ function* fetchActiveCourierWithOnlyOrder(action) {
 
     const latest = overwrite
       ? 0
-      : activeCourier.courier.last_seen;
+      : activeCourier.courier.lastSeen;
 
-    const [courier, history, order] = yield all([
+    const [courier, geoHistory, order] = yield all([
       call(getCourierById, action.courierId),
       call(getGeoHistory, action.courierId, latest),
       call(getOrder, action.courierId, action.orderId),
     ]);
 
     courier.orders = [order];
-
-    const geoHistory = history.geo_history.map(historyPoint => ({
-      lat: historyPoint.point.lat,
-      lng: historyPoint.point.lon,
-    }));
     courier.geoHistory = overwrite
       ? geoHistory
       : activeCourier.geoHistory.concat(geoHistory);

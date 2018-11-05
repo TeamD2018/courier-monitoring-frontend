@@ -72,6 +72,7 @@ const StyledButton = styled(Button)`
 class CourierDetails extends PureComponent {
   constructor(props) {
     super(props);
+
     moment.locale('ru');
     this.state = {
       relativeLastSeen: true,
@@ -87,17 +88,14 @@ class CourierDetails extends PureComponent {
     const { pan, setZoom } = this.props;
 
     setZoom(13);
-    pan(waypoint.location.point);
+    pan(waypoint.location);
   }
 
   onCourierClick(courier) {
     const { setZoom, pan } = this.props;
 
     setZoom(13);
-    pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
-    });
+    pan(courier.location);
   }
 
   toggleList() {
@@ -147,27 +145,15 @@ class CourierDetails extends PureComponent {
       waypoints.push({
         type: SOURCE,
         orderId: ordersOfSource[0].id,
-        location: {
-          address: ordersOfSource[0].source.address,
-          point: {
-            lat: ordersOfSource[0].source.point.lat,
-            lng: ordersOfSource[0].source.point.lon,
-          },
-        },
+        location: ordersOfSource[0].source,
       });
 
       ordersOfSource.forEach(order => waypoints.push({
         type: DESTINATION,
         orderId: order.id,
-        orderNumber: order.order_number,
-        created_at: order.created_at,
-        location: {
-          address: order.destination.address,
-          point: {
-            lat: order.destination.point.lat,
-            lng: order.destination.point.lon,
-          },
-        },
+        orderNumber: order.orderNumber,
+        createdAt: order.createdAt,
+        location: order.destination,
       }));
     });
 
@@ -205,8 +191,8 @@ class CourierDetails extends PureComponent {
               onClick={() => this.setState({ relativeLastSeen: !relativeLastSeen })}
             >
               {`Был активен ${relativeLastSeen
-                ? moment.unix(courier.last_seen).startOf('second').fromNow()
-                : moment.unix(courier.last_seen).format('HH:mm:ss DD.MM.YYYY')
+                ? moment.unix(courier.lastSeen).startOf('second').fromNow()
+                : moment.unix(courier.lastSeen).format('HH:mm:ss DD.MM.YYYY')
               }`}
             </div>
             <div className={isFetching ? Classes.SKELETON : undefined}>
@@ -238,7 +224,7 @@ CourierDetails.propTypes = {
       lat: PropTypes.number,
       lng: PropTypes.number,
     }),
-    lastSeen: PropTypes.string,
+    lastSeen: PropTypes.number,
   }).isRequired,
   isOpen: PropTypes.bool,
   showCourierDetails: PropTypes.func.isRequired,

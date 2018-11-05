@@ -1,17 +1,32 @@
+import {
+  courierMapping,
+  couriersMapping,
+  geoHistoryMapping,
+  orderMapping,
+  ordersMapping, suggestionsMapping,
+} from './mappings';
+
 const { API_URL } = process.env;
 
-const responseHandler = (response) => {
-  if (response.status === 200) {
-    return response.json();
+const responseMapper = (fetch, mapping) => new Promise(async (resolve, reject) => {
+  const response = await fetch;
+
+  if (response.status !== 200) {
+    reject(new Error(response.status));
   }
 
-  throw new Error(response.status);
-};
+  try {
+    const obj = await response.json();
+    resolve(mapping(obj));
+  } catch (e) {
+    reject(new Error(e));
+  }
+});
 
 export const getCourierById = (courierId) => {
   const url = new URL(`couriers/${courierId}`, API_URL);
-  return fetch(url)
-    .then(responseHandler);
+
+  return responseMapper(fetch(url), courierMapping);
 };
 
 export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
@@ -22,15 +37,13 @@ export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
     excludeDelivered,
   });
 
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), ordersMapping);
 };
 
 export const getOrder = (courierId, orderId) => {
   const url = new URL(`couriers/${courierId}/orders/${orderId}`, API_URL);
 
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), orderMapping);
 };
 
 export const getCouriersByCircleField = (lat, lon, radius) => {
@@ -41,8 +54,7 @@ export const getCouriersByCircleField = (lat, lon, radius) => {
     radius,
   });
 
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), couriersMapping);
 };
 
 export const getCouriersByBoxField = ({
@@ -56,16 +68,14 @@ export const getCouriersByBoxField = ({
     bottom_right_lon: bottomRightLon,
   });
 
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), couriersMapping);
 };
 
 export const getSuggestions = (input) => {
   const url = new URL('suggestions', API_URL);
   url.search = new URLSearchParams({ input });
 
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), suggestionsMapping);
 };
 
 export const getGeoHistory = (courierId, since) => {
@@ -73,6 +83,5 @@ export const getGeoHistory = (courierId, since) => {
   url.search = new URLSearchParams({
     since,
   });
-  return fetch(url)
-    .then(responseHandler);
+  return responseMapper(fetch(url), geoHistoryMapping);
 };

@@ -59,10 +59,7 @@ class CouriersList extends PureComponent {
       pan, hideCouriersList, requestActiveCourier, setZoom,
     } = this.props;
 
-    pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
-    });
+    pan(courier.location);
 
     setZoom(13);
 
@@ -128,7 +125,7 @@ CouriersList.propTypes = {
       lat: PropTypes.number,
       lng: PropTypes.number,
     }),
-    last_seen: PropTypes.number,
+    lastSeen: PropTypes.number,
   })),
   isOpen: PropTypes.bool,
   showCouriersList: PropTypes.func.isRequired,

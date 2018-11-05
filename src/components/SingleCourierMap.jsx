@@ -80,12 +80,9 @@ class SingleCourierMap extends Component {
     return (
       <CourierMarker
         key={courier.id}
-        lat={courier.location.point.lat}
-        lng={courier.location.point.lon}
-        onClick={() => pan({
-          lat: courier.location.point.lat,
-          lng: courier.location.point.lon,
-        })}
+        lat={courier.location.lat}
+        lng={courier.location.lng}
+        onClick={() => pan(courier.location)}
         courier={courier}
       />
     );
@@ -96,14 +93,11 @@ class SingleCourierMap extends Component {
     return (
       <OrderMarker
         key={`${order.id}_src`}
-        lat={order.source.point.lat}
-        lng={order.source.point.lon}
+        lat={order.source.lat}
+        lng={order.source.lng}
         address={order.source.address}
         type={false}
-        onClick={() => pan({
-          lat: order.source.point.lat,
-          lng: order.source.point.lon,
-        })}
+        onClick={() => pan(order.source)}
       />
     );
   }
@@ -113,14 +107,11 @@ class SingleCourierMap extends Component {
     return (
       <OrderMarker
         key={`${order.id}_dst`}
-        lat={order.destination.point.lat}
-        lng={order.destination.point.lon}
+        lat={order.destination.lat}
+        lng={order.destination.lng}
         address={order.destination.address}
         type
-        onClick={() => pan({
-          lat: order.destination.point.lat,
-          lng: order.destination.point.lon,
-        })}
+        onClick={() => pan(order.destination)}
       />
     );
   }
@@ -191,7 +182,7 @@ SingleCourierMap.propTypes = {
         lon: PropTypes.number,
       }),
     }),
-    order_number: PropTypes.number,
+    orderNumber: PropTypes.number,
   }),
   requestActiveCourierWithOnlyOrder: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,

@@ -9,7 +9,7 @@ const StyledTag = styled(Tag)`
 `;
 
 const StatusTag = ({ courier }) => {
-  const isBusy = courier.orders_count > 0;
+  const isBusy = courier.ordersCount > 0;
 
   return (
     <StyledTag intent={isBusy ? Intent.WARNING : Intent.SUCCESS}>
@@ -20,7 +20,7 @@ const StatusTag = ({ courier }) => {
 
 StatusTag.propTypes = {
   courier: PropTypes.shape({
-    orders_count: PropTypes.number.isRequired,
+    ordersCount: PropTypes.number.isRequired,
   }).isRequired,
 };
 

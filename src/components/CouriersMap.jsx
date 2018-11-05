@@ -68,10 +68,7 @@ class CouriersMap extends Component {
   onOrderMarkerClick(location) {
     const { pan } = this.props;
 
-    pan({
-      lat: location.lat,
-      lng: location.lon,
-    });
+    pan(location);
   }
 
   refreshMarkers() {
@@ -103,10 +100,7 @@ class CouriersMap extends Component {
     requestActiveCourier(courier.id);
     hideCouriersList();
 
-    pan({
-      lat: courier.location.point.lat,
-      lng: courier.location.point.lon,
-    });
+    pan(courier.location);
   }
 
   handleNativeApi({ maps, map }) {
@@ -126,8 +120,8 @@ class CouriersMap extends Component {
       <CourierMarker
         onClick={this.exposeActiveCourier}
         key={courier.id}
-        lat={courier.location.point.lat}
-        lng={courier.location.point.lon}
+        lat={courier.location.lat}
+        lng={courier.location.lng}
         courier={courier}
         active={activeCourier.courier && courier.id === activeCourier.courier.id}
       />
@@ -138,11 +132,11 @@ class CouriersMap extends Component {
     return (
       <OrderMarker
         key={`${order.id}_src`}
-        lat={order.source.point.lat}
-        lng={order.source.point.lon}
+        lat={order.source.lat}
+        lng={order.source.lng}
         address={order.source.address}
         icon={IconNames.SHOP}
-        onClick={() => this.onOrderMarkerClick(order.source.point)}
+        onClick={() => this.onOrderMarkerClick(order.source)}
         type={false}
       />
     );
@@ -152,9 +146,9 @@ class CouriersMap extends Component {
     return (
       <OrderMarker
         key={`${order.id}_dst`}
-        lat={order.destination.point.lat}
-        lng={order.destination.point.lon}
-        onClick={() => this.onOrderMarkerClick(order.destination.point)}
+        lat={order.destination.lat}
+        lng={order.destination.lng}
+        onClick={() => this.onOrderMarkerClick(order.destination)}
         address={order.destination.address}
         type
       />
@@ -206,7 +200,7 @@ CouriersMap.propTypes = {
       lat: PropTypes.number,
       lng: PropTypes.number,
     }),
-    lastSeen: PropTypes.string,
+    lastSeen: PropTypes.number,
   })),
   requestCouriersByBoxField: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
