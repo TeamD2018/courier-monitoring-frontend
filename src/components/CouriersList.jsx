@@ -32,15 +32,6 @@ const Row = styled.div`
   }
 `;
 
-const Title = styled(H5)`
-  display: block;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  word-wrap: normal;
-`;
-
 const StyledCard = styled(Card)`
   padding: 0;
   margin: 0.5rem;
@@ -95,10 +86,10 @@ class CouriersList extends PureComponent {
         key={courier.id}
         onClick={() => this.onRowClick(courier)}
       >
-        <Title>
+        <H5>
           {courier.name}
           <StatusTag courier={courier} />
-        </Title>
+        </H5>
         <div>{`+${courier.phone}`}</div>
       </Row>
     );

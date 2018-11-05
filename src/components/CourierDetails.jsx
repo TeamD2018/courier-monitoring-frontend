@@ -44,12 +44,6 @@ const CourierInfo = styled.div`
 `;
 
 const Title = styled(H5)`
-  display: block;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  word-wrap: normal;
   cursor: pointer;
 `;
 
