@@ -63,10 +63,6 @@ const StyledCard = styled(Card)`
   overflow: auto;
 `;
 
-const MarginedIcon = styled(Icon)`
-  margin: 0 0.4rem;
-`;
-
 const BoldDiv = styled.div`
   font-weight: bold;
 `;
@@ -210,19 +206,17 @@ class CourierDetails extends PureComponent {
               {courier.name}
               <StatusTag courier={courier} />
             </Title>
-            <div className={isFetching ? Classes.SKELETON : undefined}>
-              <MarginedIcon icon="phone" />
-              {`+${courier.phone}`}
-            </div>
             <div
               className={isFetching ? Classes.SKELETON : undefined}
               onClick={() => this.setState({ relativeLastSeen: !relativeLastSeen })}
             >
-              <MarginedIcon icon="history" />
-              {relativeLastSeen
-                ? moment.unix(courier.last_seen).startOf('hour').fromNow()
+              {`Был активен ${relativeLastSeen
+                ? moment.unix(courier.last_seen).startOf('second').fromNow()
                 : moment.unix(courier.last_seen).format('HH:mm:ss DD.MM.YYYY')
-              }
+              }`}
+            </div>
+            <div className={isFetching ? Classes.SKELETON : undefined}>
+              {`+${courier.phone}`}
             </div>
           </CourierInfo>
           {courier.orders.length > 0 && (
