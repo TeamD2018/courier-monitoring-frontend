@@ -3,7 +3,7 @@
     gzip
 
     proxy /api/v1 geo-rest_backend:8080
-    proxy /openapi geo-rest-stuff_swagger-ui:8080 {
+    proxy /openapi geo-rest-stuff_swagger-ui:8080/ {
         transparent
     }
 }
