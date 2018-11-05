@@ -24,7 +24,7 @@ const customStyles = {
 
 class SearchBar extends PureComponent {
   static promiseOptions(query) {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       if (query !== '') {
         try {
           const suggestions = await getSuggestions(query);
@@ -43,7 +43,7 @@ class SearchBar extends PureComponent {
               label: 'Места назначения',
               options: suggestions.orders.map(suggestion => ({
                 value: suggestion.id,
-                label: `№${suggestion.order_number}: ${suggestion.destination.address}`,
+                label: `№${suggestion.orderNumber}: ${suggestion.destination.address}`,
                 type: 'order',
                 ...suggestion,
               })),
@@ -53,6 +53,7 @@ class SearchBar extends PureComponent {
           resolve(options);
         } catch (e) {
           console.error(e);
+          reject(e);
         }
       } else {
         resolve([]);
@@ -76,20 +77,14 @@ class SearchBar extends PureComponent {
         requestActiveCourier(item.id, 0);
         hideCouriersList();
 
-        pan({
-          lat: item.location.point.lat,
-          lng: item.location.point.lon,
-        });
+        pan(item.location);
         break;
 
       case 'order':
-        requestActiveCourier(item.courier_id, 0);
+        requestActiveCourier(item.courierId, 0);
         hideCouriersList();
 
-        pan({
-          lat: item.destination.point.lat,
-          lng: item.destination.point.lon,
-        });
+        pan(item.destination);
         break;
 
       default:

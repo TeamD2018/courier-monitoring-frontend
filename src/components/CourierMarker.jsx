@@ -24,7 +24,7 @@ class CourierMarker extends PureComponent {
     let icon;
     if (active) {
       icon = activeCourierMarker;
-    } else if (courier.orders_count > 0) {
+    } else if (courier.ordersCount > 0) {
       icon = busyCourierMarker;
     } else {
       icon = courierMarker;
@@ -53,7 +53,7 @@ CourierMarker.propTypes = {
   courier: PropTypes.shape({
     phone: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    orders_count: PropTypes.number.isRequired,
+    ordersCount: PropTypes.number.isRequired,
   }).isRequired,
   active: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
