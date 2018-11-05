@@ -225,7 +225,7 @@ class CourierDetails extends PureComponent {
               }
             </div>
           </CourierInfo>
-          {courier.orders && (
+          {courier.orders.length > 0 && (
             <Fragment>
               <Divider />
               <WaypointsList>
