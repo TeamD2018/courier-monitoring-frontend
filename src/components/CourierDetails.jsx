@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
@@ -214,12 +214,12 @@ class CourierDetails extends PureComponent {
             </div>
           </CourierInfo>
           {courier.orders.length > 0 && (
-            <Fragment>
+            <>
               <Divider />
               <WaypointsList>
                 {this.renderWaypoints(courier.orders)}
               </WaypointsList>
-            </Fragment>
+            </>
           )}
         </Collapse>
       </StyledCard>

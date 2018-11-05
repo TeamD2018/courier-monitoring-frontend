@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -21,7 +21,7 @@ class ClientApp extends Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <SingleCourierMap
           mapCenter={mapCenter}
           mapZoom={mapZoom}
@@ -42,7 +42,7 @@ class ClientApp extends Component {
             )
           }
         </Sidebar>
-      </Fragment>
+      </>
     );
   }
 }

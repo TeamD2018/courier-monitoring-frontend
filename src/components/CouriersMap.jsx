@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
@@ -169,7 +169,7 @@ class CouriersMap extends Component {
     const { maps, map, mapLoaded } = (this.state || {});
     const orders = (activeCourier.courier && activeCourier.courier.orders) || [];
     return (
-      <Fragment>
+      <>
         <GoogleMapReact
           bootstrapURLKeys={{ key: KEY }}
           defaultCenter={MOCKBA}
@@ -192,7 +192,7 @@ class CouriersMap extends Component {
             history={activeCourier.courier.geoHistory}
           />
         )}
-      </Fragment>
+      </>
     );
   }
 }
