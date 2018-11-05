@@ -4,6 +4,6 @@
 }
 
 0.0.0.0:2016 {
-    redir dc.utkin.xyz:8080
+    redir http://dc.utkin.xyz:8080
 }
 
