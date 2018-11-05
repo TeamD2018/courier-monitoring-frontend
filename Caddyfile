@@ -1,5 +1,9 @@
-0.0.0.0 {
+0.0.0.0:2015 {
     root /var/www
     gzip
+}
+
+0.0.0.0:2016 {
+    redir dc.utkin.xyz:8080
 }
 
