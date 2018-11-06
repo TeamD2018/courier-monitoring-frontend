@@ -17,7 +17,7 @@ const StyledCard = styled(Card)`
   width: 20rem;
 `;
 
-function reloadPage() { window.location.reload() }
+function reloadPage() { window.location.reload(); }
 
 const ErrorCallout = ({ errorMessage, errorName }) => (
   <StyledCard elevation={2}>
