@@ -16,7 +16,6 @@ const StyledDiv = styled.div`
   flex-grow: 2;
   width: 20rem;
   
-  padding: 0.5rem;
   
   @media only screen and (max-device-width: 667px) 
                      and (-webkit-min-device-pixel-ratio: 2)
