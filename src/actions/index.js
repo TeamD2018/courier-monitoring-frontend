@@ -78,3 +78,9 @@ export const setZoom = zoom => ({
   type: types.SET_ZOOM,
   zoom,
 });
+
+
+// Error action
+export const resetError = () => ({
+  type: types.RESET_ERROR,
+});

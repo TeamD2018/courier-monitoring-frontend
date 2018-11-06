@@ -5,6 +5,7 @@ import courierListReducer from './couriersListReducer';
 import couriersReducer from './couriersReducer';
 import activeCourierReducer from './activeCourierReducer';
 import courierDetailsReducer from './courierDetailsReducer';
+import errorReducer from './errorsReducer';
 
 export default combineReducers({
   map: mapReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   couriers: couriersReducer,
   activeCourier: activeCourierReducer,
   courierDetails: courierDetailsReducer,
+  error: errorReducer,
 });
