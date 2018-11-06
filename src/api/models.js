@@ -29,10 +29,7 @@ export const Order = struct({
     address: 'string',
   },
   destination: {
-    point: {
-      lat: 'number',
-      lon: 'number',
-    },
+    point: GeoPoint,
     address: 'string',
   },
 });
