@@ -8,6 +8,7 @@ import Sidebar from '../components/Sidebar';
 import CouriersList from '../components/CouriersList';
 import SearchBar from '../components/SearchBar';
 import CourierDetails from '../components/CourierDetails';
+import ErrorCallout from '../components/ErrorCallout';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class App extends Component {
 
   render() {
     const {
-      couriers, mapCenter, mapZoom, isCouriersListOpen, areCourierDetailsOpen, activeCourier,
+      couriers, mapCenter, mapZoom, isCouriersListOpen, areCourierDetailsOpen, activeCourier, error,
     } = this.props;
 
     return (
@@ -33,26 +34,25 @@ class App extends Component {
         />
         <Sidebar>
           <SearchBar {...this.boundActionCreators} />
-          {
-            couriers.length > 0 && (
-              <CouriersList
-                isOpen={isCouriersListOpen}
-                couriers={couriers}
-                {...this.boundActionCreators}
-              />
-            )
-          }
-          {
-            activeCourier.courier && (
-              <CourierDetails
-                courier={activeCourier.courier}
-                isFetching={activeCourier.isFetching}
-                isOpen={areCourierDetailsOpen}
-                {...this.boundActionCreators}
-              />
-            )
-          }
+          {couriers.length > 0 && (
+            <CouriersList
+              isOpen={isCouriersListOpen}
+              couriers={couriers}
+              {...this.boundActionCreators}
+            />
+          )}
+          {activeCourier.courier && (
+            <CourierDetails
+              courier={activeCourier.courier}
+              isFetching={activeCourier.isFetching}
+              isOpen={areCourierDetailsOpen}
+              {...this.boundActionCreators}
+            />
+          )}
         </Sidebar>
+        {error.error && (
+          <ErrorCallout errorMessage={error.errorMessage} />
+        )}
       </>
     );
   }
@@ -65,6 +65,7 @@ const mapStateToProps = state => ({
   isCouriersListOpen: state.couriersList.isOpen,
   areCourierDetailsOpen: state.courierDetails.isOpen,
   mapZoom: state.map.zoom,
+  error: state.error,
 });
 
 export default connect(mapStateToProps)(App);
