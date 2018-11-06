@@ -6,7 +6,7 @@ export const GeoPoint = struct({
 });
 
 export const Courier = struct({
-  id: 'number',
+  id: 'string',
   name: 'string',
   phone: 'string',
   last_seen: 'number',
