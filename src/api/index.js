@@ -8,61 +8,51 @@ import {
 import {
   Courier, Couriers, GeoHistory, Order, Suggestions, Orders,
 } from './models';
+import { handleResponse, mapResponse, validateResponse } from './helpers';
 
 const { API_URL } = process.env;
-
-const responseMapper = (fetch, mapping, validator) => new Promise(async (resolve, reject) => {
-  const response = await fetch;
-
-  if (response.status !== 200) {
-    reject(new Error(response.status));
-  }
-
-  try {
-    const obj = await response.json();
-    const validatedObj = validator(obj);
-    resolve(mapping(validatedObj));
-  } catch (e) {
-    reject(new Error(e));
-  }
-});
 
 export const getCourierById = (courierId) => {
   const url = new URL(`couriers/${courierId}`, API_URL);
 
-  return responseMapper(fetch(url), courierMapping, Courier);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Courier))
+    .then(mapResponse(courierMapping));
 };
 
 export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
   const url = new URL(`couriers/${courierId}/orders`, API_URL);
-  url.search = new URLSearchParams({
-    since,
-    asc,
-    excludeDelivered,
-  });
+  url.search = new URLSearchParams({ since, asc, excludeDelivered });
 
-  return responseMapper(fetch(url), ordersMapping, Orders);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Orders))
+    .then(mapResponse(ordersMapping));
 };
 
 export const getOrder = (courierId, orderId) => {
   const url = new URL(`couriers/${courierId}/orders/${orderId}`, API_URL);
 
-  return responseMapper(fetch(url), orderMapping, Order);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Order))
+    .then(mapResponse(orderMapping));
 };
 
 export const getCouriersByCircleField = (lat, lon, radius) => {
   const url = new URL('couriers', API_URL);
-  url.search = new URLSearchParams({
-    lat,
-    lon,
-    radius,
-  });
+  url.search = new URLSearchParams({ lat, lon, radius });
 
-  return responseMapper(fetch(url), couriersMapping, Couriers);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Couriers))
+    .then(mapResponse(couriersMapping));
 };
 
 export const getCouriersByBoxField = ({
-  topLeftLat, topLeftLon, bottomRightLat, bottomRightLon,
+  topLeftLat, topLeftLon,
+  bottomRightLat, bottomRightLon,
 }) => {
   const url = new URL('couriers', API_URL);
   url.search = new URLSearchParams({
@@ -72,20 +62,28 @@ export const getCouriersByBoxField = ({
     bottom_right_lon: bottomRightLon,
   });
 
-  return responseMapper(fetch(url), couriersMapping, Couriers);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Couriers))
+    .then(mapResponse(couriersMapping));
 };
 
 export const getSuggestions = (input) => {
   const url = new URL('suggestions', API_URL);
   url.search = new URLSearchParams({ input });
 
-  return responseMapper(fetch(url), suggestionsMapping, Suggestions);
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Suggestions))
+    .then(mapResponse(suggestionsMapping));
 };
 
 export const getGeoHistory = (courierId, since) => {
   const url = new URL(`couriers/${courierId}/geo_history`, API_URL);
-  url.search = new URLSearchParams({
-    since,
-  });
-  return responseMapper(fetch(url), geoHistoryMapping, GeoHistory);
+  url.search = new URLSearchParams({ since });
+
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(GeoHistory))
+    .then(mapResponse(geoHistoryMapping));
 };
