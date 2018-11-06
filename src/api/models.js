@@ -49,6 +49,6 @@ export const GeoHistory = struct({
 });
 
 export const Suggestions = struct({
-  couriers: [Courier],
-  orders: [Orders],
+  couriers: Couriers,
+  orders: Orders,
 });
