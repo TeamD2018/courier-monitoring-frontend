@@ -18,10 +18,9 @@ const courierId = urlParams.get('courier_id');
 
 ReactDOM.render(
   <Provider store={store}>
-    {
-      orderId && courierId
-        ? <ClientApp orderId={orderId} courierId={courierId} />
-        : <App />
+    {orderId && courierId
+      ? <ClientApp orderId={orderId} courierId={courierId} />
+      : <App />
     }
   </Provider>,
   document.getElementById('root'),
