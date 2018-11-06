@@ -6,6 +6,7 @@ import SingleCourierMap from '../components/SingleCourierMap';
 import * as actions from '../actions';
 import Sidebar from '../components/Sidebar';
 import CourierDetails from '../components/CourierDetails';
+import ErrorCallout from '../components/ErrorCallout';
 
 class ClientApp extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class ClientApp extends Component {
 
   render() {
     const {
-      mapCenter, mapZoom, activeCourier, orderId, courierId, activeOrder,
+      mapCenter, mapZoom, activeCourier, orderId, courierId, activeOrder, error,
     } = this.props;
 
     return (
@@ -42,6 +43,9 @@ class ClientApp extends Component {
             )
           }
         </Sidebar>
+        {error.error && (
+          <ErrorCallout errorMessage={error.errorMessage} errorName={error.errorName} />
+        )}
       </>
     );
   }
@@ -51,6 +55,7 @@ const mapStateToProps = state => ({
   activeCourier: state.activeCourier,
   mapCenter: state.map.center,
   mapZoom: state.map.zoom,
+  error: state.error,
 });
 
 export default connect(mapStateToProps)(ClientApp);
