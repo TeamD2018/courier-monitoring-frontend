@@ -14,8 +14,10 @@ export const receiveCouriers = couriers => ({
   couriers,
 });
 
-export const receiverCouriersFailed = () => ({
+export const receiverCouriersFailed = (errorMessage, errorName) => ({
   type: types.RECEIVE_COURIERS_FAILED,
+  errorMessage,
+  errorName,
 });
 
 
@@ -48,8 +50,10 @@ export const receiveActiveCourier = activeCourier => ({
   type: types.RECEIVE_ACTIVE_COURIER,
   activeCourier,
 });
-export const receiveActiveCourierFailed = () => ({
+export const receiveActiveCourierFailed = (errorMessage, errorName) => ({
   type: types.RECEIVE_ACTIVE_COURIER_FAIL,
+  errorMessage,
+  errorName,
 });
 
 export const requestActiveCourier = courierId => ({

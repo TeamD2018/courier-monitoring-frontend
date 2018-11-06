@@ -3,6 +3,7 @@ import { types } from '../actions';
 const initialState = {
   error: false,
   errorMessage: null,
+  errorName: 'Ошибка',
 };
 
 export default (state = initialState, action) => {
@@ -12,7 +13,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: true,
-        errorMessage: action.message,
+        errorMessage: action.errorMessage,
+        errorName: action.errorName,
       };
 
     case types.RESET_ERROR:

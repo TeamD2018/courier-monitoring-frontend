@@ -15,16 +15,17 @@ const StyledCard = styled(Card)`
   width: 20rem;
 `;
 
-const ErrorCallout = ({ errorMessage }) => (
+const ErrorCallout = ({ errorMessage, errorName }) => (
   <StyledCard elevation={2}>
-    <Callout title="Ошибка" intent={Intent.DANGER} icon={IconNames.ERROR}>
       {errorMessage}
+    <Callout title={errorName} intent={Intent.DANGER} icon={IconNames.ERROR}>
     </Callout>
   </StyledCard>
 );
 
 ErrorCallout.propTypes = {
   errorMessage: PropTypes.string.isRequired,
+  errorName: PropTypes.string.isRequired,
 };
 
 export default ErrorCallout;

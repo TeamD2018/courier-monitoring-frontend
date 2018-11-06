@@ -21,7 +21,7 @@ function* couriersFetch(action) {
     yield put(receiveCouriers(couriers));
   } catch (e) {
     console.error(e);
-    yield put(receiverCouriersFailed());
+    yield put(receiverCouriersFailed(e.message, e.name));
   }
 }
 
@@ -48,7 +48,7 @@ function* fetchActiveCourier(action) {
     yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
-    yield put(receiveActiveCourierFailed());
+    yield put(receiveActiveCourierFailed(e.message, e.name));
   }
 }
 
@@ -75,7 +75,7 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
-    yield put(receiveActiveCourierFailed());
+    yield put(receiveActiveCourierFailed(e.message, e.name));
   }
 }
 

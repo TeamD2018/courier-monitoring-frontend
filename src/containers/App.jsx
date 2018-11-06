@@ -51,7 +51,7 @@ class App extends Component {
           )}
         </Sidebar>
         {error.error && (
-          <ErrorCallout errorMessage={error.errorMessage} />
+          <ErrorCallout errorMessage={error.errorMessage} errorName={error.errorName} />
         )}
       </>
     );
