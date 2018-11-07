@@ -56,11 +56,12 @@ CourierMarker.propTypes = {
     ordersCount: PropTypes.number.isRequired,
   }).isRequired,
   active: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 CourierMarker.defaultProps = {
   active: false,
+  onClick: null,
 };
 
 export default CourierMarker;

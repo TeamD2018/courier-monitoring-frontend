@@ -6,12 +6,7 @@ import CourierMarker from './CourierMarker';
 import Track from './Track';
 import OrderMarker from './OrderMarker';
 
-const MOCKBA = {
-  lat: 55.751244,
-  lng: 37.618423,
-};
 const KEY = process.env.API_KEY;
-const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
 
 class SingleCourierMap extends Component {
@@ -75,21 +70,18 @@ class SingleCourierMap extends Component {
     /* eslint-enable react/no-unused-state */
   }
 
-  renderCourierMarker(courier) {
-    const { pan } = this.props;
+  static renderCourierMarker(courier) {
     return (
       <CourierMarker
         key={courier.id}
         lat={courier.location.lat}
         lng={courier.location.lng}
-        onClick={() => pan(courier.location)}
         courier={courier}
       />
     );
   }
 
-  renderSourceMarker(order) {
-    const { pan } = this.props;
+  static renderSourceMarker(order) {
     return (
       <OrderMarker
         key={`${order.id}_src`}
@@ -97,13 +89,11 @@ class SingleCourierMap extends Component {
         lng={order.source.lng}
         address={order.source.address}
         type={false}
-        onClick={() => pan(order.source)}
       />
     );
   }
 
-  renderDestMarker(order) {
-    const { pan } = this.props;
+  static renderDestMarker(order) {
     return (
       <OrderMarker
         key={`${order.id}_dst`}
@@ -111,7 +101,6 @@ class SingleCourierMap extends Component {
         lng={order.destination.lng}
         address={order.destination.address}
         type
-        onClick={() => pan(order.destination)}
       />
     );
   }
@@ -124,18 +113,19 @@ class SingleCourierMap extends Component {
       <>
         <GoogleMapReact
           bootstrapURLKeys={{ key: KEY }}
-          defaultCenter={MOCKBA}
           center={mapCenter}
-          defaultZoom={DEFAULT_ZOOM}
           zoom={mapZoom}
           onChange={this.onMove}
           options={SingleCourierMap.createOptions}
           onGoogleApiLoaded={this.handleNativeApi}
           yesIWantToUseGoogleMapApiInternals
         >
-          {activeCourier.courier && this.renderCourierMarker(activeCourier.courier)}
-          {activeCourier.courier && this.renderDestMarker(activeCourier.courier.orders[0])}
-          {activeCourier.courier && this.renderSourceMarker(activeCourier.courier.orders[0])}
+          {activeCourier.courier
+            && SingleCourierMap.renderCourierMarker(activeCourier.courier)}
+          {activeCourier.courier
+            && SingleCourierMap.renderDestMarker(activeCourier.courier.orders[0])}
+          {activeCourier.courier
+            && SingleCourierMap.renderSourceMarker(activeCourier.courier.orders[0])}
         </GoogleMapReact>
         {mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
           <Track
