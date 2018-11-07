@@ -10,7 +10,7 @@ import {
   receiverCouriersFailed,
   receiveActiveCourier,
   receiveActiveCourierFailed,
-  types,
+  types, resetActiveCourier,
 } from '../actions';
 import { fetchRecentOrders } from '../services';
 
@@ -48,7 +48,12 @@ function* fetchActiveCourier(action) {
     yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
-    yield put(receiveActiveCourierFailed(e.message, e.name));
+
+    if (e.message === '404') {
+      yield put(resetActiveCourier());
+    } else {
+      yield put(receiveActiveCourierFailed(e.message, e.name));
+    }
   }
 }
 
@@ -75,7 +80,12 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     yield put(receiveActiveCourier(courier));
   } catch (e) {
     console.error(e);
-    yield put(receiveActiveCourierFailed(e.message, e.name));
+
+    if (e.message === '404') {
+      yield put(resetActiveCourier());
+    } else {
+      yield put(receiveActiveCourierFailed(e.message, e.name));
+    }
   }
 }
 
