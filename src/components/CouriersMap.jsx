@@ -7,12 +7,7 @@ import CourierMarker from './CourierMarker';
 import Track from './Track';
 import OrderMarker from './OrderMarker';
 
-const MOCKBA = {
-  lat: 55.751244,
-  lng: 37.618423,
-};
 const KEY = process.env.API_KEY;
-const DEFAULT_ZOOM = 13;
 const TIMEOUT = 5000;
 
 class CouriersMap extends Component {
@@ -34,10 +29,9 @@ class CouriersMap extends Component {
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
     this.handleNativeApi = this.handleNativeApi.bind(this);
     this.exposeActiveCourier = this.exposeActiveCourier.bind(this);
-    this.onOrderMarkerClick = this.onOrderMarkerClick.bind(this);
     this.renderCourierMarker = this.renderCourierMarker.bind(this);
-    this.renderSourceMarker = this.renderSourceMarker.bind(this);
-    this.renderDestMarker = this.renderDestMarker.bind(this);
+    CouriersMap.renderSourceMarker = CouriersMap.renderSourceMarker.bind(this);
+    CouriersMap.renderDestMarker = CouriersMap.renderDestMarker.bind(this);
   }
 
   componentDidMount() {
@@ -65,12 +59,6 @@ class CouriersMap extends Component {
     this.refreshMarkers();
   }
 
-  onOrderMarkerClick(location) {
-    const { pan } = this.props;
-
-    pan(location);
-  }
-
   refreshMarkers() {
     const topLeftLat = this.bounds.nw.lat;
     const topLeftLon = this.bounds.nw.lng;
@@ -93,14 +81,10 @@ class CouriersMap extends Component {
   }
 
   exposeActiveCourier(courier) {
-    const {
-      requestActiveCourier, hideCouriersList, pan,
-    } = this.props;
+    const { requestActiveCourier, hideCouriersList } = this.props;
 
     requestActiveCourier(courier.id);
     hideCouriersList();
-
-    pan(courier.location);
   }
 
   handleNativeApi({ maps, map }) {
@@ -128,7 +112,7 @@ class CouriersMap extends Component {
     );
   }
 
-  renderSourceMarker(order) {
+  static renderSourceMarker(order) {
     return (
       <OrderMarker
         key={`${order.id}_src`}
@@ -136,19 +120,17 @@ class CouriersMap extends Component {
         lng={order.source.lng}
         address={order.source.address}
         icon={IconNames.SHOP}
-        onClick={() => this.onOrderMarkerClick(order.source)}
         type={false}
       />
     );
   }
 
-  renderDestMarker(order) {
+  static renderDestMarker(order) {
     return (
       <OrderMarker
         key={`${order.id}_dst`}
         lat={order.destination.lat}
         lng={order.destination.lng}
-        onClick={() => this.onOrderMarkerClick(order.destination)}
         address={order.destination.address}
         type
       />
@@ -166,9 +148,7 @@ class CouriersMap extends Component {
       <>
         <GoogleMapReact
           bootstrapURLKeys={{ key: KEY }}
-          defaultCenter={MOCKBA}
           center={mapCenter}
-          defaultZoom={DEFAULT_ZOOM}
           zoom={mapZoom}
           onChange={this.onMove}
           options={CouriersMap.createOptions}
@@ -176,8 +156,8 @@ class CouriersMap extends Component {
           yesIWantToUseGoogleMapApiInternals
         >
           {couriers.map(this.renderCourierMarker)}
-          {orders.map(this.renderSourceMarker)}
-          {orders.map(this.renderDestMarker)}
+          {orders.map(CouriersMap.renderSourceMarker)}
+          {orders.map(CouriersMap.renderDestMarker)}
         </GoogleMapReact>
         {mapLoaded && activeCourier.courier && activeCourier.courier.geoHistory && (
           <Track

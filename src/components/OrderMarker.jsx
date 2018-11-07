@@ -38,7 +38,11 @@ class OrderMarker extends PureComponent {
 OrderMarker.propTypes = {
   address: PropTypes.string.isRequired,
   type: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};
+
+OrderMarker.defaultProps = {
+  onClick: null,
 };
 
 export default OrderMarker;
