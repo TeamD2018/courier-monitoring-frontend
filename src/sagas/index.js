@@ -70,7 +70,7 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     courier.orders = [order];
     courier.geoHistory = overwrite
       ? geoHistory
-      : activeCourier.geoHistory.concat(geoHistory);
+      : activeCourier.courier.geoHistory.concat(geoHistory);
 
     yield put(receiveActiveCourier(courier));
   } catch (e) {
