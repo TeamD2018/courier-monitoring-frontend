@@ -27,7 +27,7 @@ class SearchBar extends PureComponent {
     return new Promise(async (resolve, reject) => {
       if (query !== '') {
         try {
-          const suggestions = await getSuggestions(query);
+          const suggestions = await getSuggestions(query.replace('+', ''));
 
           const options = [
             {
