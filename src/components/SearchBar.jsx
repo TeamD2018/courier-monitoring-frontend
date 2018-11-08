@@ -32,12 +32,14 @@ class SearchBar extends PureComponent {
           const options = [
             {
               label: 'Курьеры',
-              options: suggestions.couriers.map(suggestion => ({
-                value: suggestion.id,
-                label: suggestion.name,
-                type: 'courier',
-                ...suggestion,
-              })),
+              options: suggestions.couriers
+                .filter(suggestion => !!suggestion.lastSeen && !!suggestion.location)
+                .map(suggestion => ({
+                  value: suggestion.id,
+                  label: suggestion.name,
+                  type: 'courier',
+                  ...suggestion,
+                })),
             },
             {
               label: 'Места назначения',
