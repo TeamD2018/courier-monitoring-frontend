@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Icon, Classes,
 } from '@blueprintjs/core';
-import moment from 'moment';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import ruLocale from 'date-fns/locale/ru';
 import StatusTag from './StatusTag';
 
 const SOURCE = false;
@@ -73,7 +74,6 @@ class CourierDetails extends PureComponent {
   constructor(props) {
     super(props);
 
-    moment.locale('ru');
     this.state = {
       relativeLastSeen: true,
     };
@@ -164,6 +164,8 @@ class CourierDetails extends PureComponent {
     const { courier, isOpen, isFetching } = this.props;
     const { relativeLastSeen } = this.state;
 
+    const courierLastSeen = new Date(courier.lastSeen * 1000);
+
     /* eslint-disable jsx-a11y/click-events-have-key-events,
       jsx-a11y/no-static-element-interactions */
     return (
@@ -190,10 +192,10 @@ class CourierDetails extends PureComponent {
               className={isFetching ? Classes.SKELETON : undefined}
               onClick={() => this.setState({ relativeLastSeen: !relativeLastSeen })}
             >
-              {`Был активен ${relativeLastSeen
-                ? moment.unix(courier.lastSeen).startOf('second').fromNow()
-                : moment.unix(courier.lastSeen).format('HH:mm:ss DD.MM.YYYY')
-              }`}
+              {relativeLastSeen
+                ? `Был активен ${distanceInWordsToNow(courierLastSeen, { locale: ruLocale })} назад`
+                : `Был активен ${courierLastSeen.toLocaleString()}`
+              }
             </div>
             <div className={isFetching ? Classes.SKELETON : undefined}>
               {`+${courier.phone}`}
