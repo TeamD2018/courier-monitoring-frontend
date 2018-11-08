@@ -148,22 +148,22 @@ class CourierDetails extends PureComponent {
 
     const waypoints = [];
     waypointsMap.forEach((ordersOfSource) => {
-      waypoints.push({
+      waypoints.push(this.renderWaypoint({
         type: SOURCE,
         orderId: ordersOfSource[0].id,
         location: ordersOfSource[0].source,
-      });
+      }));
 
-      ordersOfSource.forEach(order => waypoints.push({
+      ordersOfSource.forEach(order => waypoints.push(this.renderWaypoint({
         type: DESTINATION,
         orderId: order.id,
         orderNumber: order.orderNumber,
         createdAt: order.createdAt,
         location: order.destination,
-      }));
+      })));
     });
 
-    return waypoints.map(this.renderWaypoint);
+    return waypoints;
   }
 
   render() {
