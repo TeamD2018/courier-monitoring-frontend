@@ -6,7 +6,6 @@
   "repository": "https://github.com/TeamD2018/courier-monitoring-frontend.git",
   "dependencies": {
     "@blueprintjs/core": "^3.6.1",
-    "@blueprintjs/icons": "^3.2.0",
     "@blueprintjs/select": "^3.2.0",
     "@types/googlemaps": "^3.0.0",
     "@types/markerclustererplus": "^2.1.29",

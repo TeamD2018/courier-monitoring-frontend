@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import PropTypes from 'prop-types';
-import { IconNames } from '@blueprintjs/icons';
 import CourierMarker from './CourierMarker';
 import Track from './Track';
 import OrderMarker from './OrderMarker';
@@ -119,7 +118,6 @@ class CouriersMap extends Component {
         lat={order.source.lat}
         lng={order.source.lng}
         address={order.source.address}
-        icon={IconNames.SHOP}
         type={false}
       />
     );

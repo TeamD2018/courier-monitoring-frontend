@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {
   Button, Callout, Card, Intent,
 } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
 import PropTypes from 'prop-types';
 
 const StyledCard = styled(Card)`
@@ -21,7 +20,7 @@ function reloadPage() { window.location.reload(); }
 
 const ErrorCallout = ({ errorMessage, errorName }) => (
   <StyledCard elevation={2}>
-    <Callout title={errorName} intent={Intent.DANGER} icon={IconNames.ERROR}>
+    <Callout title={errorName} intent={Intent.DANGER} icon="error">
       <div>{errorMessage}</div>
       <Button
         large

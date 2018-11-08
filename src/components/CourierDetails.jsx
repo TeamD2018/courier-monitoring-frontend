@@ -2,11 +2,14 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, Collapse, Divider, H5, Icon, Classes,
+  Button, Card, Collapse, Divider, H5, Classes,
 } from '@blueprintjs/core';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import ruLocale from 'date-fns/locale/ru';
 import StatusTag from './StatusTag';
+
+import home from '../images/home.svg';
+import shop from '../images/shop.svg';
 
 const SOURCE = false;
 const DESTINATION = true;
@@ -69,6 +72,9 @@ const StyledButton = styled(Button)`
   z-index: 100;
 `;
 
+const StyledImg = styled.img`
+  width: 1rem;
+`;
 
 class CourierDetails extends PureComponent {
   constructor(props) {
@@ -117,7 +123,7 @@ class CourierDetails extends PureComponent {
         onClick={() => this.onRowClick(waypoint)}
       >
         <StyledDiv className={isFetching ? Classes.SKELETON : undefined}>
-          <Icon icon={waypoint.type ? 'home' : 'shop'} />
+          <StyledImg src={waypoint.type ? home : shop} />
         </StyledDiv>
         <div className={isFetching ? Classes.SKELETON : undefined}>
           {waypoint.type && (

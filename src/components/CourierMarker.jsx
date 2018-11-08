@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledIcon = styled.img`
-  width: 32px;
+  width: 2rem;
   cursor: pointer;
   position: absolute;
   transform: translate(-50%, -100%);
