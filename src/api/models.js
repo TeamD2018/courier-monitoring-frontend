@@ -5,16 +5,18 @@ export const GeoPoint = struct({
   lon: 'number',
 });
 
+export const Location = struct({
+  point: GeoPoint,
+  address: 'string?',
+});
+
 export const Courier = struct({
   id: 'string',
   name: 'string',
   phone: 'string',
-  last_seen: 'number',
-  orders_count: 'number',
-  location: {
-    point: GeoPoint,
-    address: 'string?',
-  },
+  last_seen: 'number?',
+  orders_count: 'number?',
+  location: struct.optional(Location),
 });
 
 export const Couriers = struct.list([Courier]);
@@ -24,14 +26,8 @@ export const Order = struct({
   order_number: 'number',
   courier_id: 'string',
   created_at: 'number',
-  source: {
-    point: GeoPoint,
-    address: 'string',
-  },
-  destination: {
-    point: GeoPoint,
-    address: 'string',
-  },
+  source: Location,
+  destination: Location,
 });
 
 export const Orders = struct.list([Order]);

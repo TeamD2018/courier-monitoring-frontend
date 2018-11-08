@@ -2,11 +2,11 @@ export const courierMapping = courier => ({
   id: courier.id,
   name: courier.name,
   phone: courier.phone,
-  location: {
+  location: courier.location ? {
     lat: courier.location.point.lat,
     lng: courier.location.point.lon,
     address: courier.location.address,
-  },
+  } : undefined,
   lastSeen: courier.last_seen,
   ordersCount: courier.orders_count,
 });
