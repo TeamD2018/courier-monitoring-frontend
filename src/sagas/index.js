@@ -27,12 +27,13 @@ function* couriersFetch(action) {
 
 function* fetchActiveCourier(action) {
   try {
-    const activeCourier = yield select(state => state.activeCourier);
-    const overwrite = !activeCourier.courier || activeCourier.courier.id !== action.courierId;
+    const currentActiveCourier = yield select(state => state.activeCourier);
+    const overwrite = !currentActiveCourier.courier
+      || currentActiveCourier.courier.id !== action.courierId;
 
     const latest = overwrite
       ? 0
-      : activeCourier.courier.lastSeen;
+      : currentActiveCourier.courier.lastSeen;
 
     const [courier, geoHistory, orders] = yield all([
       call(getCourierById, action.courierId),
@@ -43,7 +44,7 @@ function* fetchActiveCourier(action) {
     courier.orders = orders;
     courier.geoHistory = overwrite
       ? geoHistory
-      : activeCourier.courier.geoHistory.concat(geoHistory);
+      : currentActiveCourier.courier.geoHistory.concat(geoHistory);
 
     yield put(receiveActiveCourier(courier));
   } catch (e) {
@@ -59,12 +60,13 @@ function* fetchActiveCourier(action) {
 
 function* fetchActiveCourierWithOnlyOrder(action) {
   try {
-    const activeCourier = yield select(state => state.activeCourier);
-    const overwrite = !activeCourier.courier || activeCourier.courier.id !== action.courierId;
+    const currentActiveCourier = yield select(state => state.activeCourier);
+    const overwrite = !currentActiveCourier.courier
+      || currentActiveCourier.courier.id !== action.courierId;
 
     const latest = overwrite
       ? 0
-      : activeCourier.courier.lastSeen;
+      : currentActiveCourier.courier.lastSeen;
 
     const [courier, geoHistory, order] = yield all([
       call(getCourierById, action.courierId),
@@ -75,7 +77,7 @@ function* fetchActiveCourierWithOnlyOrder(action) {
     courier.orders = [order];
     courier.geoHistory = overwrite
       ? geoHistory
-      : activeCourier.courier.geoHistory.concat(geoHistory);
+      : currentActiveCourier.courier.geoHistory.concat(geoHistory);
 
     yield put(receiveActiveCourier(courier));
   } catch (e) {
