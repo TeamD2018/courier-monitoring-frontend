@@ -27,4 +27,4 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 
 EXPOSE 80 443 8080
 ENTRYPOINT ["/usr/bin/caddy"]
-CMD ["--conf", "/etc/Caddyfile", "--log", "stdout"]
+CMD ["--conf", "/etc/Caddyfile","-agree", "--log", "stdout"]
