@@ -23,7 +23,11 @@ export const getCourierById = (courierId) => {
 
 export const getCourierOrders = (courierId, since, asc, excludeDelivered) => {
   const url = new URL(`couriers/${courierId}/orders`, API_URL);
-  url.search = new URLSearchParams({ since, asc, excludeDelivered });
+  url.search = new URLSearchParams({
+    since,
+    asc,
+    exclude_delivered: excludeDelivered,
+  });
 
   return fetch(url)
     .then(handleResponse)
