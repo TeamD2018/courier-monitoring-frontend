@@ -28,6 +28,7 @@ export const Order = struct({
   created_at: 'number',
   source: Location,
   destination: Location,
+  delivered_at: 'number?',
 });
 
 export const Orders = struct.list([Order]);
