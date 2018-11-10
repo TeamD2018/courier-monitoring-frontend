@@ -12,12 +12,13 @@ services:
         condition: on-failure
     networks:
     - geo-rest
-    environment:
-    - EMAIL="megamailrus@gmail.com"
     volumes:
     - type: bind
       source: /root/.caddy
       target: /root/.caddy
+    - type: bind
+      source: /root/Caddyfile
+      target: /etc/Caddyfile
 networks:
   geo-rest:
     name: geo-rest
