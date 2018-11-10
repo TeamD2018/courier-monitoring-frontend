@@ -23,7 +23,7 @@ FROM scratch as runtime
 COPY --from=build /usr/local/bin /usr/bin
 COPY --from=build /root/dist /var/www
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-
+ENV CADDYPATH /root/.caddy
 
 EXPOSE 80 443 8080
 ENTRYPOINT ["/usr/bin/caddy"]
