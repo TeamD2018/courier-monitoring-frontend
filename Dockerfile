@@ -27,6 +27,6 @@ COPY Caddyfile /etc/Caddyfile
 
 ENV NODE_ENV production
 
-EXPOSE 80 443 2015
+EXPOSE 80 443 8080
 ENTRYPOINT ["/usr/bin/caddy"]
-CMD ["--conf", "/etc/Caddyfile", "--log", "stdout"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree", "$EMAIL"]
