@@ -13,7 +13,7 @@ services:
     networks:
     - geo-rest
     environment:
-    - EMAIL: megamailrus@gmail.com
+    - EMAIL="megamailrus@gmail.com"
     volumes:
     - type: bind
       source: /root/.caddy
