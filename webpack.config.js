@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => ({
   entry: './src/index.jsx',
@@ -70,5 +71,12 @@ module.exports = (env, argv) => ({
       analyzerMode: 'static',
       openAnalyzer: false,
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/assets/*',
+        to: './',
+        flatten: true,
+      },
+    ]),
   ],
 });
