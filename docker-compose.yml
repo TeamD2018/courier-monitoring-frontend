@@ -18,7 +18,7 @@ services:
       target: /root/.caddy
     - type: bind
       source: /root/Caddyfile
-      target: /etc/Caddyfile
+      target: /etc/caddy/Caddyfile
 networks:
   geo-rest:
     name: geo-rest

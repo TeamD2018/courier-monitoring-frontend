@@ -27,4 +27,4 @@ ENV CADDYPATH /root/.caddy
 
 EXPOSE 80 443 8080
 ENTRYPOINT ["/usr/bin/caddy"]
-CMD ["--conf", "/etc/Caddyfile","-agree", "--log", "stdout"]
+CMD ["--conf", "/etc/caddy/Caddyfile","-agree", "--log", "stdout"]
