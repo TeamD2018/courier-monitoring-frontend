@@ -24,26 +24,26 @@ jobs:
       only:
       - master
 
-  - stage: deploy
-    name: swarm
-    if: branch = master
-    language: bash
-    before_deploy:
-    - openssl aes-256-cbc -K $encrypted_0159f993d050_key -iv $encrypted_0159f993d050_iv -in travis_key.enc -out ./travis_key -d
-    deploy:
-    - provider: script
-      skip_cleanup: true
-      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
-      on:
-        branch: master
-    - provider: script
-      skip_cleanup: true
-      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
-      on:
-        branch: develop
-    branches:
-      only:
-      - master
+#  - stage: deploy
+#    name: swarm
+#    if: branch = master
+#    language: bash
+#    before_deploy:
+#    - openssl aes-256-cbc -K $encrypted_0159f993d050_key -iv $encrypted_0159f993d050_iv -in travis_key.enc -out ./travis_key -d
+#    deploy:
+#    - provider: script
+#      skip_cleanup: true
+#      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
+#      on:
+#        branch: master
+#    - provider: script
+#      skip_cleanup: true
+#      script: bash deploy.sh $DEPLOY_TARGET $TRAVIS_COMMIT
+#      on:
+#        branch: develop
+#    branches:
+#      only:
+#      - master
 
   - stage: deploy
     name: kubernetes
