@@ -1,18 +1,12 @@
 #!/usr/bin/env bash
-SWARM_MANAGER_IP=$1
-VERSION=$2
+VERSION=$1
 
-DEPLOY_USER=travis
-echo "Deploying to $SERVER_IP"
+echo "Installing kubectl..."
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
 
-echo "Setting up ssh..."
-eval "$(ssh-agent -s)"
-ssh-keyscan -p 228 -H $SWARM_MANAGER_IP >> ~/.ssh/known_hosts
-chmod 600 travis_key
-ssh-add travis_key
+export KUBECONFIG=./kubernetes/config
 
-echo "Uploading..."
-scp -P 228 -r docker-compose.yml $DEPLOY_USER@$SWARM_MANAGER_IP:/tmp/
-
-echo "Pushing stack to swarm..."
-ssh -p 228 $DEPLOY_USER@$SWARM_MANAGER_IP "VERSION=${VERSION} docker stack deploy --compose-file /tmp/docker-compose.yml courier-monitoring-frontend"
+echo "Deploying..."
+kubectl set image deployment frontend frontend=teamd2018/courier-monitoring-frontend:$VERSION
