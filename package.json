@@ -22,6 +22,7 @@
     "redux-saga": "^0.16.0",
     "regenerator-runtime": "^0.12.1",
     "styled-components": "^4.0.3",
+    "supercluster": "^5.0.0",
     "superstruct": "^0.6.0"
   },
   "license": "MIT",

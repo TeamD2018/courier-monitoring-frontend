@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import Supercluster from 'supercluster';
 
 import PropTypes from 'prop-types';
 import CourierMarker from './CourierMarker';
 import Track from './Track';
 import OrderMarker from './OrderMarker';
+import Cluster from './Cluster';
 
 const KEY = process.env.API_KEY;
 const TIMEOUT = 5000;
@@ -99,14 +101,28 @@ class CouriersMap extends Component {
   renderCourierMarker(courier) {
     const { activeCourier } = this.props;
 
+    if (courier.properties.cluster) {
+      return (
+        <Cluster
+          key={courier.id}
+          lng={courier.geometry.coordinates[0]}
+          lat={courier.geometry.coordinates[1]}
+          pointCount={courier.properties.point_count}
+          cluster={courier.properties}
+        />
+      );
+    }
+
+    const oldCourier = courier.properties;
+
     return (
       <CourierMarker
         onClick={this.exposeActiveCourier}
-        key={courier.id}
-        lat={courier.location.lat}
-        lng={courier.location.lng}
-        courier={courier}
-        active={activeCourier.courier && courier.id === activeCourier.courier.id}
+        key={oldCourier.id}
+        lat={oldCourier.location.lat}
+        lng={oldCourier.location.lng}
+        courier={oldCourier}
+        active={activeCourier.courier && oldCourier.id === activeCourier.courier.id}
       />
     );
   }
@@ -135,6 +151,38 @@ class CouriersMap extends Component {
     );
   }
 
+  renderClusters(couriers) {
+    if (this.bounds) {
+      const geoJSONCouriers = couriers.map(courier => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [courier.location.lng, courier.location.lat],
+        },
+        properties: courier,
+      }));
+
+      const bbox = [
+        this.bounds.nw.lng,
+        this.bounds.se.lat,
+        this.bounds.se.lng,
+        this.bounds.nw.lat,
+      ];
+
+      const clusterizer = new Supercluster({
+        radius: 80,
+        maxZoom: 16,
+      }).load(geoJSONCouriers);
+
+      const { mapZoom } = this.props;
+      const clusters = clusterizer.getClusters(bbox, mapZoom);
+
+      return clusters.map(this.renderCourierMarker);
+    }
+
+    return [];
+  }
+
   render() {
     const {
       couriers, mapCenter, activeCourier, mapZoom,
@@ -153,7 +201,7 @@ class CouriersMap extends Component {
           onGoogleApiLoaded={this.handleNativeApi}
           yesIWantToUseGoogleMapApiInternals
         >
-          {couriers.map(this.renderCourierMarker)}
+          {this.renderClusters(couriers)}
           {orders.map(CouriersMap.renderSourceMarker)}
           {orders.map(CouriersMap.renderDestMarker)}
         </GoogleMapReact>
