@@ -56,9 +56,10 @@ const StyledDiv = styled.div`
 `;
 
 const StyledCard = styled(Card)`
+  display: flex;
+  flex-direction: column;
   padding: 0;
   margin: 0.5rem;
-  overflow: auto;
 `;
 
 const BoldDiv = styled.div`
@@ -66,7 +67,6 @@ const BoldDiv = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  position: sticky;
   top: 0;
   background: rgba(255, 255, 255, 1) none !important;
   z-index: 100;

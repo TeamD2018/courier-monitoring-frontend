@@ -8,8 +8,7 @@ import StatusTag from './StatusTag';
 
 const Body = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
   
   -webkit-overflow-scrolling: touch;
 `;
@@ -33,13 +32,25 @@ const Row = styled.div`
 `;
 
 const StyledCard = styled(Card)`
+  display: flex;
+  flex-direction: column;
   padding: 0;
   margin: 0.5rem;
-  overflow: auto;
+  min-height: 0;
+  
+  & .bp3-collapse {
+    display: flex;
+    min-height: 0;
+  }
+  
+  & .bp3-collapse-body {
+    display: flex;
+    min-height: 0;
+    width: 100%;
+  }
 `;
 
 const StyledButton = styled(Button)`
-  position: sticky;
   top: 0;
   background: rgba(255, 255, 255, 1) none !important;
   z-index: 100;
