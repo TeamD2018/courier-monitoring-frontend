@@ -1,5 +1,5 @@
 import {
-  call, put, takeLatest, all, select,
+  call, put, takeLatest, all, select, debounce,
 } from 'redux-saga/effects';
 
 import {
@@ -93,7 +93,7 @@ function* fetchActiveCourierWithOnlyOrder(action) {
 
 function* rootSaga() {
   yield all([
-    takeLatest(types.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
+    debounce(500, types.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
     takeLatest(types.REQUEST_ACTIVE_COURIER, fetchActiveCourier),
     takeLatest(types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER, fetchActiveCourierWithOnlyOrder),
   ]);
