@@ -4,6 +4,7 @@ const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => ({
   entry: './src/index.jsx',
@@ -78,5 +79,9 @@ module.exports = (env, argv) => ({
         flatten: true,
       },
     ]),
+    new webpack.NormalModuleReplacementPlugin(
+      /iconSvgPaths.js/,
+      `${__dirname}/src/images/iconSvgPaths.js`,
+    ),
   ],
 });
