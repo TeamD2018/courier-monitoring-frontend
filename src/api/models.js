@@ -17,6 +17,7 @@ export const Courier = struct({
   last_seen: 'number?',
   orders_count: 'number?',
   location: struct.optional(Location),
+  is_active: 'boolean?',
 });
 
 export const Couriers = struct.list([Courier]);
