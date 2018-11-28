@@ -1,6 +1,12 @@
 # DC Courier Monitor Service Dashboard
 [![Build Status](https://travis-ci.com/TeamD2018/courier-monitoring-frontend.svg?branch=master)](https://travis-ci.com/TeamD2018/courier-monitoring-frontend)
 
+<p align="center">
+  <br>
+  <img alt="Logo" src="https://raw.githubusercontent.com/TeamD2018/courier-monitoring-frontend/master/screenshot.png" />
+  <br><br><br>
+</p>
+
 Микросервис, позволяющий отслеживать геолокацию курьеров в рамках приложения Delivery Club.
 
 Разработка сервиса осуществлялась в рамках итогого задания образовательного проекта Технопарк от компании Mail.Ru.
