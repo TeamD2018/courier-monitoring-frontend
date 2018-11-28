@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import shopMarker from '../images/Shop.png';
 import homeMarker from '../images/Home.png';

@@ -7,6 +7,8 @@
   "dependencies": {
     "@blueprintjs/core": "^3.6.1",
     "@blueprintjs/select": "^3.2.0",
+    "@emotion/core": "^10.0.0",
+    "@emotion/styled": "^10.0.0",
     "@types/googlemaps": "^3.0.0",
     "@types/react": "^15.0.0 || ^16.0.0",
     "date-fns": "^1.29.0",
@@ -21,7 +23,6 @@
     "redux": "^4.0.0",
     "redux-saga": "^1.0.0-beta.3",
     "regenerator-runtime": "^0.12.1",
-    "styled-components": "^4.0.3",
     "supercluster": "^5.0.0",
     "superstruct": "^0.6.0"
   },
@@ -31,7 +32,7 @@
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "babel-plugin-styled-components": "^1.8.0",
+    "babel-plugin-emotion": "^10.0.0",
     "babel-preset-flow": "^6.23.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.0",

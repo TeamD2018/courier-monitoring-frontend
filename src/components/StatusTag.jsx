@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Intent, Tag } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 

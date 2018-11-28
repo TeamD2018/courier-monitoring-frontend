@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import AsyncSelect from 'react-select/lib/Async';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Card } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
