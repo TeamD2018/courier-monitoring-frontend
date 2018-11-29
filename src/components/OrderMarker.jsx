@@ -1,15 +1,16 @@
-import React, { PureComponent } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import shopMarker from '../images/Shop.png';
 import homeMarker from '../images/Home.png';
 
-const StyledDiv = styled.div`
+const divStyle = css`
   padding: 1rem;
 `;
 
-const StyledIcon = styled.img`
+const iconStyle = css`
   width: 32px;
   cursor: pointer;
   position: absolute;
@@ -19,19 +20,26 @@ const StyledIcon = styled.img`
 class OrderMarker extends PureComponent {
   render() {
     const { address, type, onClick } = this.props;
+
+    /* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+      jsx-a11y/click-events-have-key-events */
     return (
       <Popover
         interactionKind={PopoverInteractionKind.HOVER}
         transitionDuration={100}
         position="bottom"
       >
-        <StyledIcon
+        <img
+          alt={type ? 'Home' : 'Shop'}
+          css={iconStyle}
           src={type ? homeMarker : shopMarker}
           onClick={onClick}
         />
-        <StyledDiv className="bp3-text-large">{address}</StyledDiv>
+        <div css={divStyle} className="bp3-text-large">{address}</div>
       </Popover>
     );
+    /* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+      jsx-a11y/click-events-have-key-events */
   }
 }
 

@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cluster from '../images/Cluster.png';
 
-const StyledIcon = styled.div`
+const style = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +25,7 @@ class Cluster extends PureComponent {
     const { pointCount, onClick } = this.props;
 
     return (
-      <StyledIcon onClick={onClick}>{pointCount}</StyledIcon>
+      <div css={style} onClick={onClick}>{pointCount}</div>
     );
   }
 }

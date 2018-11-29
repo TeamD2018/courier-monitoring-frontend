@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import { Intent, Tag } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
 
-const StyledTag = styled(Tag)`
+const tagStyle = css`
   margin-left: 0.5rem;
 `;
 
@@ -12,9 +12,9 @@ const StatusTag = ({ courier }) => {
   const isBusy = courier.ordersCount > 0;
 
   return (
-    <StyledTag intent={isBusy ? Intent.WARNING : Intent.SUCCESS}>
+    <Tag css={tagStyle} intent={isBusy ? Intent.WARNING : Intent.SUCCESS}>
       {isBusy ? 'Занят' : 'Свободен'}
-    </StyledTag>
+    </Tag>
   );
 };
 

@@ -1,19 +1,20 @@
-import React, { PureComponent } from 'react';
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, H5,
 } from '@blueprintjs/core';
 import StatusTag from './StatusTag';
 
-const Body = styled.div`
+const bodyStyle = css`
   width: 100%;
   overflow: auto;
   
   -webkit-overflow-scrolling: touch;
 `;
 
-const Row = styled.div`
+const rowStyle = css`
   width: 100%;
   padding: 0.8rem;
   cursor: pointer;
@@ -31,7 +32,7 @@ const Row = styled.div`
   }
 `;
 
-const StyledCard = styled(Card)`
+const cardStyle = css`
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -50,7 +51,7 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const StyledButton = styled(Button)`
+const buttonStyle = css`
   top: 0;
   background: rgba(255, 255, 255, 1) none !important;
   z-index: 100;
@@ -89,8 +90,11 @@ class CouriersList extends PureComponent {
   }
 
   renderRow(courier) {
+    /* eslint-disable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
     return (
-      <Row
+      <div
+        css={rowStyle}
         key={courier.id}
         onClick={() => this.onRowClick(courier)}
       >
@@ -99,16 +103,19 @@ class CouriersList extends PureComponent {
           <StatusTag courier={courier} />
         </H5>
         <div>{`+${courier.phone}`}</div>
-      </Row>
+      </div>
     );
+    /* eslint-enable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
   }
 
   render() {
     const { couriers, isOpen } = this.props;
 
     return (
-      <StyledCard elevation={2}>
-        <StyledButton
+      <Card css={cardStyle} elevation={2}>
+        <Button
+          css={buttonStyle}
           icon={isOpen ? 'caret-up' : 'caret-down'}
           fill
           large
@@ -116,13 +123,13 @@ class CouriersList extends PureComponent {
           onClick={this.toggleList}
         >
           Курьеры
-        </StyledButton>
+        </Button>
         <Collapse isOpen={isOpen}>
-          <Body>
+          <div css={bodyStyle}>
             {couriers.map(this.renderRow)}
-          </Body>
+          </div>
         </Collapse>
-      </StyledCard>
+      </Card>
     );
   }
 }

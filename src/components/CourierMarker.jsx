@@ -1,16 +1,17 @@
-import React, { PureComponent } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import { Popover, PopoverInteractionKind } from '@blueprintjs/core';
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import courierMarker from '../images/Courier.png';
 import busyCourierMarker from '../images/Busy courier.png';
 import activeCourierMarker from '../images/Active courier.png';
 
-const StyledDiv = styled.div`
+const divStyle = css`
   padding: 1rem;
 `;
 
-const StyledIcon = styled.img`
+const iconStyle = css`
   width: 2rem;
   cursor: pointer;
   position: absolute;
@@ -30,22 +31,28 @@ class CourierMarker extends PureComponent {
       icon = courierMarker;
     }
 
+    /* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+      jsx-a11y/click-events-have-key-events */
     return (
       <Popover
         interactionKind={PopoverInteractionKind.HOVER}
         transitionDuration={100}
         position="bottom"
       >
-        <StyledIcon
+        <img
+          alt="Courier"
+          css={iconStyle}
           onClick={() => onClick(courier)}
           src={icon}
         />
-        <StyledDiv>
+        <div css={divStyle}>
           <div className="bp3-text-large">{courier.name}</div>
           {courier.phone && <div className="bp3-text-muted">{`+${courier.phone}`}</div>}
-        </StyledDiv>
+        </div>
       </Popover>
     );
+    /* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+      jsx-a11y/click-events-have-key-events */
   }
 }
 

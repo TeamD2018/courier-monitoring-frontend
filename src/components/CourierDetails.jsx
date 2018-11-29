@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import React, { PureComponent } from 'react';
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Classes,
@@ -14,7 +15,14 @@ import shop from '../images/shop.svg';
 const SOURCE = false;
 const DESTINATION = true;
 
-const WaypointsList = styled.div`
+const cardStyle = css`
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0.5rem;
+`;
+
+const waypointListStyle = css`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -22,7 +30,7 @@ const WaypointsList = styled.div`
   -webkit-overflow-scrolling: touch;
 `;
 
-const Waypoint = styled.div`
+const waypointStyle = css`
   width: 100%;
   padding: 0.8rem;
   cursor: pointer;
@@ -42,37 +50,30 @@ const Waypoint = styled.div`
   }
 `;
 
-const CourierInfo = styled.div`
+const courierInfoStyle = css`
   width: 100%;
   padding: 0.8rem;
 `;
 
-const Title = styled(H5)`
+const titleStyle = css`
   cursor: pointer;
 `;
 
-const StyledDiv = styled.div`
+const divStyle = css`
   margin: auto 0.4rem auto 0;
 `;
 
-const StyledCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0.5rem;
-`;
-
-const BoldDiv = styled.div`
+const boldDivStyle = css`
   font-weight: bold;
 `;
 
-const StyledButton = styled(Button)`
+const buttonStyle = css`
   top: 0;
   background: rgba(255, 255, 255, 1) none !important;
   z-index: 100;
 `;
 
-const StyledImg = styled.img`
+const iconStyle = css`
   width: 1rem;
 `;
 
@@ -117,22 +118,31 @@ class CourierDetails extends PureComponent {
   renderWaypoint(waypoint) {
     const { isFetching } = this.props;
 
+    /* eslint-disable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
     return (
-      <Waypoint
+      <div
+        css={waypointStyle}
         key={`${waypoint.orderId}_${(waypoint.type ? 'dst' : 'src')}`}
         onClick={() => this.onRowClick(waypoint)}
       >
-        <StyledDiv className={isFetching ? Classes.SKELETON : undefined}>
-          <StyledImg src={waypoint.type ? home : shop} />
-        </StyledDiv>
+        <div css={divStyle} className={isFetching ? Classes.SKELETON : undefined}>
+          <img
+            css={iconStyle}
+            alt={waypoint.type ? home : shop}
+            src={waypoint.type ? home : shop}
+          />
+        </div>
         <div className={isFetching ? Classes.SKELETON : undefined}>
           {waypoint.type && (
-            <BoldDiv>{`Заказ №${waypoint.orderNumber}`}</BoldDiv>
+            <div css={boldDivStyle}>{`Заказ №${waypoint.orderNumber}`}</div>
           )}
           {waypoint.location.address}
         </div>
-      </Waypoint>
+      </div>
     );
+    /* eslint-enable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-static-element-interactions */
   }
 
   renderWaypoints(orders) {
@@ -175,8 +185,9 @@ class CourierDetails extends PureComponent {
     /* eslint-disable jsx-a11y/click-events-have-key-events,
       jsx-a11y/no-static-element-interactions */
     return (
-      <StyledCard elevation={2}>
-        <StyledButton
+      <Card css={cardStyle} elevation={2}>
+        <Button
+          css={buttonStyle}
           icon={isOpen ? 'caret-up' : 'caret-down'}
           fill
           large
@@ -184,16 +195,17 @@ class CourierDetails extends PureComponent {
           onClick={this.toggleList}
         >
           Информация
-        </StyledButton>
+        </Button>
         <Collapse isOpen={isOpen}>
-          <CourierInfo>
-            <Title
+          <div css={courierInfoStyle}>
+            <H5
+              css={titleStyle}
               className={isFetching ? Classes.SKELETON : undefined}
               onClick={() => this.onCourierClick(courier)}
             >
               {courier.name}
               <StatusTag courier={courier} />
-            </Title>
+            </H5>
             <div
               className={isFetching ? Classes.SKELETON : undefined}
               onClick={() => this.setState({ relativeLastSeen: !relativeLastSeen })}
@@ -206,17 +218,17 @@ class CourierDetails extends PureComponent {
             <div className={isFetching ? Classes.SKELETON : undefined}>
               {`+${courier.phone}`}
             </div>
-          </CourierInfo>
+          </div>
           {courier.orders.length > 0 && (
             <>
               <Divider />
-              <WaypointsList>
+              <div css={waypointListStyle}>
                 {this.renderWaypoints(courier.orders)}
-              </WaypointsList>
+              </div>
             </>
           )}
         </Collapse>
-      </StyledCard>
+      </Card>
     );
     /* eslint-enable jsx-a11y/click-events-have-key-events,
       jsx-a11y/no-static-element-interactions */

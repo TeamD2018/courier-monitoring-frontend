@@ -733,13 +733,6 @@
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.6.6.tgz#62266c5f0eac6941fece302abad69f2ee7e25e44"
   integrity sha512-ojhgxzUHZ7am3D2jHkMzPpsBAiB005GF5YU4ea+8DNPybMk01JJUM9V9YRlF/GE95tcOm8DxQvWA2jq19bGalQ==
 
-"@emotion/is-prop-valid@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-0.7.2.tgz#bfff84765f39c352570ff537c5670dfdc90a1dbe"
-  integrity sha512-UCkzksTUib0aVnR5O7UxxDmlaUTEfQLRFBjC29z6FJ10Vg/P2T01iaq76I11katqmZjKHNVKJLH1nOvOY2E9Cw==
-  dependencies:
-    "@emotion/memoize" "0.7.1"
-
 "@emotion/memoize@0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.1.tgz#e93c13942592cf5ef01aa8297444dc192beee52f"
@@ -775,24 +768,6 @@
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-0.9.2.tgz#74e5c6b5e489a1ba30ab246ab5eedd96916487c4"
   integrity sha512-pVBLzIbC/QCHDKJF2E82V2H/W/B004mDFQZiyo/MSR+VC4pV5JLG0TF/zgQDFvP3fZL/5RTPGEmXlYJBMUuJ+A==
-
-"@emotion/styled-base@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@emotion/styled-base/-/styled-base-10.0.0.tgz#df8bf95d0cdd669dab73ba2bde4eb3223bedf85a"
-  integrity sha512-sTlo13oMhODwEBIv0gOfxu3DLHwiznb1rQGKuVMdjDg9DRPp+sjcmkkYijwu8gmmjN5b+vF3KorEO4ovlmvzEQ==
-  dependencies:
-    "@emotion/is-prop-valid" "0.7.2"
-    "@emotion/serialize" "0.11.0"
-    "@emotion/utils" "0.11.1"
-    object-assign "^4.1.1"
-
-"@emotion/styled@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-10.0.0.tgz#44b3511b2474e6626a9dde1a266cc5d2eac591a5"
-  integrity sha512-ypRAKZOgds3u/51fjKGBg9V4b9F6YNuANcJgg2glctZRU6zplj3K7Dz7M/GOqbJd0LWT1UqSjrWq7Uuh/fTOkw==
-  dependencies:
-    "@emotion/styled-base" "10.0.0"
-    babel-plugin-emotion "10.0.0"
 
 "@emotion/stylis@0.8.3":
   version "0.8.3"
@@ -2652,6 +2627,11 @@ eslint-module-utils@^2.2.0:
   dependencies:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
+
+eslint-plugin-emotion@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-emotion/-/eslint-plugin-emotion-10.0.0.tgz#330b7f1e7d8881abfc9660e70464f5efa760328d"
+  integrity sha512-gsTpKsgGPKpdMI946yq+eYa0FMEuChpez9CICLHGUvRkXQZ1BmDoK8UDEgWauXy/WEdeJSFfBBBzT/KWhgbc7Q==
 
 eslint-plugin-import@^2.14.0:
   version "2.14.0"
