@@ -15,7 +15,7 @@ const iconStyle = css`
   width: 2rem;
   cursor: pointer;
   position: absolute;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -120%);
 `;
 
 class CourierMarker extends PureComponent {

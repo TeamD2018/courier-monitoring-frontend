@@ -11,10 +11,10 @@ const divStyle = css`
 `;
 
 const iconStyle = css`
-  width: 32px;
+  width: 2rem;
   cursor: pointer;
   position: absolute;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -120%);
 `;
 
 class OrderMarker extends PureComponent {
