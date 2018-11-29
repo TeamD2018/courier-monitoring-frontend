@@ -24,9 +24,13 @@ class Cluster extends PureComponent {
   render() {
     const { pointCount, onClick } = this.props;
 
+    /* eslint-disable jsx-a11y/no-static-element-interactions,
+      jsx-a11y/click-events-have-key-events */
     return (
       <div css={style} onClick={onClick}>{pointCount}</div>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions,
+      jsx-a11y/click-events-have-key-events */
   }
 }
 

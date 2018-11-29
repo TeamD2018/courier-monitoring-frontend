@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+/* eslint-disable no-unused-vars */
 import React, { PureComponent } from 'react';
+/* eslint-enable no-unused-vars */
 import PropTypes from 'prop-types';
 import {
   Button, Card, Collapse, Divider, H5, Classes,
