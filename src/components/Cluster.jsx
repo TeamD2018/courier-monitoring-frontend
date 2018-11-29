@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cluster from '../images/Cluster.png';
 
-const StyledIcon = styled.div`
+const style = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,9 +24,13 @@ class Cluster extends PureComponent {
   render() {
     const { pointCount, onClick } = this.props;
 
+    /* eslint-disable jsx-a11y/no-static-element-interactions,
+      jsx-a11y/click-events-have-key-events */
     return (
-      <StyledIcon onClick={onClick}>{pointCount}</StyledIcon>
+      <div css={style} onClick={onClick}>{pointCount}</div>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions,
+      jsx-a11y/click-events-have-key-events */
   }
 }
 

@@ -1,12 +1,13 @@
-import React, { PureComponent } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import AsyncSelect from 'react-select/lib/Async';
-import styled from 'styled-components';
 import { Card } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
 import { getSuggestions } from '../api';
 
-const StyledCard = styled(Card)`
+const cardStyle = css`
   margin: 0.5rem;
   padding: 0.3rem;
   flex-grow: 0;
@@ -98,7 +99,7 @@ class SearchBar extends PureComponent {
 
   render() {
     return (
-      <StyledCard elevation={2}>
+      <Card css={cardStyle} elevation={2}>
         <AsyncSelect
           loadOptions={SearchBar.promiseOptions}
           onChange={this.onItemClick}
@@ -109,7 +110,7 @@ class SearchBar extends PureComponent {
           placeholder="Курьеры, заказы, адреса..."
           value={null}
         />
-      </StyledCard>
+      </Card>
     );
   }
 }

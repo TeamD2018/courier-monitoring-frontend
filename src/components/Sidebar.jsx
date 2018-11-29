@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-const StyledDiv = styled.div`
+const style = css`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -32,9 +33,9 @@ class Sidebar extends PureComponent {
   render() {
     const { children } = this.props;
     return (
-      <StyledDiv>
+      <div css={style}>
         {children}
-      </StyledDiv>
+      </div>
     );
   }
 }

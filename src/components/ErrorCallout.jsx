@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import {
   Button, Callout, Card, Intent,
 } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
-const StyledCard = styled(Card)`
+const cardStyle = css`
   position: absolute;
   top: 0;
   right: 0;
@@ -19,7 +19,7 @@ const StyledCard = styled(Card)`
 function reloadPage() { window.location.reload(); }
 
 const ErrorCallout = ({ errorMessage, errorName }) => (
-  <StyledCard elevation={2}>
+  <Card css={cardStyle} elevation={2}>
     <Callout title={errorName} intent={Intent.DANGER} icon="error">
       <div>{errorMessage}</div>
       <Button
@@ -32,7 +32,7 @@ const ErrorCallout = ({ errorMessage, errorName }) => (
         Перезагрузить страницу
       </Button>
     </Callout>
-  </StyledCard>
+  </Card>
 );
 
 
