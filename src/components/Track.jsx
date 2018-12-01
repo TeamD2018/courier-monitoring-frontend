@@ -17,7 +17,7 @@ class Track extends React.PureComponent {
       path: history,
       strokeColor: '#9179F2',
       strokeOpacity: 1,
-      strokeWeight: 2,
+      strokeWeight: 4,
     });
     line.setMap(map);
     this.line = line;
