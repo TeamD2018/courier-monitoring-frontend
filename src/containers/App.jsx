@@ -31,14 +31,17 @@ class App extends Component {
       showOnlyFreeCouriers,
     } = this.props;
 
+    const filteredCouriers = showOnlyFreeCouriers
+      ? couriers.filter(courier => courier.ordersCount === 0)
+      : couriers;
+
     return (
       <>
         <CouriersMap
-          couriers={couriers}
+          couriers={filteredCouriers}
           mapCenter={mapCenter}
           mapZoom={mapZoom}
           activeCourier={activeCourier}
-          showOnlyFreeCouriers={showOnlyFreeCouriers}
           {...this.boundActionCreators}
         />
         <Sidebar>
@@ -50,10 +53,10 @@ class App extends Component {
               : this.boundActionCreators.setShowOnlyFreeCouriersFlag
             }
           />
-          {couriers.length > 0 && (
+          {filteredCouriers.length > 0 && (
             <CouriersList
               isOpen={isCouriersListOpen}
-              couriers={couriers}
+              couriers={filteredCouriers}
               {...this.boundActionCreators}
             />
           )}

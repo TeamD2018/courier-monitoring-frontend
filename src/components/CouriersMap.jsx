@@ -153,19 +153,14 @@ class CouriersMap extends Component {
 
   renderClusters(couriers) {
     if (this.bounds) {
-      const { mapZoom, showOnlyFreeCouriers } = this.props;
-
-      const geoJSONCouriers = (showOnlyFreeCouriers
-        ? couriers.filter(courier => courier.ordersCount === 0)
-        : couriers)
-        .map(courier => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [courier.location.lng, courier.location.lat],
-          },
-          properties: courier,
-        }));
+      const geoJSONCouriers = couriers.map(courier => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [courier.location.lng, courier.location.lat],
+        },
+        properties: courier,
+      }));
 
       const bbox = [
         this.bounds.nw.lng,
@@ -179,7 +174,9 @@ class CouriersMap extends Component {
         maxZoom: 16,
       }).load(geoJSONCouriers);
 
+      const { mapZoom } = this.props;
       const clusters = clusterizer.getClusters(bbox, mapZoom);
+
       return clusters.map(this.renderCourierMarker);
     }
 
@@ -251,13 +248,11 @@ CouriersMap.propTypes = {
     requestedId: PropTypes.string,
   }),
   hideCouriersList: PropTypes.func.isRequired,
-  showOnlyFreeCouriers: PropTypes.bool,
 };
 
 CouriersMap.defaultProps = {
   couriers: [],
   activeCourier: null,
-  showOnlyFreeCouriers: false,
 };
 
 export default CouriersMap;
