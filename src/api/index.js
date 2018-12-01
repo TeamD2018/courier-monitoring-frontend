@@ -44,16 +44,6 @@ export const getOrder = (courierId, orderId) => {
     .then(mapResponse(orderMapping));
 };
 
-export const getCouriersByCircleField = (lat, lon, radius) => {
-  const url = new URL('couriers', API_URL);
-  url.search = new URLSearchParams({ lat, lon, radius });
-
-  return fetch(url)
-    .then(handleResponse)
-    .then(validateResponse(Couriers))
-    .then(mapResponse(couriersMapping));
-};
-
 export const getCouriersByBoxField = ({
   topLeftLat, topLeftLon,
   bottomRightLat, bottomRightLon,
