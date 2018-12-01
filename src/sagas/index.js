@@ -16,7 +16,7 @@ import { fetchRecentOrders } from '../services';
 
 function* couriersFetch(action) {
   try {
-    const couriers = yield call(getCouriersByBoxField, action.boxField);
+    const couriers = yield call(getCouriersByBoxField, action.boxField, action.activeOnly);
 
     yield put(receiveCouriers(couriers));
   } catch (e) {

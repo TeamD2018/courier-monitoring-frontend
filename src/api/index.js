@@ -47,13 +47,14 @@ export const getOrder = (courierId, orderId) => {
 export const getCouriersByBoxField = ({
   topLeftLat, topLeftLon,
   bottomRightLat, bottomRightLon,
-}) => {
+}, activeOnly) => {
   const url = new URL('couriers', API_URL);
   url.search = new URLSearchParams({
     top_left_lat: topLeftLat,
     top_left_lon: topLeftLon,
     bottom_right_lat: bottomRightLat,
     bottom_right_lon: bottomRightLon,
+    active_only: activeOnly,
   });
 
   return fetch(url)

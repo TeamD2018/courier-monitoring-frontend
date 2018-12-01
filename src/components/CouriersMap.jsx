@@ -73,7 +73,7 @@ class CouriersMap extends Component {
       topLeftLon,
       bottomRightLat,
       bottomRightLon,
-    });
+    }, true);
 
     const { activeCourier } = this.props;
     if (activeCourier.requestedId) {

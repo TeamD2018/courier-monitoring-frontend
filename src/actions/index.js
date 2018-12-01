@@ -4,9 +4,10 @@ export { types };
 
 
 // Request actions
-export const requestCouriersByBoxField = boxField => ({
+export const requestCouriersByBoxField = (boxField, activeOnly) => ({
   type: types.REQUEST_COURIERS_BY_BOX_FIELD,
   boxField,
+  activeOnly,
 });
 
 export const receiveCouriers = couriers => ({
