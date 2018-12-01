@@ -9,6 +9,7 @@ import CouriersList from '../components/CouriersList';
 import SearchBar from '../components/SearchBar';
 import CourierDetails from '../components/CourierDetails';
 import ErrorCallout from '../components/ErrorCallout';
+import OnlyFreeCouriersSwitchCard from '../components/OnlyFreeCouriersSwitchCard';
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,14 @@ class App extends Component {
 
   render() {
     const {
-      couriers, mapCenter, mapZoom, isCouriersListOpen, areCourierDetailsOpen, activeCourier, error,
+      couriers,
+      mapCenter,
+      mapZoom,
+      isCouriersListOpen,
+      areCourierDetailsOpen,
+      activeCourier,
+      error,
+      showOnlyFreeCouriers,
     } = this.props;
 
     return (
@@ -30,10 +38,18 @@ class App extends Component {
           mapCenter={mapCenter}
           mapZoom={mapZoom}
           activeCourier={activeCourier}
+          showOnlyFreeCouriers={showOnlyFreeCouriers}
           {...this.boundActionCreators}
         />
         <Sidebar>
           <SearchBar {...this.boundActionCreators} />
+          <OnlyFreeCouriersSwitchCard
+            checked={showOnlyFreeCouriers}
+            onChange={showOnlyFreeCouriers
+              ? this.boundActionCreators.resetShowOnlyFreeCouriersFlag
+              : this.boundActionCreators.setShowOnlyFreeCouriersFlag
+            }
+          />
           {couriers.length > 0 && (
             <CouriersList
               isOpen={isCouriersListOpen}
@@ -59,7 +75,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  couriers: state.couriers,
+  couriers: state.couriers.couriers,
+  showOnlyFreeCouriers: state.couriers.showOnlyFreeCouriers,
   activeCourier: state.activeCourier,
   mapCenter: state.map.center,
   isCouriersListOpen: state.couriersList.isOpen,

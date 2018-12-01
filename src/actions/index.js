@@ -89,3 +89,12 @@ export const setZoom = zoom => ({
 export const resetError = () => ({
   type: types.RESET_ERROR,
 });
+
+// Couriers filter
+export const setShowOnlyFreeCouriersFlag = () => ({
+  type: types.SET_SHOW_ONLY_FREE_COURIERS_FLAG,
+});
+
+export const resetShowOnlyFreeCouriersFlag = () => ({
+  type: types.RESET_SHOW_ONLY_FREE_COURIERS_FLAG,
+});
