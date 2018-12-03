@@ -51,6 +51,15 @@ class SearchBar extends PureComponent {
                 ...suggestion,
               })),
             },
+            {
+              label: 'Районы',
+              options: suggestions.polygons.map(suggestion => ({
+                value: suggestion.osmID,
+                label: suggestion.name,
+                type: 'polygon',
+                ...suggestion,
+              })),
+            },
           ];
 
           resolve(options);
@@ -72,7 +81,7 @@ class SearchBar extends PureComponent {
 
   onItemClick(item) {
     const {
-      requestActiveCourier, hideCouriersList, pan, setZoom,
+      requestActiveCourier, hideCouriersList, pan, setZoom, requestPolygon,
     } = this.props;
 
     switch (item.type) {
@@ -88,6 +97,10 @@ class SearchBar extends PureComponent {
         hideCouriersList();
 
         pan(item.destination);
+        break;
+
+      case 'polygon':
+        requestPolygon(item.osmID, item.osmType, item.name);
         break;
 
       default:
@@ -118,6 +131,7 @@ class SearchBar extends PureComponent {
 SearchBar.propTypes = {
   requestActiveCourier: PropTypes.func.isRequired,
   hideCouriersList: PropTypes.func.isRequired,
+  requestPolygon: PropTypes.func.isRequired,
   pan: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
 };

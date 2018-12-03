@@ -5,6 +5,10 @@ export const GeoPoint = struct({
   lon: 'number',
 });
 
+export const PolygonPoints = struct({
+  polygon: struct.list([GeoPoint]),
+});
+
 export const Location = struct({
   point: GeoPoint,
   address: 'string?',
@@ -43,7 +47,16 @@ export const GeoHistory = struct({
   geo_history: [TimeSeries],
 });
 
+export const Polygon = struct({
+  osm_id: 'number',
+  osm_type: 'string',
+  name: 'string',
+});
+
+export const Polygons = struct.list([Polygon]);
+
 export const Suggestions = struct({
   couriers: Couriers,
   orders: Orders,
+  polygons: Polygons,
 });

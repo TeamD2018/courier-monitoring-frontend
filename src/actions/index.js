@@ -10,6 +10,13 @@ export const requestCouriersByBoxField = (boxField, activeOnly) => ({
   activeOnly,
 });
 
+export const requestCouriersByPolygon = (osmID, osmType, activeOnly) => ({
+  type: types.REQUEST_COURIERS_BY_POLYGON,
+  osmID,
+  osmType,
+  activeOnly,
+});
+
 export const receiveCouriers = couriers => ({
   type: types.RECEIVE_COURIERS,
   couriers,
@@ -97,4 +104,29 @@ export const setShowOnlyFreeCouriersFlag = () => ({
 
 export const resetShowOnlyFreeCouriersFlag = () => ({
   type: types.RESET_SHOW_ONLY_FREE_COURIERS_FLAG,
+});
+
+export const requestPolygon = (osmID, osmType, name) => ({
+  type: types.REQUEST_POLYGON,
+  osmID,
+  osmType,
+  name,
+});
+
+export const receivePolygonFailed = (errorMessage, errorName) => ({
+  type: types.RECEIVE_POLYGON_FAILED,
+  errorMessage,
+  errorName,
+});
+
+export const setPolygonFilter = (osmID, osmType, name, polygon) => ({
+  type: types.SET_POLYGON,
+  osmID,
+  osmType,
+  name,
+  polygon,
+});
+
+export const resetPolygonFilter = () => ({
+  type: types.RESET_POLYGON,
 });

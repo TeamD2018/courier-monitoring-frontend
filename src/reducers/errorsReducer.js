@@ -9,6 +9,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.RECEIVE_COURIERS_FAILED:
+    case types.RECEIVE_POLYGON_FAILED:
     case types.RECEIVE_ACTIVE_COURIER_FAIL:
       return {
         ...state,

@@ -7,6 +7,7 @@ import CourierMarker from './CourierMarker';
 import Track from './Track';
 import OrderMarker from './OrderMarker';
 import Cluster from './Cluster';
+import Polygon from './Polygon';
 
 const KEY = process.env.API_KEY;
 const TIMEOUT = 5000;
@@ -67,13 +68,23 @@ class CouriersMap extends Component {
     const bottomRightLat = this.bounds.se.lat;
     const bottomRightLon = this.bounds.se.lng;
 
-    const { requestCouriersByBoxField, requestActiveCourier } = this.props;
-    requestCouriersByBoxField({
-      topLeftLat,
-      topLeftLon,
-      bottomRightLat,
-      bottomRightLon,
-    }, true);
+    const {
+      requestCouriersByBoxField,
+      requestCouriersByPolygon,
+      requestActiveCourier,
+      polygonFilter,
+    } = this.props;
+
+    if (polygonFilter) {
+      requestCouriersByPolygon(polygonFilter.osmID, polygonFilter.osmType, true);
+    } else {
+      requestCouriersByBoxField({
+        topLeftLat,
+        topLeftLon,
+        bottomRightLat,
+        bottomRightLon,
+      }, true);
+    }
 
     const { activeCourier } = this.props;
     if (activeCourier.requestedId) {
@@ -185,7 +196,7 @@ class CouriersMap extends Component {
 
   render() {
     const {
-      couriers, mapCenter, activeCourier, mapZoom,
+      couriers, mapCenter, activeCourier, mapZoom, polygonFilter,
     } = this.props;
 
     const { maps, map, mapLoaded } = (this.state || {});
@@ -212,6 +223,13 @@ class CouriersMap extends Component {
             history={activeCourier.courier.geoHistory}
           />
         )}
+        {mapLoaded && polygonFilter && (
+          <Polygon
+            map={map}
+            maps={maps}
+            polygonPoints={polygonFilter.polygon}
+          />
+        )}
       </>
     );
   }
@@ -228,7 +246,16 @@ CouriersMap.propTypes = {
     }),
     lastSeen: PropTypes.number,
   })),
+  polygonFilter: PropTypes.shape({
+    osmID: PropTypes.number.isRequired,
+    osmType: PropTypes.string.isRequired,
+    polygon: PropTypes.arrayOf(PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    })).isRequired,
+  }),
   requestCouriersByBoxField: PropTypes.func.isRequired,
+  requestCouriersByPolygon: PropTypes.func.isRequired,
   requestActiveCourier: PropTypes.func.isRequired,
   mapCenter: PropTypes.shape({
     lat: PropTypes.number,
@@ -253,6 +280,7 @@ CouriersMap.propTypes = {
 CouriersMap.defaultProps = {
   couriers: [],
   activeCourier: null,
+  polygonFilter: null,
 };
 
 export default CouriersMap;

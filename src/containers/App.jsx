@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar';
 import CourierDetails from '../components/CourierDetails';
 import ErrorCallout from '../components/ErrorCallout';
 import OnlyFreeCouriersSwitchCard from '../components/OnlyFreeCouriersSwitchCard';
+import PolygonFilterCard from '../components/PolygonFilterCard';
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class App extends Component {
       activeCourier,
       error,
       showOnlyFreeCouriers,
+      polygonFilter,
     } = this.props;
 
     const filteredCouriers = showOnlyFreeCouriers
@@ -42,6 +44,7 @@ class App extends Component {
           mapCenter={mapCenter}
           mapZoom={mapZoom}
           activeCourier={activeCourier}
+          polygonFilter={polygonFilter}
           {...this.boundActionCreators}
         />
         <Sidebar>
@@ -53,6 +56,12 @@ class App extends Component {
               : this.boundActionCreators.setShowOnlyFreeCouriersFlag
             }
           />
+          {polygonFilter && (
+            <PolygonFilterCard
+              resetPolygonFilter={this.boundActionCreators.resetPolygonFilter}
+              name={polygonFilter.name}
+            />
+          )}
           {filteredCouriers.length > 0 && (
             <CouriersList
               isOpen={isCouriersListOpen}
@@ -86,6 +95,7 @@ const mapStateToProps = state => ({
   areCourierDetailsOpen: state.courierDetails.isOpen,
   mapZoom: state.map.zoom,
   error: state.error,
+  polygonFilter: state.couriers.polygonFilter,
 });
 
 export default connect(mapStateToProps)(App);

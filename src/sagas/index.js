@@ -3,20 +3,47 @@ import {
 } from 'redux-saga/effects';
 
 import {
-  getCourierById, getCouriersByBoxField, getGeoHistory, getOrder,
+  getCourierById, getCouriersByBoxField, getCouriersByPolygon, getGeoHistory, getOrder, getPolygon,
 } from '../api';
 import {
+  types,
   receiveCouriers,
   receiverCouriersFailed,
   receiveActiveCourier,
   receiveActiveCourierFailed,
-  types, resetActiveCourier,
+  resetActiveCourier,
+  setPolygonFilter,
+  receivePolygonFailed,
 } from '../actions';
 import { fetchRecentOrders } from '../services';
 
-function* couriersFetch(action) {
+function* fetchCouriersByBoxField(action) {
   try {
     const couriers = yield call(getCouriersByBoxField, action.boxField, action.activeOnly);
+
+    yield put(receiveCouriers(couriers));
+  } catch (e) {
+    console.error(e);
+    yield put(receiverCouriersFailed(e.message, e.name));
+  }
+}
+
+function* requestPolygon(action) {
+  try {
+    const polygon = yield call(getPolygon, action.osmID, action.osmType);
+    yield put(setPolygonFilter(action.osmID, action.osmType, action.name, polygon));
+  } catch (e) {
+    console.error(e);
+    yield put(receivePolygonFailed(e.message, e.name));
+  }
+}
+
+function* fetchCouriersByPolygon(action) {
+  try {
+    const couriers = yield call(getCouriersByPolygon,
+      action.osmID,
+      action.osmType,
+      action.activeOnly);
 
     yield put(receiveCouriers(couriers));
   } catch (e) {
@@ -93,7 +120,9 @@ function* fetchActiveCourierWithOnlyOrder(action) {
 
 function* rootSaga() {
   yield all([
-    debounce(500, types.REQUEST_COURIERS_BY_BOX_FIELD, couriersFetch),
+    debounce(500, types.REQUEST_COURIERS_BY_BOX_FIELD, fetchCouriersByBoxField),
+    debounce(500, types.REQUEST_COURIERS_BY_POLYGON, fetchCouriersByPolygon),
+    takeLatest(types.REQUEST_POLYGON, requestPolygon),
     takeLatest(types.REQUEST_ACTIVE_COURIER, fetchActiveCourier),
     takeLatest(types.REQUEST_ACTIVE_COURIER_WITH_ONLY_ORDER, fetchActiveCourierWithOnlyOrder),
   ]);

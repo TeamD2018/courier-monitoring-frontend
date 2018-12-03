@@ -38,7 +38,21 @@ export const geoHistoryMapping = response => response.geo_history.map(waypoint =
   timestamp: waypoint.timestamp,
 }));
 
+export const polygonMapping = polygon => ({
+  osmID: polygon.osm_id,
+  osmType: polygon.osm_type,
+  name: polygon.name,
+});
+
 export const suggestionsMapping = suggestions => ({
   couriers: couriersMapping(suggestions.couriers),
   orders: ordersMapping(suggestions.orders),
+  polygons: suggestions.polygons.map(polygonMapping),
 });
+
+export const geoPointMapping = point => ({
+  lat: point.lat,
+  lng: point.lon,
+});
+
+export const geoPointsMapping = geoPoints => geoPoints.polygon.map(geoPointMapping);

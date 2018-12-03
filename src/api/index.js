@@ -2,11 +2,13 @@ import {
   courierMapping,
   couriersMapping,
   geoHistoryMapping,
+  geoPointsMapping,
   orderMapping,
-  ordersMapping, suggestionsMapping,
+  ordersMapping,
+  suggestionsMapping,
 } from './mappings';
 import {
-  Courier, Couriers, GeoHistory, Order, Suggestions, Orders,
+  Courier, Couriers, GeoHistory, Order, Suggestions, Orders, PolygonPoints,
 } from './models';
 import { handleResponse, mapResponse, validateResponse } from './helpers';
 
@@ -63,6 +65,20 @@ export const getCouriersByBoxField = ({
     .then(mapResponse(couriersMapping));
 };
 
+export const getCouriersByPolygon = (osmID, osmType, activeOnly) => {
+  const url = new URL('couriers', API_URL);
+  url.search = new URLSearchParams({
+    osm_id: osmID,
+    osm_type: osmType,
+    active_only: activeOnly,
+  });
+
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(Couriers))
+    .then(mapResponse(couriersMapping));
+};
+
 export const getSuggestions = (input) => {
   const url = new URL('suggestions', API_URL);
   url.search = new URLSearchParams({ input });
@@ -81,4 +97,17 @@ export const getGeoHistory = (courierId, since) => {
     .then(handleResponse)
     .then(validateResponse(GeoHistory))
     .then(mapResponse(geoHistoryMapping));
+};
+
+export const getPolygon = (osmID, osmType) => {
+  const url = new URL('polygon', API_URL);
+  url.search = new URLSearchParams({
+    osm_id: osmID,
+    osm_type: osmType,
+  });
+
+  return fetch(url)
+    .then(handleResponse)
+    .then(validateResponse(PolygonPoints))
+    .then(mapResponse(geoPointsMapping));
 };
