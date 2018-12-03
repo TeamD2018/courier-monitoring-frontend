@@ -14,6 +14,7 @@ import {
   resetActiveCourier,
   setPolygonFilter,
   receivePolygonFailed,
+  pan,
 } from '../actions';
 import { fetchRecentOrders } from '../services';
 
@@ -32,6 +33,9 @@ function* requestPolygon(action) {
   try {
     const polygon = yield call(getPolygon, action.osmID, action.osmType);
     yield put(setPolygonFilter(action.osmID, action.osmType, action.name, polygon));
+
+    // TODO сделать нормально
+    yield put(pan(polygon[0]));
   } catch (e) {
     console.error(e);
     yield put(receivePolygonFailed(e.message, e.name));
