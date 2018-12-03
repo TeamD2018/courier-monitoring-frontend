@@ -19,7 +19,7 @@ class Polygon extends React.PureComponent {
       strokeOpacity: 0.8,
       strokeWeight: 2,
       fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      fillOpacity: 0.1,
     });
     polygon.setMap(map);
     this.polygon = polygon;
