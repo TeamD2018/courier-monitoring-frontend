@@ -46,3 +46,15 @@ jobs:
     branches:
       only:
       - master
+
+  - stage: deploy
+    name: firebase hosting
+    deploy:
+      provider: firebase
+      token:
+        secure: 'Keab8v08+UW2Io1X1gjOU608M2rsUCurb2p/M2xsDxW+9y6/tfh23eQQzG47Wh0R7MOo08xO3i1n/p28/kTC1kqH9vVNzoUF53lTjCXQ4qM476yR6s4XT06b2vO/OAgwmuYK+3rYFzjXCjVQ3BmeLQe6kzcA1QjggciXt31AFKTd+Xe+YfEr3NqzylZoK+RJ5M7umUXefvejztWBHuJZIMaGBLCyS1IZKbCxBHcxhHwQYyu2FuYwkV8VRl8x/eFaNXhuOkeyg9lIj9csM+thsYCOKN6ETk+BLdXpiXj43K63+8RrWJ0/VqK+Nj/lofLUnzOtKPl1CUxeaq/JNoEvC5X1bUUM6LQCGz8Eok0maQ8X3YNsD1etER8qqmGHT/RFhZ5cK/afdgbZsKW+sXu5MSiYR/u/xh4RpBSVnelWFo4k3A2j1q2AEOHosD2YlP5eb97ZizMskP6FJ6ofJkFEvEb79TTdMlv4l+zkRSjQODpt/geBToqs/fOKbuyq2YanKsY+GlwS4A/18rreJkYJlJHxqfxUvcZZqbVDLQWLB0jg6g5jpwD+bLRhMo1x8YO1R2UvSOrq2+gcKPKm7CVKvp+h+QEcgIoZVwv+uwF4kv4jcLHBUBddhBFtWmiWfrBT+AI/FBaMTrm90gM6vdEhU98W3xpniJxdWV8qbOFuGlI='
+      project: 'tracker-f4807'
+    if: branch = master
+    branches:
+      only:
+      - master
