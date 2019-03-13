@@ -15,9 +15,9 @@ jobs:
     nodejs:
     - '10.11'
     install:
-    - yarn install --non-interactive --production=true --frozen-lockfile
+    - yarn install --non-interactive --production=false --frozen-lockfile
     script:
-    - yarn build
+    - NODE_ENV=production yarn build
     cache: yarn
     deploy:
       provider: firebase
